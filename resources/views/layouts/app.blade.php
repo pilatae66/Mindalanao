@@ -12,69 +12,280 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
 
+    <link rel="shortcut icon" href="{{ asset('/images/logo/Minda.jpg') }}" type="image/x-icon">
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/morris.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/typicons.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/azia.css') }}" rel="stylesheet">
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<body class="az-body az-body-sidebar">
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+        <div class="az-sidebar">
+          <div class="az-sidebar-header">
+            <a href="{{ url('/') }}" class="az-logo">
+                <div class="pr-2"><img src="{{ asset('images/logo/Minda.jpg') }}" style="height:50px;"></div>
+                <div>MDSHHRM</div>
+            </a>
+          </div><!-- az-sidebar-header -->
+          <div class="az-sidebar-loggedin">
+            <div class="az-img-user online"><img src="{{ asset('images/photos/image.gif') }}" alt=""></div>
+            <div class="media-body">
+              <h6>{{ auth()->user()->full_name }}</h6>
+              <span>Premium Member</span>
+            </div><!-- media-body -->
+          </div><!-- az-sidebar-loggedin -->
+          <div class="az-sidebar-body">
+            <ul class="nav">
+              <li class="nav-label">Main Menu</li>
+              <li class="nav-item active show">
+                  {{-- <li>with-sub</li> --}}
+                <a href="{{ route('home') }}" class="nav-link"><i class="typcn typcn-clipboard"></i>Home</a>
+                {{-- <ul class="nav-sub">
+                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
+                </ul> --}}
+              </li><!-- nav-item -->
+            </ul><!-- nav -->
+          </div><!-- az-sidebar-body -->
+        </div><!-- az-sidebar -->
 
-                    </ul>
+        <div class="az-content az-content-dashboard-two">
+          <div class="az-header">
+            <div class="container-fluid">
+              <div class="az-header-left">
+                    <div class="pt-2"><h4>Mindalano Specialist Hospital Human Resource Management</h4></div>
+              </div><!-- az-header-left -->
+              <div class="az-header-right">
+                <div class="dropdown az-profile-menu">
+                  <a href="" class="az-img-user"><img src="{{ asset('images/photos/image.gif') }}" alt=""></a>
+                  <div class="dropdown-menu">
+                    <div class="az-dropdown-header d-sm-none">
+                      <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+                    </div>
+                    <div class="az-header-profile">
+                      <div class="az-img-user">
+                        <img src="{{ asset('images/photos/image.gif') }}" alt="">
+                      </div><!-- az-img-user -->
+                      <h6>{{ auth()->user()->full_name }}</h6>
+                      <span>Premium Member</span>
+                    </div><!-- az-header-profile -->
 
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
+                    <a href="" class="dropdown-item"><i class="typcn typcn-user-outline"></i> My Profile</a>
+                    <a href="" class="dropdown-item"><i class="typcn typcn-edit"></i> Edit Profile</a>
+                    <a class="dropdown-item" href="{{ route('logout') }}"
+                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();">
+                        <i class="typcn typcn-power-outline"></i>{{ __('Signout') }}
+                    </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                  </div><!-- dropdown-menu -->
                 </div>
+              </div><!-- az-header-right -->
+            </div><!-- container -->
+          </div><!-- az-header -->
+          <div class="az-content-header d-block d-md-flex">
+            <div>
+              <h2 class="az-content-title tx-24 mg-b-5 mg-b-lg-8">Hi, {{ auth()->user()->firstname }} welcome back!</h2>
             </div>
-        </nav>
-
-        <main class="py-4">
+            <div class="az-dashboard-header-right">
+              {{-- <div>
+                <label class="tx-13">All Sales (Offline)</label>
+                <h5>932,210</h5>
+              </div> --}}
+            </div><!-- az-dashboard-header-right -->
+          </div><!-- az-content-header -->
+          <div class="az-content-body">
             @yield('content')
-        </main>
-    </div>
-</body>
+          </div><!-- az-content-body -->
+          <div class="az-footer ht-40">
+            <div class="container-fluid pd-t-0-f ht-100p">
+              <span>&copy; 2019 Developed by <a href="https://www.linkedin.com/in/LonerJey"><b>LonerJey</b></a></span>
+              <div class="ml-auto">
+                Mindalano Specialist Hospital Foundation, Inc., Panggao Saduc, Marawi City
+              </div>
+            <div>
+
+            </div>
+            </div><!-- container -->
+          </div><!-- az-footer -->
+        </div><!-- az-content -->
+
+
+        <script src="{{ asset('js/jquery.min.js') }}"></script>
+        {{-- <script src="../lib/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
+        <script src="{{ asset('js/ionicons.js') }}"></script>
+        <script src="{{ asset('js/jquery.sparkline.min.js') }}"></script>
+        <script src="{{ asset('js/raphael.min.js') }}"></script>
+        <script src="{{ asset('js/morris.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.vmap.min.js') }}"></script>
+
+        <script src="js/azia.js"></script>
+        <script>
+          $(function(){
+            'use strict'
+
+            $('.az-sidebar .with-sub').on('click', function(e){
+              e.preventDefault();
+              $(this).parent().toggleClass('show');
+              $(this).parent().siblings().removeClass('show');
+            })
+
+            $(document).on('click touchstart', function(e){
+              e.stopPropagation();
+
+              // closing of sidebar menu when clicking outside of it
+              if(!$(e.target).closest('.az-header-menu-icon').length) {
+                var sidebarTarg = $(e.target).closest('.az-sidebar').length;
+                if(!sidebarTarg) {
+                  $('body').removeClass('az-sidebar-show');
+                }
+              }
+            });
+
+
+            $('#azSidebarToggle').on('click', function(e){
+              e.preventDefault();
+
+              if(window.matchMedia('(min-width: 992px)').matches) {
+                $('body').toggleClass('az-sidebar-hide');
+              } else {
+                $('body').toggleClass('az-sidebar-show');
+              }
+            })
+
+            /* ----------------------------------- */
+            /* Dashboard content */
+
+            $('#compositeline').sparkline('html', {
+              lineColor: '#cecece',
+              lineWidth: 2,
+              spotColor: false,
+              minSpotColor: false,
+              maxSpotColor: false,
+              highlightSpotColor: null,
+              highlightLineColor: null,
+              fillColor: '#f9f9f9',
+              chartRangeMin: 0,
+              chartRangeMax: 10,
+              width: '100%',
+              height: 20,
+              disableTooltips: true
+            });
+
+            $('#compositeline2').sparkline('html', {
+              lineColor: '#cecece',
+              lineWidth: 2,
+              spotColor: false,
+              minSpotColor: false,
+              maxSpotColor: false,
+              highlightSpotColor: null,
+              highlightLineColor: null,
+              fillColor: '#f9f9f9',
+              chartRangeMin: 0,
+              chartRangeMax: 10,
+              width: '100%',
+              height: 20,
+              disableTooltips: true
+            });
+
+            $('#compositeline3').sparkline('html', {
+              lineColor: '#cecece',
+              lineWidth: 2,
+              spotColor: false,
+              minSpotColor: false,
+              maxSpotColor: false,
+              highlightSpotColor: null,
+              highlightLineColor: null,
+              fillColor: '#f9f9f9',
+              chartRangeMin: 0,
+              chartRangeMax: 10,
+              width: '100%',
+              height: 20,
+              disableTooltips: true
+            });
+
+            $('#compositeline4').sparkline('html', {
+              lineColor: '#cecece',
+              lineWidth: 2,
+              spotColor: false,
+              minSpotColor: false,
+              maxSpotColor: false,
+              highlightSpotColor: null,
+              highlightLineColor: null,
+              fillColor: '#f9f9f9',
+              chartRangeMin: 0,
+              chartRangeMax: 10,
+              width: '100%',
+              height: 20,
+              disableTooltips: true
+            });
+
+
+            var morrisData = [
+              { y: 'Oct 01', a: 95000, b: 70000 },
+              { y: 'Oct 05', a: 75000,  b: 55000 },
+              { y: 'Oct 10', a: 50000,  b: 40000 },
+              { y: 'Oct 15', a: 75000,  b: 65000 },
+              { y: 'Oct 20', a: 50000,  b: 40000 },
+              { y: 'Oct 25', a: 80000, b: 90000 },
+              { y: 'Oct 30', a: 75000,  b: 65000 }
+            ];
+
+            new Morris.Bar({
+              element: 'morrisBar1',
+              data: morrisData,
+              xkey: 'y',
+              ykeys: ['a', 'b'],
+              labels: ['Online', 'Offline'],
+              barColors: ['#560bd0', '#00cccc'],
+              preUnits: '$',
+              barSizeRatio: 0.55,
+              gridTextSize: 11,
+              gridTextColor: '#494c57',
+              gridTextWeight: 'bold',
+              gridLineColor: '#999',
+              gridStrokeWidth: 0.25,
+              hideHover: 'auto',
+              resize: true,
+              padding: 5
+            });
+
+            // $('#vmap2').vectorMap({
+            //   map: 'usa_en',
+            //   showTooltip: true,
+            //   backgroundColor: '#fff',
+            //   color: '#60adff',
+            //   colors: {
+            //     mo: '#9fceff',
+            //     fl: '#60adff',
+            //     or: '#409cff',
+            //     ca: '#005cbf',
+            //     tx: '#005cbf',
+            //     wy: '#005cbf',
+            //     ny: '#007bff'
+            //   },
+            //   hoverColor: '#222',
+            //   enableZoom: false,
+            //   borderWidth: 1,
+            //   borderColor: '#fff',
+            //   hoverOpacity: .85
+            // });
+
+          });
+        </script>
+      </body>
+            {{-- <main class="py-4">
+                @yield('content')
+            </main> --}}
+        </div>
 </html>

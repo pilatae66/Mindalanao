@@ -1,23 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
+        <div class="col-md-12">
+            <div class="card bd-0">
+                <div class="card-header tx-medium bd-0 tx-white bg-indigo">
+                    Description
+                </div><!-- card-header -->
+                <div class="card-body bd bd-t-0">
+                    <p class="mg-b-0">Some quick example text to build on the card title and make up the bulk of the card's content. Lorem ipsum dolor sit amet consictetur...</p>
+                </div><!-- card-body -->
+            </div><!-- card -->
         </div>
     </div>
-</div>
 @endsection
