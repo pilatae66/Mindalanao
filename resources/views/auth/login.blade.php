@@ -39,7 +39,7 @@
             <div class="form-group">
                 <label>Username</label>
                 <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
-                @error('email')
+                @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
                     </span>
@@ -64,7 +64,7 @@
                     </label>
                 </div>
             </div>
-            
+
              <button type="submit" class="btn btn-block btn-success">
                 {{ __('Login') }}
             </button>
@@ -81,9 +81,9 @@
         </div><!-- az-card-signin -->
     </div><!-- az-signin-wrapper -->
 
-    <script src="../lib/jquery/jquery.min.js"></script>
-    <script src="../lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="../lib/ionicons/ionicons.js"></script>
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/ionicons.js') }}"></script>
 
     <script src="../js/azia.js"></script>
     <script>

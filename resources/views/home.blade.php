@@ -1,5 +1,9 @@
 @extends('layouts.app')
 
+@section('title')
+    Hi, {{ auth()->user()->firstname }} welcome back!
+@endsection
+
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-12">

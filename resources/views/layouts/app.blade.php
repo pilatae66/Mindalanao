@@ -20,10 +20,13 @@
 
     <!-- Styles -->
     <!-- Custom styles for this template -->
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/responsive.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/morris.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/typicons.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/azia.css') }}" rel="stylesheet">
 </head>
 <body class="az-body az-body-sidebar">
@@ -45,11 +48,27 @@
           <div class="az-sidebar-body">
             <ul class="nav">
               <li class="nav-label">Main Menu</li>
-              <li class="nav-item active show">
+              <li class="nav-item {{ Request::path() == 'home' ? 'active' : '' }}">
                   {{-- <li>with-sub</li> --}}
                 <a href="{{ route('home') }}" class="nav-link"><i class="typcn typcn-clipboard"></i>Home</a>
                 {{-- <ul class="nav-sub">
                   <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
+                </ul> --}}
+              </li><!-- nav-item -->
+              <li class="nav-item  {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active show' : '' }}">
+                  {{-- <li>with-sub</li> --}}
+                <a href="{{ route('home') }}" class="nav-link with-sub"><i class="typcn typcn-clipboard"></i>User</a>
+                <ul class="nav-sub">
+                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                </ul>
+              </li><!-- nav-item -->
+              <li class="nav-item  {{ Request::path() == 'positions' || Request::path() == 'position/create' ? 'active show' : '' }}">
+                  {{-- <li>with-sub</li> --}}
+                <a href="{{ route('position.index') }}" class="nav-link"><i class="typcn typcn-clipboard"></i>Positions</a>
+                {{-- <ul class="nav-sub">
+                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
                 </ul> --}}
               </li><!-- nav-item -->
             </ul><!-- nav -->
@@ -95,7 +114,7 @@
           </div><!-- az-header -->
           <div class="az-content-header d-block d-md-flex">
             <div>
-              <h2 class="az-content-title tx-24 mg-b-5 mg-b-lg-8">Hi, {{ auth()->user()->firstname }} welcome back!</h2>
+              <h2 class="az-content-title tx-24 mg-b-5 mg-b-lg-8">@yield('title')</h2>
             </div>
             <div class="az-dashboard-header-right">
               {{-- <div>
@@ -122,14 +141,19 @@
 
 
         <script src="{{ asset('js/jquery.min.js') }}"></script>
-        {{-- <script src="../lib/bootstrap/js/bootstrap.bundle.min.js"></script> --}}
+        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+        <script src="{{ asset('js/dataTables.dataTables.min.js') }}"></script>
+        <script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
+        <script src="{{ asset('js/responsive.dataTables.min.js') }}"></script>
+        <script src="{{ asset('js/select2.min.js') }}"></script>
         <script src="{{ asset('js/ionicons.js') }}"></script>
         <script src="{{ asset('js/jquery.sparkline.min.js') }}"></script>
         <script src="{{ asset('js/raphael.min.js') }}"></script>
         <script src="{{ asset('js/morris.min.js') }}"></script>
         <script src="{{ asset('js/jquery.vmap.min.js') }}"></script>
 
-        <script src="js/azia.js"></script>
+        <script src="{{ asset('js/azia.js') }}"></script>
         <script>
           $(function(){
             'use strict'
@@ -280,9 +304,9 @@
             //   borderColor: '#fff',
             //   hoverOpacity: .85
             // });
-
           });
         </script>
+        @stack('script')
       </body>
             {{-- <main class="py-4">
                 @yield('content')

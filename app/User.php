@@ -37,8 +37,23 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function setFirstnameAttribute($value)
+    {
+        $this->attributes['firstname'] = ucfirst($value);
+    }
+
+    public function setMiddlenameAttribute($value)
+    {
+        $this->attributes['middlename'] = ucfirst($value);
+    }
+
+    public function setLastnameAttribute($value)
+    {
+        $this->attributes['lastname'] = ucfirst($value);
+    }
+
     public function getFullNameAttribute()
     {
-        return "{$this->firstname} {$this->middlename[0]}. {$this->lastname}";
-    } 
+        return ucfirst($this->firstname)." ".ucfirst($this->middlename[0]).". ".ucfirst($this->lastname);
+    }
 }
