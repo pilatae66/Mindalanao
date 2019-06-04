@@ -20,13 +20,18 @@
 
     <!-- Styles -->
     <!-- Custom styles for this template -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/responsive.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/morris.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/ionicons.min.css') }}" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="{{ asset('css/ion.rangeSlider.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/ion.rangeSlider.skinFlat.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/amazeui.datetimepicker.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/jquery.simple-dtpicker.cs') }}s" rel="stylesheet">
+    <link href="{{ asset('css/picker.min.css') }}" rel="stylesheet">
+
     <link href="{{ asset('css/azia.css') }}" rel="stylesheet">
 </head>
 <body class="az-body az-body-sidebar">
@@ -50,22 +55,38 @@
               <li class="nav-label">Main Menu</li>
               <li class="nav-item {{ Request::path() == 'home' ? 'active' : '' }}">
                   {{-- <li>with-sub</li> --}}
-                <a href="{{ route('home') }}" class="nav-link"><i class="typcn typcn-clipboard"></i>Home</a>
+                <a href="{{ route('home') }}" class="nav-link"><i class="icon ion-md-home"></i>Home</a>
                 {{-- <ul class="nav-sub">
                   <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
                 </ul> --}}
               </li><!-- nav-item -->
               <li class="nav-item  {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active show' : '' }}">
                   {{-- <li>with-sub</li> --}}
-                <a href="{{ route('home') }}" class="nav-link with-sub"><i class="typcn typcn-clipboard"></i>User</a>
+                <a href="{{ route('home') }}" class="nav-link with-sub"><i class="icon ion-md-contacts"></i>Users</a>
                 <ul class="nav-sub">
                   <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
                   <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
                 </ul>
               </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::path() == 'positions' || Request::path() == 'position/create' ? 'active show' : '' }}">
+              <li class="nav-item  {{ Request::path() == 'position' || Request::path() == 'position/create' ? 'active show' : '' }}">
                   {{-- <li>with-sub</li> --}}
-                <a href="{{ route('position.index') }}" class="nav-link"><i class="typcn typcn-clipboard"></i>Positions</a>
+                <a href="{{ route('position.index') }}" class="nav-link"><i class="icon ion-md-trophy"></i>Positions</a>
+                {{-- <ul class="nav-sub">
+                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                </ul> --}}
+              </li><!-- nav-item -->
+              <li class="nav-item  {{ Request::path() == 'department' || Request::path() == 'department/create' ? 'active show' : '' }}">
+                  {{-- <li>with-sub</li> --}}
+                <a href="{{ route('department.index') }}" class="nav-link"><i class="icon ion-md-filing"></i>Department</a>
+                {{-- <ul class="nav-sub">
+                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                </ul> --}}
+              </li><!-- nav-item -->
+              <li class="nav-item  {{ Request::path() == 'activity' || Request::path() == 'activity/create' ? 'active show' : '' }}">
+                  {{-- <li>with-sub</li> --}}
+                <a href="{{ route('activity.index') }}" class="nav-link"><i class="icon ion-md-star"></i>Activity</a>
                 {{-- <ul class="nav-sub">
                   <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
                   <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
@@ -141,13 +162,21 @@
 
 
         <script src="{{ asset('js/jquery.min.js') }}"></script>
+        <script src="{{ asset('js/datepicker.js') }}"></script>
         <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
         <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
         <script src="{{ asset('js/dataTables.dataTables.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.maskedinput.js') }}"></script>
+        <script src="{{ asset('js/select2.min.js') }}"></script>
+        <script src="{{ asset('js/ion.rangeSlider.min.js') }}"></script>
+        <script src="{{ asset('js/amazeui.datetimepicker.min.js') }}"></script>
+        <script src="{{ asset('js/jquery.simple-dtpicker.js') }}"></script>
+        <script src="{{ asset('js/picker.min.js') }}"></script>
         <script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
+
         <script src="{{ asset('js/responsive.dataTables.min.js') }}"></script>
         <script src="{{ asset('js/select2.min.js') }}"></script>
-        <script src="{{ asset('js/ionicons.js') }}"></script>
+        <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
         <script src="{{ asset('js/jquery.sparkline.min.js') }}"></script>
         <script src="{{ asset('js/raphael.min.js') }}"></script>
         <script src="{{ asset('js/morris.min.js') }}"></script>
@@ -254,34 +283,25 @@
               disableTooltips: true
             });
 
+            new Picker(document.querySelector('#timepicker'), {
+                headers: true,
+                format: 'HH:mm',
+                text: {
+                    title: 'Pick a Time',
+                    hour: 'Hour',
+                    minute: 'Minute'
+                },
+            });
 
-            var morrisData = [
-              { y: 'Oct 01', a: 95000, b: 70000 },
-              { y: 'Oct 05', a: 75000,  b: 55000 },
-              { y: 'Oct 10', a: 50000,  b: 40000 },
-              { y: 'Oct 15', a: 75000,  b: 65000 },
-              { y: 'Oct 20', a: 50000,  b: 40000 },
-              { y: 'Oct 25', a: 80000, b: 90000 },
-              { y: 'Oct 30', a: 75000,  b: 65000 }
-            ];
-
-            new Morris.Bar({
-              element: 'morrisBar1',
-              data: morrisData,
-              xkey: 'y',
-              ykeys: ['a', 'b'],
-              labels: ['Online', 'Offline'],
-              barColors: ['#560bd0', '#00cccc'],
-              preUnits: '$',
-              barSizeRatio: 0.55,
-              gridTextSize: 11,
-              gridTextColor: '#494c57',
-              gridTextWeight: 'bold',
-              gridLineColor: '#999',
-              gridStrokeWidth: 0.25,
-              hideHover: 'auto',
-              resize: true,
-              padding: 5
+            new Picker(document.querySelector('#datepicker'), {
+                headers: true,
+                format: 'MMMM DD, YYYY',
+                text: {
+                    title: 'Pick a Time',
+                    year: 'Year',
+                    month: 'Month',
+                    day: 'Day'
+                },
             });
 
             // $('#vmap2').vectorMap({

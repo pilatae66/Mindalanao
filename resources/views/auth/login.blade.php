@@ -38,7 +38,7 @@
             @csrf
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" name="username" class="form-control" placeholder="Enter your username" required>
+                <input type="text" name="username" class="form-control @error('username') parsley-error @enderror" placeholder="Enter your username" required>
                 @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -47,7 +47,7 @@
             </div><!-- form-group -->
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" name="password" class="form-control" placeholder="Enter your password" required>
+                <input type="password" name="password" class="form-control @error('password') parsley-error @enderror" placeholder="Enter your password" required>
                 @error('password')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>

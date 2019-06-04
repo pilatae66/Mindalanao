@@ -19,22 +19,26 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/users', 'UserController@index')->name('user.index');
 
-Route::delete('/user/{user}', 'UserController@delete')->name('user.delete');
+Route::group(['prefix' => 'users'], function () {
 
-Route::get('/positions', 'PositionController@index')->name('position.index');
+    Route::get('/users', 'UserController@index')->name('user.index');
 
-Route::get('/position/create', 'PositionController@create')->name('position.create');
+    Route::delete('/{user}', 'UserController@delete')->name('user.delete');
 
-Route::post('/position', 'PositionController@store')->name('position.store');
+});
 
-Route::get('/position/{position}/edit', 'PositionController@edit')->name('position.edit');
 
-Route::patch('/position/{position}', 'PositionController@update')->name('position.update');
+Route::resource('/position', 'PositionController');
 
-Route::delete('/position/{position}', 'PositionController@destroy')->name('position.destroy');
+Route::resource('/department', 'DepartmentController');
+
+Route::resource('/activity', 'ActivityController');
 
 Route::get('/getUserData', 'UserController@getAllUsers')->name('user.all');
 
 Route::get('/getPositionsData', 'PositionController@getAllPosition')->name('position.all');
+
+Route::get('/getDepartmentData', 'DepartmentController@getAllDepartment')->name('department.all');
+
+Route::get('/getActivityData', 'ActivityController@getAllActivity')->name('activity.all');

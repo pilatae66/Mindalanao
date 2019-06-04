@@ -23,10 +23,10 @@ class PositionController extends Controller
         return DataTables::of(Position::all())
         ->addColumn('action', function ($user) {
             return '<div class="d-flex align-items-baseline">
-                        <a href="/position/'.$user->id.'/edit" class="btn btn-sm btn-rounded bg-white tx-success p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Activate Employee">
+                        <a href="'.route('position.edit',$user->id).'" class="btn btn-sm btn-rounded bg-white tx-success p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Activate Employee">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <button data-remote="/position/'.$user->id.'" class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2">
+                        <button data-remote="'.route('position.destroy',$user->id).'" class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>';

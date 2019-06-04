@@ -12,10 +12,10 @@
                     <div class="pt-2">
                         Position List
                     </div>
-                    <div><a href="{{ route('position.create') }}" class="btn btn-sm btn-success btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <div><a href="{{ route('department.create') }}" class="btn btn-sm btn-success btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
-                    <table class="table" id="positionDatatable">
+                    <table class="table" id="departmentDatatable">
                         <thead>
                             <tr>
                                 <th>Position</th>
@@ -32,11 +32,11 @@
 @push('script')
     <script>
         $(function() {
-            $('#positionDatatable').DataTable({
+            $('#departmentDatatable').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: '{!! route('position.all') !!}',
+                ajax: '{!! route('department.all') !!}',
                 language: {
                     searchPlaceholder: 'Search...',
                     sSearch: '',
@@ -44,7 +44,7 @@
                 },
 
                 columns: [
-                    { data: 'position' },
+                    { data: 'department_name' },
                     { data: 'created_at' },
                     { data: 'action', orderable: false, searchable: false }
                 ]
@@ -52,7 +52,7 @@
 
             $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
 
-            $('#positionDatatable').on('click', '.delete[data-remote]',(e) => {
+            $('#departmentDatatable').on('click', '.delete[data-remote]',(e) => {
                 e.preventDefault()
                 $.ajaxSetup({
                     headers: {
@@ -72,7 +72,7 @@
                             submit: true
                         }
                     }).always(function (data) {
-                        $('#positionDatatable').DataTable().draw(false);
+                        $('#departmentDatatable').DataTable().draw(false);
                     });
                 }else alert("You have cancelled!"); })
             })

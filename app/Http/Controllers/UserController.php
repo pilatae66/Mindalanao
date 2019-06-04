@@ -26,7 +26,7 @@ class UserController extends Controller
                         <a href="#edit-'.$user->id.'" class="btn btn-sm btn-rounded bg-white tx-success p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Activate Employee">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <button data-remote="/user/'.$user->id.'" class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2">
+                        <button data-remote="/users/'.$user->id.'" class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>';
