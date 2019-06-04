@@ -95,3 +95,29 @@
         </div>
     </div>
 @endsection
+@push('script')
+    <script>
+        $(function(){
+            new Picker(document.querySelector('#datepicker'), {
+                headers: true,
+                format: 'MMMM DD, YYYY',
+                text: {
+                    title: 'Pick a Time',
+                    year: 'Year',
+                    month: 'Month',
+                    day: 'Day'
+                },
+            });
+
+            new Picker(document.querySelector('#timepicker'), {
+                headers: true,
+                format: 'HH:mm',
+                text: {
+                    title: 'Pick a Time',
+                    hour: 'Hour',
+                    minute: 'Minute'
+                },
+            });
+        })
+    </script>
+@endpush

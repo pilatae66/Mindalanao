@@ -24,11 +24,14 @@ class ActivityController extends Controller
         return DataTables::of(Activity::query())
         ->addColumn('action', function ($activity) {
             return '<div class="d-flex align-items-baseline">
-                        <a href="'.route('activity.edit', $activity->id).'" class="btn btn-sm btn-rounded bg-white tx-success p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Show Activity">
-                            <i class="fas fa-eye"></i>
+                        <a href="'.route('activity.show', $activity->id).'" class="btn btn-rounded bg-white tx-dark p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Show Activity">
+                            <i class="icon ion-md-eye"></i>
                         </a>
-                        <button data-remote="'.route('activity.destroy', $activity->id).'" class="btn btn-sm btn-rounded tx-danger delete p-0 m-0 pr-2">
-                            <i class="fas fa-trash"></i>
+                        <a href="'.route('activity.edit', $activity->id).'" class="btn btn-rounded bg-white tx-primary p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Show Activity">
+                            <i class="icon ion-md-open"></i>
+                        </a>
+                        <button data-remote="'.route('activity.destroy', $activity->id).'" class="btn btn-rounded tx-danger delete p-0 m-0 pr-2">
+                            <i class="icon ion-md-trash"></i>
                         </button>
                     </div>';
         })
@@ -81,7 +84,30 @@ class ActivityController extends Controller
      */
     public function show(Activity $activity)
     {
-        //
+        return view('activity.show', compact('activity'));
+    }
+
+    public function getAllAttendees(Activity $activity)
+    {
+        return DataTables::of($activity->attendees)
+        ->addColumn('position', function ($user){
+            return $user->position[0]->position;
+        })
+        ->addColumn('department', function ($user){
+            return $user->department[0]->department_name;
+        })
+        ->editColumn('created_at', function($user){
+            return $user->created_at->format('F d, Y');
+        })
+        ->editColumn('name', function($user){
+            return "{$user->firstname} {$user->middlename[0]}. {$user->lastname}";
+        })
+        ->addColumn('action', function ($activity) {
+            return '<div class="d-flex align-items-baseline">
+                        <attendee-button></attendee-button>
+                    </div>';
+        })
+        ->make(true);
     }
 
     /**

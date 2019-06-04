@@ -38,7 +38,7 @@
             @csrf
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" name="username" class="form-control @error('username') parsley-error @enderror" placeholder="Enter your username" required>
+                <input type="text" name="username" value="{{ old('username') }}" class="form-control @error('username') parsley-error @enderror" placeholder="Enter your username" required>
                 @error('username')
                     <span class="invalid-feedback" role="alert">
                         <strong>{{ $message }}</strong>
@@ -70,13 +70,12 @@
             </button>
             </form>
         </div><!-- az-signin-header -->
-        <div class="az-signin-footer pt-3">
+        <div class="az-signin-footer">
             @if (Route::has('password.request'))
-            <p><a class="" href="{{ route('password.request') }}">
+            <p><a style="color:blue;" class="" href="{{ route('password.request') }}">
                 {{ __('Forgot Your Password?') }}
             </a></p>
             @endif
-            <p>Don't have an account? <a href="{{ route('register') }}">Create an Account</a></p>
         </div><!-- az-signin-footer -->
         </div><!-- az-card-signin -->
     </div><!-- az-signin-wrapper -->

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Positions
+    Department
 @endsection
 
 @section('content')
@@ -10,7 +10,7 @@
             <div class="card bd-0">
                 <div class="card-header tx-medium bd-0 tx-white bg-success d-flex justify-content-between">
                     <div class="pt-2">
-                        Position List
+                        Department List
                     </div>
                     <div><a href="{{ route('department.create') }}" class="btn btn-sm btn-success btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
@@ -18,7 +18,7 @@
                     <table class="table" id="departmentDatatable">
                         <thead>
                             <tr>
-                                <th>Position</th>
+                                <th>Department</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>

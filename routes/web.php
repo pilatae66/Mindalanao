@@ -22,7 +22,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::group(['prefix' => 'users'], function () {
 
-    Route::get('/users', 'UserController@index')->name('user.index');
+    Route::get('/', 'UserController@index')->name('user.index');
+
+    Route::get('/create', 'UserController@create')->name('user.create');
+
+    Route::post('/', 'UserController@store')->name('user.store');
 
     Route::delete('/{user}', 'UserController@delete')->name('user.delete');
 
@@ -34,6 +38,8 @@ Route::resource('/position', 'PositionController');
 Route::resource('/department', 'DepartmentController');
 
 Route::resource('/activity', 'ActivityController');
+
+Route::get('/activity/{activity}/getAttendees', 'ActivityController@getAllAttendees')->name('activity.attendees');
 
 Route::get('/getUserData', 'UserController@getAllUsers')->name('user.all');
 

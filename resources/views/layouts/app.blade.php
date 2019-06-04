@@ -47,7 +47,7 @@
             <div class="az-img-user online"><img src="{{ asset('images/photos/image.gif') }}" alt=""></div>
             <div class="media-body">
               <h6>{{ auth()->user()->full_name }}</h6>
-              <span>Premium Member</span>
+              <span>{{ auth()->user()->position[0]->position }}</span>
             </div><!-- media-body -->
           </div><!-- az-sidebar-loggedin -->
           <div class="az-sidebar-body">
@@ -60,12 +60,12 @@
                   <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
                 </ul> --}}
               </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active show' : '' }}">
+              <li class="nav-item  {{ Request::path() == 'users' || Request::path() == 'users/create' ? 'active show' : '' }}">
                   {{-- <li>with-sub</li> --}}
                 <a href="{{ route('home') }}" class="nav-link with-sub"><i class="icon ion-md-contacts"></i>Users</a>
                 <ul class="nav-sub">
                   <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
-                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'users/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
                 </ul>
               </li><!-- nav-item -->
               <li class="nav-item  {{ Request::path() == 'position' || Request::path() == 'position/create' ? 'active show' : '' }}">
@@ -114,7 +114,7 @@
                         <img src="{{ asset('images/photos/image.gif') }}" alt="">
                       </div><!-- az-img-user -->
                       <h6>{{ auth()->user()->full_name }}</h6>
-                      <span>Premium Member</span>
+                      <span class="tx-center">{{ auth()->user()->position[0]->position }}</span>
                     </div><!-- az-header-profile -->
 
                     <a href="" class="dropdown-item"><i class="typcn typcn-user-outline"></i> My Profile</a>
@@ -145,7 +145,9 @@
             </div><!-- az-dashboard-header-right -->
           </div><!-- az-content-header -->
           <div class="az-content-body">
-            @yield('content')
+              <div id="app">
+                  @yield('content')
+              </div>
           </div><!-- az-content-body -->
           <div class="az-footer ht-40">
             <div class="container-fluid pd-t-0-f ht-100p">
@@ -281,27 +283,6 @@
               width: '100%',
               height: 20,
               disableTooltips: true
-            });
-
-            new Picker(document.querySelector('#timepicker'), {
-                headers: true,
-                format: 'HH:mm',
-                text: {
-                    title: 'Pick a Time',
-                    hour: 'Hour',
-                    minute: 'Minute'
-                },
-            });
-
-            new Picker(document.querySelector('#datepicker'), {
-                headers: true,
-                format: 'MMMM DD, YYYY',
-                text: {
-                    title: 'Pick a Time',
-                    year: 'Year',
-                    month: 'Month',
-                    day: 'Day'
-                },
             });
 
             // $('#vmap2').vectorMap({

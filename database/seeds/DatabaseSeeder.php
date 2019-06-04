@@ -2,6 +2,8 @@
 
 use Illuminate\Database\Seeder;
 use App\User;
+use App\Position;
+use App\Department;
 
 class DatabaseSeeder extends Seeder
 {
@@ -12,6 +14,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        factory(User::class, 1)->create();
+        factory(User::class, 1)->create()->each(function ($user){
+            $user->department()->save(factory(Department::class)->create());
+            $user->position()->sync(factory(Position::class)->create()->each(function($position){
+                $position->department()->sync(factory(Department::class)->create());
+            }));
+        });
     }
 }

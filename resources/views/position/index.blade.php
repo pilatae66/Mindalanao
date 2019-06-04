@@ -19,6 +19,8 @@
                         <thead>
                             <tr>
                                 <th>Position</th>
+                                <th>Department</th>
+                                <th>Basic Salary</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -45,6 +47,8 @@
 
                 columns: [
                     { data: 'position' },
+                    { data: 'department' },
+                    { data: 'salary' },
                     { data: 'created_at' },
                     { data: 'action', orderable: false, searchable: false }
                 ]

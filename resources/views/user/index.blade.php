@@ -12,6 +12,7 @@
                     <div class="pt-2">
                         User List
                     </div>
+                    <div><a href="{{ route('user.create') }}" class="btn btn-sm btn-success btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
                     <table class="table" id="userDatatable">
@@ -21,6 +22,8 @@
                                 <th>Username</th>
                                 <th>Name</th>
                                 <th>Email</th>
+                                <th>Position</th>
+                                <th>Department</th>
                                 <th>Date Employed</th>
                                 <th>Actions</th>
                             </tr>
@@ -50,6 +53,8 @@
                     { data: 'username' },
                     { data: 'name' },
                     { data: 'email' },
+                    { data: 'position' },
+                    { data: 'department' },
                     { data: 'created_at' },
                     { data: 'action', orderable: false, searchable: false }
                 ]

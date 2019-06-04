@@ -37,4 +37,9 @@ class Activity extends Model
     {
         return $this->attributes['activity_provider'] = ucfirst($value);
     }
+
+    public function attendees()
+    {
+        return $this->belongsToMany(User::class)->withTimestamps();
+    }
 }

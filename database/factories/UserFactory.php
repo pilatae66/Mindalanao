@@ -22,6 +22,11 @@ $factory->define(User::class, function (Faker $faker) {
         'middlename' => 'Andrade',
         'lastname' => 'Ortega',
         'username' => 'liezelortega39',
+        'address' => $faker->address,
+        'dob' => 'October 10, 1989',
+        'gender' => 'Female',
+        'contact_number' => '09754157431',
+        'degree' => 'Master\'s in Gwapa',
         'email' => 'liezelortega39@gmail.com',
         'email_verified_at' => now(),
         'password' => '$2y$10$C8NSqP3mKUjTPVtKKlpZReIPdcrwRbPAe6IsC3TSt8MLrRjGyVrdS', // babynakoh
