@@ -15,21 +15,16 @@
     <link rel="shortcut icon" href="{{ asset('/images/logo/Minda.jpg') }}" type="image/x-icon">
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+    {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet"> --}}
 
     <!-- Styles -->
     <!-- Custom styles for this template -->
+    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/jquery.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/responsive.dataTables.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/morris.css') }}" rel="stylesheet">
     <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
-    <link href="{{ asset('css/ion.rangeSlider.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/ion.rangeSlider.skinFlat.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/amazeui.datetimepicker.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/jquery.simple-dtpicker.cs') }}s" rel="stylesheet">
     <link href="{{ asset('css/picker.min.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/azia.css') }}" rel="stylesheet">
@@ -147,6 +142,7 @@
           <div class="az-content-body">
               <div id="app">
                   @yield('content')
+                  @yield('modal')
               </div>
           </div><!-- az-content-body -->
           <div class="az-footer ht-40">

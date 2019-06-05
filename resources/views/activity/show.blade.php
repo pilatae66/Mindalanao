@@ -5,16 +5,15 @@
 @endsection
 
 @section('content')
-    <div class="row justify-content-center">
+    <div class="row">
         <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-10">
                     <div class="card bd-0 pb-4">
-                        <div class="card-header tx-medium bd-0 tx-white bg-success d-flex justify-content-between">
+                        <div class="card-header tx-medium bd-0 tx-white tx-light bg-success d-flex justify-content-between">
                             <div class="pt-2">
                                     {{ $activity->activity_name }} Details
                             </div>
-                            <div><a href="{{ route('activity.create') }}" class="btn btn-sm btn-success btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                         </div><!-- card-header -->
                         <div class="card-body bd bd-t-0">
                             <div class="row pb-2">
@@ -31,28 +30,19 @@
                     </div><!-- card -->
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-12">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-10">
                     <div class="card bd-0">
-                        <div class="card-header tx-medium bd-0 tx-white bg-success d-flex justify-content-between">
+                        <div class="card-header tx-medium bd-0 bg-success tx-light tx-white d-flex justify-content-between">
                             <div class="pt-2">
                                     {{ $activity->activity_name }} Attendees List
                             </div>
-                            <div><a href="{{ route('activity.create') }}" class="btn btn-sm btn-success btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                            <div>
+                                <a href="" class="btn btn-sm btn-success btn-rounded" data-toggle="modal" data-target="#modaldemo1"><i class="icon ion-md-add"></i> Add Attendees</a>
+                            </div>
                         </div><!-- card-header -->
-                        <div class="card-body bd bd-t-0">
-                            <table class="table" id="activityDatatable">
-                                <thead>
-                                    <tr>
-                                        <th>Employee ID</th>
-                                        <th>Name</th>
-                                        <th>Position</th>
-                                        <th>Department</th>
-                                        <th>Registered At</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                            </table>
+                        <div class="card-body bd">
+                            <attendee-table activity-id="{{ $activity->id }}" />
                         </div><!-- card-body -->
                     </div><!-- card -->
                 </div>
@@ -60,55 +50,24 @@
         </div>
     </div>
 @endsection
-@push('script')
-    <script>
-        $(function() {
-            $('#activityDatatable').DataTable({
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                ajax: '{!! route('activity.attendees', $activity->id) !!}',
-                language: {
-                    searchPlaceholder: 'Search...',
-                    sSearch: '',
-                    lengthMenu: '_MENU_ items/page',
-                },
-
-                columns: [
-                    { data: 'id' },
-                    { data: 'name' },
-                    { data: 'position' },
-                    { data: 'department' },
-                    { data: 'created_at' },
-                    { data: 'action', orderable: false, searchable: false }
-                ]
-            });
-
-            $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
-
-            $('#activityDatatable').on('click', '.delete[data-remote]',(e) => {
-                e.preventDefault()
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                var url = e.currentTarget.dataset.remote;
-                // console.log(e.currentTarget.dataset.remote)
-                // confirm then
-                if (confirm('Are you sure you want to delete this?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            _method: 'DELETE',
-                            submit: true
-                        }
-                    }).always(function (data) {
-                        $('#activityDatatable').DataTable().draw(false);
-                    });
-                }else alert("You have cancelled!"); })
-            })
-    </script>
-@endpush
+@section('modal')
+<div id="modaldemo1" class="modal fade effect-sign">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Register Employee</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <attendee-modal activity-id="{{ $activity->id }}"></attendee-modal>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-indigo">Save changes</button>
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+@endsection

@@ -4094,7 +4094,7 @@ a.close.disabled {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1050;
+  z-index: 1060;
   display: none;
   width: 100%;
   height: 100%;
@@ -4160,7 +4160,7 @@ a.close.disabled {
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 1040;
+  z-index: 1050;
   width: 100vw;
   height: 100vh;
   background-color: #000; }
@@ -10694,14 +10694,14 @@ body {
   font-weight: 700;
   font-size: 28px;
   font-family: 'Poppins', sans-serif;
-  color: green;
+  color: #5b47fb;
   letter-spacing: -1px;
   display: flex;
   align-items: center;
   position: relative;
   top: -2px; }
   .az-logo:hover, .az-logo:focus {
-    color: green; }
+    color: #5b47fb; }
   .az-logo i {
     display: block;
     line-height: .9;
@@ -10756,7 +10756,7 @@ body {
   width: 240px;
   background-color: #fff;
   overflow-y: auto;
-  z-index: 1000;
+  z-index: 800;
   transform: translateX(-240px);
   transition: all 0.35s; }
   @media (prefers-reduced-motion: reduce) {
@@ -11521,7 +11521,7 @@ body {
       .az-iconbar-body .nav-sub .nav-sub-item + .nav-sub-item {
         border-top: 1px dotted #cdd4e0; }
       .az-iconbar-body .nav-sub .nav-sub-item.active > .nav-sub-link {
-        color: green; }
+        color: #5b47fb; }
     .az-iconbar-body .nav-sub .nav-sub-link {
       display: flex;
       align-items: center;
@@ -11764,7 +11764,7 @@ body {
     .az-navbar .nav-sub-item.show > .nav-sub {
       display: block; }
     .az-navbar .nav-sub-item.active > .nav-sub-link {
-      color: green; }
+      color: #5b47fb; }
   .az-navbar .nav-sub-link {
     position: relative;
     font-size: .875rem;
@@ -12144,7 +12144,7 @@ body {
     position: relative;
     display: block; }
     .az-sidebar-body .nav-item.active .nav-link {
-      color: green; }
+      color: #5b47fb; }
     .az-sidebar-body .nav-item.show > .nav-sub {
       display: block; }
     .az-sidebar-body .nav-item + .nav-item {
@@ -12200,7 +12200,7 @@ body {
       height: auto;
       padding: 7px 0; }
   .az-sidebar-body .nav-sub-item.active > .nav-sub-link {
-    color: green; }
+    color: #5b47fb; }
   .az-sidebar-body .nav-sub-item.show .nav-sub {
     display: block; }
   .az-sidebar-body .nav-sub-link {
@@ -14913,7 +14913,7 @@ body {
 
 .az-signin-header h2 {
   font-weight: 500;
-  color: green;
+  color: #5b47fb;
   letter-spacing: -1px; }
 
 .az-signin-header h4 {
@@ -14967,9 +14967,8 @@ body {
   padding: 30px;
   flex-direction: column;
   align-items: center;
-  display: none;
-  margin-top: 50px;
-}
+  justify-content: center;
+  display: none; }
   @media (min-width: 576px) {
     .az-column-signup-left {
       padding: 40px; } }
@@ -15018,7 +15017,7 @@ body {
 
 .az-signup-header h2 {
   font-weight: 500;
-  color: green;
+  color: #5b47fb;
   letter-spacing: -1px; }
 
 .az-signup-header h4 {

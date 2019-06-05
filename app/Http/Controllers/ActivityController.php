@@ -6,6 +6,7 @@ use App\Activity;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
+use App\User;
 
 class ActivityController extends Controller
 {
@@ -89,25 +90,42 @@ class ActivityController extends Controller
 
     public function getAllAttendees(Activity $activity)
     {
-        return DataTables::of($activity->attendees)
-        ->addColumn('position', function ($user){
-            return $user->position[0]->position;
-        })
-        ->addColumn('department', function ($user){
-            return $user->department[0]->department_name;
-        })
-        ->editColumn('created_at', function($user){
-            return $user->created_at->format('F d, Y');
-        })
-        ->editColumn('name', function($user){
-            return "{$user->firstname} {$user->middlename[0]}. {$user->lastname}";
-        })
-        ->addColumn('action', function ($activity) {
-            return '<div class="d-flex align-items-baseline">
-                        <attendee-button></attendee-button>
-                    </div>';
-        })
-        ->make(true);
+        $attendees = $activity->attendees;
+        for ($i=0; $i < $attendees->count(); $i++) {
+            $attendees[$i]->position = $attendees[$i]->position[0];
+            $attendees[$i]->department = $attendees[$i]->department[0];
+            $attendees[$i]->created_when = Carbon::parse($attendees[$i]->created_at)->format('F d, Y');
+        }
+        // dd($attendees[0]->created_at);
+        return $attendees;
+    }
+
+    public function getAllEmployees($activity)
+    {
+        $activity_test = Activity::findOrFail($activity);
+        $users = User::all();
+        for ($i=0; $i < $users->count(); $i++) {
+            $users[$i]->position = $users[$i]->position[0];
+            $users[$i]->department = $users[$i]->department[0];
+            $users[$i]->isAdded = $activity_test->attendees->contains($users[$i]);
+        }
+
+        // dd($users);
+        return $users;
+    }
+
+    public function addEmployeeToActivity(Request $request)
+    {
+        $activity = Activity::findOrFail($request->activityId);
+
+        $activity->attendees()->attach($request->employeeId);
+
+        return $request;
+    }
+
+    public function removeAttendee($attendee, $activity)
+    {
+        Activity::find($activity)->attendees()->detach([$attendee]);
     }
 
     /**

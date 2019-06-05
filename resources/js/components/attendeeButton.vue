@@ -1,15 +1,32 @@
 <template>
     <div>
-        <button class="btn btn-danger delete">
-            Remove Employee <i class="icon ion-md-trash"></i>
+        <button class="btn btn-danger tx-light btn-sm delete" @click="deleteAttendee">
+            Remove <i class="icon ion-md-close"></i>
         </button>
     </div>
 </template>
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+        props: ['attendeeId', 'activityId'],
+        name: "attendeeButton",
+        data(){
+            return {
+                delete:{
+                    attendeeId: this.attendeeId,
+                    activityId: this.activityId,
+                    _method: "DELETE"
+                },
+                url:'/removeAttendee/'+this.attendeeId+'/'+this.activityId
+            }
+        },
+        methods:{
+            deleteAttendee: function() {
+                axios.post(this.url, this.delete)
+                .then(res => {
+
+                })
+            }
         }
     }
 </script>
