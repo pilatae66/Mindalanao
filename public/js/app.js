@@ -1838,7 +1838,15 @@ __webpack_require__.r(__webpack_exports__);
   props: ['activityId'],
   name: "attendeeModal",
   created: function created() {
+    var _this = this;
+
     this.getAllEmployees();
+    _EventBus_js__WEBPACK_IMPORTED_MODULE_0__["EventBus"].$on('delete', function () {
+      _this.getAllEmployees();
+    });
+  },
+  destroyed: function destroyed() {
+    _EventBus_js__WEBPACK_IMPORTED_MODULE_0__["EventBus"].$off('delete');
   },
   data: function data() {
     return {
@@ -1847,7 +1855,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     addEmployee: function addEmployee(employeeId) {
-      var _this = this;
+      var _this2 = this;
 
       axios.post('/addEmployeeToActivity', {
         activityId: this.activityId,
@@ -1855,16 +1863,16 @@ __webpack_require__.r(__webpack_exports__);
       }).then(function (res) {
         alert("done");
 
-        _this.getAllEmployees();
+        _this2.getAllEmployees();
 
         _EventBus_js__WEBPACK_IMPORTED_MODULE_0__["EventBus"].$emit('re-render');
       });
     },
     getAllEmployees: function getAllEmployees() {
-      var _this2 = this;
+      var _this3 = this;
 
       axios.get('/getAllEmployee/' + this.activityId).then(function (res) {
-        _this2.employees = res.data;
+        _this3.employees = res.data;
       });
     }
   }
@@ -1943,6 +1951,8 @@ __webpack_require__.r(__webpack_exports__);
         alert("Successfully Deleted");
 
         _this2.getAllAttendees();
+
+        _EventBus_js__WEBPACK_IMPORTED_MODULE_0__["EventBus"].$emit('delete');
       });
     },
     getAllAttendees: function getAllAttendees() {

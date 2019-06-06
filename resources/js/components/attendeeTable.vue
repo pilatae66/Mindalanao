@@ -56,6 +56,7 @@
                 .then(res => {
                     alert("Successfully Deleted")
                     this.getAllAttendees()
+                    EventBus.$emit('delete')
                 })
             },
 

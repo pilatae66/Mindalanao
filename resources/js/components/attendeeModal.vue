@@ -35,6 +35,12 @@
         name: "attendeeModal",
         created(){
             this.getAllEmployees()
+            EventBus.$on('delete', () => {
+                this.getAllEmployees()
+            })
+        },
+        destroyed(){
+            EventBus.$off('delete')
         },
         data(){
             return {
