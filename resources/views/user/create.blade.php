@@ -9,17 +9,17 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body bd bd-t-0">
-                    <form method="POST" action="{{ route('user.store') }}">
+                    <form method="POST" action="{{ route('user.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
-                            <div class="col-md-6 pb-3 d-flex justify-content-center">
-                                <img id="imagePreview" class="rounded-circle" src="{{ asset('images/photos/image.gif') }}" height="150" alt="your image" />
+                            <div class="col-md-6 pb-3 d-flex justify-content-center ">
+                                <img id="imagePreview" class="rounded-circle img-thumbnail " src="{{ asset('storage/photos/image.gif') }}" alt="your image" />
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6 pb-3">
                                 <div class="custom-file">
-                                    <input type="file" class="custom-file-input" id="customFile" onchange="readURL(this);">
+                                    <input type="file" name="photoURL" class="custom-file-input" id="customFile" onchange="readURL(this);">
                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                 </div>
                             </div>

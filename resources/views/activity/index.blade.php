@@ -47,7 +47,12 @@
                     sSearch: '',
                     lengthMenu: '_MENU_ items/page',
                 },
-
+                columnDefs: [
+                    {
+                        targets:'_all',
+                        className: 'align-middle'
+                    }
+                ],
                 columns: [
                     { data: 'activity_name' },
                     { data: 'activity_provider' },

@@ -7,6 +7,7 @@ use App\User;
 use Yajra\DataTables\DataTables;
 use App\Position;
 use App\Department;
+use Image;
 
 class UserController extends Controller
 {
@@ -29,7 +30,7 @@ class UserController extends Controller
                         <a href="#edit-'.$user->id.'" class="btn btn-sm btn-rounded bg-white tx-success p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Activate Employee">
                             <i class="fas fa-eye"></i>
                         </a>
-                        <button data-remote="/users/'.$user->id.'" class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2">
+                        <button data-remote="'.route('user.delete', $user->id).'" class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>';
@@ -46,6 +47,19 @@ class UserController extends Controller
         ->editColumn('name', function($user){
             return "{$user->firstname} {$user->middlename[0]}. {$user->lastname}";
         })
+        ->addColumn('photo', function($user){
+            if($user->photoURL){
+                return '<div>
+                            <img class="rounded-circle" src="'.asset('storage/'.$user->photoURL).'" height="70px" style="border: 1px solid gray; padding: 3px;" alt="your image" />
+                        </div>';
+            }
+            else{
+                return '<div>
+                            <img class="rounded-circle" src="'.asset('storage/photos/image.gif').'" height="70px" style="border: 1px solid gray; padding: 3px;" alt="your image" />
+                        </div>';
+            }
+        })
+        ->rawColumns(['photo','action'])
         ->make(true);
     }
 
@@ -59,6 +73,7 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+        // return $request->file('photoURL')->store('photos', 'public');
         $request->validate([
             'firstname' => 'required|string|max:255',
             'middlename' => 'required|string|max:255',
@@ -72,7 +87,13 @@ class UserController extends Controller
             'position' => 'required|string|max:255',
             'department' => 'required|string|max:255',
             'degree' => 'required|string|max:255',
+            'photoURL' => 'file|image|mimes:jpeg,jpg,gif,png'
         ]);
+
+        $imagePath = $request->file('photoURL')->store('photos', 'public');
+        // dd($imagePath);
+        $image = Image::make(storage_path("app/public/{$imagePath}"))->fit(150,150);
+        $image->save();
 
         $user = User::create([
             'firstname' => $request->firstname,
@@ -85,6 +106,7 @@ class UserController extends Controller
             'degree' => $request->degree,
             'email' => $request->email,
             'username' => $request->username,
+            'photoURL' => $imagePath
         ]);
 
         $user->position()->attach($request->position);

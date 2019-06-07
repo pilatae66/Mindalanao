@@ -15,9 +15,10 @@
                     <div><a href="{{ route('user.create') }}" class="btn btn-sm btn-success btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
-                    <table class="table" id="userDatatable">
+                    <table class="table compact" id="userDatatable">
                         <thead>
                             <tr>
+                                <th>Employee Photo</th>
                                 <th>Employee ID</th>
                                 <th>Username</th>
                                 <th>Name</th>
@@ -47,8 +48,18 @@
                     sSearch: '',
                     lengthMenu: '_MENU_ items/page',
                 },
-
+                columnDefs: [
+                    {
+                        targets: 0,
+                        className: 'dt-body-center'
+                    },
+                    {
+                        targets:[1,2,3,4,5,6,7,8],
+                        className: 'align-middle'
+                    }
+                ],
                 columns: [
+                    { data: 'photo' },
                     { data: 'id' },
                     { data: 'username' },
                     { data: 'name' },

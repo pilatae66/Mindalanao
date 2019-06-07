@@ -44,7 +44,12 @@
                     sSearch: '',
                     lengthMenu: '_MENU_ items/page',
                 },
-
+                columnDefs: [
+                    {
+                        targets:'_all',
+                        className: 'align-middle'
+                    }
+                ],
                 columns: [
                     { data: 'position' },
                     { data: 'department' },

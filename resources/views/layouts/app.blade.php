@@ -87,6 +87,14 @@
                   <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
                 </ul> --}}
               </li><!-- nav-item -->
+              <li class="nav-item  {{ Request::path() == '#' || Request::path() == '#/create' ? 'active show' : '' }}">
+                  {{-- <li>with-sub</li> --}}
+                <a href="#" class="nav-link"><i class="icon ion-md-card"></i>Payroll</a>
+                {{-- <ul class="nav-sub">
+                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                </ul> --}}
+              </li><!-- nav-item -->
             </ul><!-- nav -->
           </div><!-- az-sidebar-body -->
         </div><!-- az-sidebar -->

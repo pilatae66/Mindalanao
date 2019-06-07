@@ -42,7 +42,12 @@
                     sSearch: '',
                     lengthMenu: '_MENU_ items/page',
                 },
-
+                columnDefs: [
+                    {
+                        targets:'_all',
+                        className: 'align-middle'
+                    }
+                ],
                 columns: [
                     { data: 'department_name' },
                     { data: 'created_at' },
