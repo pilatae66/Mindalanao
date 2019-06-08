@@ -25,6 +25,7 @@
     },
     "dependencies": {
         "font-awesome": "^4.7.0",
-        "ionicons": "^4.5.8"
+        "ionicons": "^4.5.8",
+        "sweetalert2": "^8.11.7"
     }
 }

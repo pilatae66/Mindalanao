@@ -26,6 +26,7 @@
     <link href="{{ asset('css/select2.min.css') }}" rel="stylesheet">
     <link href="https://unpkg.com/ionicons@4.5.5/dist/css/ionicons.min.css" rel="stylesheet">
     <link href="{{ asset('css/picker.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/azia.css') }}" rel="stylesheet">
 </head>
@@ -39,7 +40,7 @@
             </a>
           </div><!-- az-sidebar-header -->
           <div class="az-sidebar-loggedin">
-            <div class="az-img-user online"><img src="{{ asset('images/photos/image.gif') }}" alt=""></div>
+            <div class="az-img-user online"><img src="{{ asset('storage/'.(auth()->user()->photoURL ?: 'photos/image.gif') ) }}" alt=""></div>
             <div class="media-body">
               <h6>{{ auth()->user()->full_name }}</h6>
               <span>{{ auth()->user()->position[0]->position }}</span>
@@ -107,14 +108,14 @@
               </div><!-- az-header-left -->
               <div class="az-header-right">
                 <div class="dropdown az-profile-menu">
-                  <a href="" class="az-img-user"><img src="{{ asset('images/photos/image.gif') }}" alt=""></a>
+                  <a href="" class="az-img-user"><img src="{{ asset('storage/'.(auth()->user()->photoURL ?: 'photos/image.gif')) }}" alt=""></a>
                   <div class="dropdown-menu">
                     <div class="az-dropdown-header d-sm-none">
                       <a href="" class="az-header-arrow"><i class="icon ion-md-arrow-back"></i></a>
                     </div>
                     <div class="az-header-profile">
                       <div class="az-img-user">
-                        <img src="{{ asset('images/photos/image.gif') }}" alt="">
+                        <img src="{{ asset('storage/'.(auth()->user()->photoURL ?: 'photos/image.gif')) }}" alt="">
                       </div><!-- az-img-user -->
                       <h6>{{ auth()->user()->full_name }}</h6>
                       <span class="tx-center">{{ auth()->user()->position[0]->position }}</span>
