@@ -16,6 +16,7 @@ class CreatePositionUserTable extends Migration
         Schema::create('position_user', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('position_id');
+            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
         });

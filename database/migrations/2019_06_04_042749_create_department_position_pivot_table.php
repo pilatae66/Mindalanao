@@ -17,6 +17,7 @@ class CreateDepartmentPositionPivotTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('department_id');
             $table->unsignedBigInteger('position_id');
+            $table->foreign('position_id')->references('id')->on('positions')->onDelete('cascade');
             $table->timestamps();
         });
     }

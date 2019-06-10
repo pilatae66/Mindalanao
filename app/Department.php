@@ -12,4 +12,9 @@ class Department extends Model
     {
         return $this->attributes['department_name'] = ucfirst($value);
     }
+
+    public function employee()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

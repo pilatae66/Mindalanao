@@ -24,22 +24,16 @@ class UserController extends Controller
 
     public function getAllUsers()
     {
-        return DataTables::of(User::query())
+        return DataTables::of(User::with('position')->with('department')->select('users.*'))
         ->addColumn('action', function ($user) {
             return '<div class="d-flex align-items-baseline">
-                        <a href="#edit-'.$user->id.'" class="btn btn-sm btn-rounded bg-white tx-success p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Activate Employee">
-                            <i class="fas fa-eye"></i>
+                        <a href="'.route('user.edit', $user->id).'" class="btn btn-sm btn-rounded bg-white tx-primary p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Activate Employee">
+                            <i class="icon ion-md-open"></i>
                         </a>
                         <button data-remote="'.route('user.delete', $user->id).'" class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>';
-        })
-        ->addColumn('position', function ($user){
-            return $user->position[0]->position;
-        })
-        ->addColumn('department', function ($user){
-            return $user->department[0]->department_name;
         })
         ->editColumn('created_at', function($user){
             return $user->created_at->format('F d, Y');
@@ -58,6 +52,9 @@ class UserController extends Controller
                             <img class="rounded-circle" src="'.asset('storage/photos/image.gif').'" height="70px" style="border: 1px solid gray; padding: 3px;" alt="your image" />
                         </div>';
             }
+        })
+        ->filterColumn('position', function($query, $keyword){
+            $query->position->where('position', ["%$keyword"]);
         })
         ->rawColumns(['photo','action'])
         ->make(true);
@@ -112,11 +109,48 @@ class UserController extends Controller
         $user->position()->attach($request->position);
         $user->department()->attach($request->department);
 
+        toast('Employee has been successfully added!','success', 'top');
+
         return redirect()->route('user.index');
     }
 
     public function delete(User $user, Request $request)
     {
         $user->delete();
+    }
+
+    public function edit(User $user)
+    {
+        $positions = Position::all();
+        $departments = Department::all();
+
+        return view('user.edit', compact('user', 'positions', 'departments'));
+    }
+
+    public function update(User $user, Request $request)
+    {
+        if ($user->position->count() > 0) {
+            $user->position()->detach($user->position[0]->id);
+            $user->position()->attach($request->position);
+        }
+        else{
+            $user->position()->attach($request->position);
+        }
+        if ($user->department->count() > 0) {
+            $user->department()->detach($user->department[0]->id);
+            $user->department()->attach($request->department);
+        }
+        else{
+            $user->department()->attach($request->department);
+        }
+
+        toast('Employee has been updated successfully!', 'success', 'top');
+
+        return redirect()->route('user.index');
+    }
+
+    public function getAllUsersAPI()
+    {
+        return User::doesntHave('position')->get();
     }
 }

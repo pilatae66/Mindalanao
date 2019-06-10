@@ -52,7 +52,7 @@
                 ],
                 columns: [
                     { data: 'position' },
-                    { data: 'department' },
+                    { data: 'department[0].department_name', name:'department.department_name' },
                     { data: 'salary' },
                     { data: 'created_at' },
                     { data: 'action', orderable: false, searchable: false }
@@ -67,12 +67,31 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     }
-                });
+                })
+                let users
+                let filteredUsers
+                // axios.get('/getUserData').then(res => {
+                //     users = res.data.data
+                //     filteredUsers = users.filter(user => {
+                //         return user.position == 'No Position'
+                //     })
+                //     // console.log(filteredUsers)
+                // })
                 var url = e.currentTarget.dataset.remote;
-                // console.log(e.currentTarget.dataset.remote)
+                console.log(e.currentTarget.dataset.remote)
                 // confirm then
-                if (confirm('Are you sure you want to delete this?')) {
-                    $.ajax({
+                swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: () => !swal.isLoading(),
+                    preConfirm: () => {
+                        return $.ajax({
                         url: url,
                         type: 'POST',
                         dataType: 'json',
@@ -80,10 +99,43 @@
                             _method: 'DELETE',
                             submit: true
                         }
-                    }).always(function (data) {
+                    }).catch(err=> console.log(err))
+                    }
+                    }).then((result) => {
+                    if (result.value) {
                         $('#positionDatatable').DataTable().draw(false);
-                    });
-                }else alert("You have cancelled!"); })
-            })
+                       swal.fire({
+                            position: 'top',
+                            toast: true,
+                            type: 'success',
+                            title: 'Employee Successfully Deleted!',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                })
+             })
+        })
     </script>
 @endpush
+@section('modal')
+<div id="modaldemo1" class="modal fade effect-sign">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">User Check</h6>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <position-list positions="{{ $positions }}"/>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-indigo">Save changes</button>
+                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div><!-- modal-dialog -->
+</div><!-- modal -->
+@endsection

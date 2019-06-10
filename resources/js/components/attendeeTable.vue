@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="tx-center" v-for="(attendee, index) in attendees" :key="attendee.firstname">
+                <tr class="tx-center" v-for="(attendee) in attendees" :key="attendee.firstname">
                     <td class="pt-3">{{ attendee.firstname }} {{ attendee.middlename[0] }}. {{ attendee.lastname }}</td>
                     <td class="pt-3">{{ attendee.position[0].position }}</td>
                     <td class="pt-3">{{ attendee.department[0].department_name }}</td>

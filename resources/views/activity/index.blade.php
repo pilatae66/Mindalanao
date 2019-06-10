@@ -77,19 +77,43 @@
                 var url = e.currentTarget.dataset.remote;
                 // console.log(e.currentTarget.dataset.remote)
                 // confirm then
-                if (confirm('Are you sure you want to delete this?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            _method: 'DELETE',
-                            submit: true
-                        }
-                    }).always(function (data) {
+                swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: () => !swal.isLoading(),
+                    preConfirm: () => {
+                        return $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    data: {
+                                        _method: 'DELETE',
+                                        submit: true
+                                    }
+                                }).catch(err => {
+                                    console.log(err)
+                                })
+                    }
+                    }).then((result) => {
+                    if (result.value) {
                         $('#activityDatatable').DataTable().draw(false);
-                    });
-                }else alert("You have cancelled!"); })
-            })
+                        swal.fire({
+                            position: 'top',
+                            toast: true,
+                            type: 'success',
+                            title: 'Activity has been successfully deleted!',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                })
+             })
+        })
     </script>
 @endpush

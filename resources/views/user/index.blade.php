@@ -62,10 +62,10 @@
                     { data: 'photo' },
                     { data: 'id' },
                     { data: 'username' },
-                    { data: 'name' },
+                    { data: 'name', name:'firstname' },
                     { data: 'email' },
-                    { data: 'position' },
-                    { data: 'department' },
+                    { data: 'position[0].position', name:'position.position' },
+                    { data: 'department[0].department_name', name:'department.department_name' },
                     { data: 'created_at' },
                     { data: 'action', orderable: false, searchable: false }
                 ]
@@ -83,19 +83,43 @@
                 var url = e.currentTarget.dataset.remote;
                 // console.log(e.currentTarget.dataset.remote)
                 // confirm then
-                if (confirm('Are you sure you want to delete this?')) {
-                    $.ajax({
-                        url: url,
-                        type: 'POST',
-                        dataType: 'json',
-                        data: {
-                            _method: 'DELETE',
-                            submit: true
-                        }
-                    }).always(function (data) {
+                swal.fire({
+                    title: 'Are you sure?',
+                    text: "You won't be able to revert this!",
+                    type: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    showLoaderOnConfirm: true,
+                    allowOutsideClick: () => !swal.isLoading(),
+                    preConfirm: () => {
+                        return $.ajax({
+                                    url: url,
+                                    type: 'POST',
+                                    dataType: 'json',
+                                    data: {
+                                        _method: 'DELETE',
+                                        submit: true
+                                    }
+                                }).catch(err => {
+                                    console.log(err)
+                                })
+                    }
+                    }).then((result) => {
+                    if (result.value) {
                         $('#userDatatable').DataTable().draw(false);
-                    });
-                }else alert("You have cancelled!"); })
-            })
+                        swal.fire({
+                            position: 'top',
+                            toast: true,
+                            type: 'success',
+                            title: 'Employee has been successfully deleted!',
+                            showConfirmButton: false,
+                            timer: 3000
+                        })
+                    }
+                })
+             })
+        })
     </script>
 @endpush

@@ -24,11 +24,17 @@ Route::group(['prefix' => 'users'], function () {
 
     Route::get('/', 'UserController@index')->name('user.index');
 
+    Route::get('/all', 'UserController@getAllUsersAPI');
+
     Route::get('/create', 'UserController@create')->name('user.create');
 
     Route::post('/', 'UserController@store')->name('user.store');
 
     Route::delete('/{user}', 'UserController@delete')->name('user.delete');
+
+    Route::get('/{user}/edit', 'UserController@edit')->name('user.edit');
+
+    Route::patch('/{user}', 'UserController@update')->name('user.update');
 
 });
 

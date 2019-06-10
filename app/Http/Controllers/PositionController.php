@@ -9,6 +9,11 @@ use App\Department;
 
 class PositionController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,24 +21,20 @@ class PositionController extends Controller
      */
     public function index()
     {
-        return view('position.index');
+        $positions = Position::all();
+        return view('position.index', compact('positions'));
     }
 
     public function getAllPosition()
     {
-        return DataTables::of(Position::all())
+        return DataTables::of(Position::with('department')->select('positions.*'))
         ->addColumn('action', function ($position) {
             return '<div class="d-flex align-items-baseline">
-                        <a href="'.route('position.edit',$position->id).'" class="btn btn-sm btn-rounded bg-white tx-success p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Activate Employee">
-                            <i class="fas fa-eye"></i>
+                        <a href="'.route('position.edit',$position->id).'" class="btn btn-sm btn-rounded bg-white tx-primary p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Activate Employee">
+                            <i class="icon ion-md-open"></i>
                         </a>
-                        <button data-remote="'.route('position.destroy',$position->id).'" class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2">
-                            <i class="fas fa-trash"></i>
-                        </button>
+                        <button class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2" data-remote="'.route('position.destroy', $position->id).'"><i class="icon ion-md-trash"></i></button
                     </div>';
-        })
-        ->addColumn('department', function($position){
-            return $position->department[0]->department_name;
         })
         ->editColumn('created_at', function($user){
             return $user->created_at->format('F d, Y');
@@ -72,6 +73,8 @@ class PositionController extends Controller
 
         $position->department()->attach($request->department);
 
+        toast('Position has been successfully added!','success', 'top');
+
         return redirect()->route('position.index');
     }
 
@@ -94,7 +97,10 @@ class PositionController extends Controller
      */
     public function edit(Position $position)
     {
-        return view('position.edit',compact('position'));
+        // dd($position->department);
+        $departments = Department::all();
+
+        return view('position.edit',compact('position', 'departments'));
     }
 
     /**
@@ -107,11 +113,18 @@ class PositionController extends Controller
     public function update(Request $request, Position $position)
     {
         $request->validate([
-            'position' => 'required|string|max:255|unique:positions'
+            'position' => 'required|string|max:255',
+            'salary' => 'required|string|max:9'
         ]);
 
         $position->position = $request->position;
+        $position->salary = $request->salary;
         $position->save();
+
+        $position->department()->detach($position->department[0]->department_id);
+        $position->department()->attach($request->department);
+
+        toast('Position has been successfully updated!','success', 'top');
 
         return redirect()->route('position.index');
     }
@@ -125,6 +138,8 @@ class PositionController extends Controller
     public function destroy(Position $position)
     {
         $position->delete();
+
+        toast('Position has been successfully deleted!','success', 'top');
 
         return redirect()->route('position.index');
     }

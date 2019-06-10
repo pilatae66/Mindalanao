@@ -10,6 +10,10 @@ use App\User;
 
 class ActivityController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -73,6 +77,8 @@ class ActivityController extends Controller
         ]);
 
         Activity::create($request->all());
+
+        toast('Activity has bee added!', 'success', 'top');
 
         return redirect()->route('activity.index');
     }
@@ -158,6 +164,8 @@ class ActivityController extends Controller
         ]);
 
         $activity->update($request->all());
+
+        toast('Activity has bee updated!', 'success', 'top');
 
         return redirect()->route('activity.index');
     }

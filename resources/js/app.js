@@ -22,6 +22,7 @@ window.swal = require('sweetalert2')
 Vue.component('attendee-button', require('./components/attendeeButton.vue').default);
 Vue.component('attendee-table', require('./components/attendeeTable.vue').default);
 Vue.component('attendee-modal', require('./components/attendeeModal.vue').default);
+Vue.component('position-list', require('./components/modifyPositionList.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

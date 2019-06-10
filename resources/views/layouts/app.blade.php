@@ -43,7 +43,7 @@
             <div class="az-img-user online"><img src="{{ asset('storage/'.(auth()->user()->photoURL ?: 'photos/image.gif') ) }}" alt=""></div>
             <div class="media-body">
               <h6>{{ auth()->user()->full_name }}</h6>
-              <span>{{ auth()->user()->position[0]->position }}</span>
+              <span>{{ auth()->user()->position->count() > 0 ? auth()->user()->position[0]->position : "No Position" }}</span>
             </div><!-- media-body -->
           </div><!-- az-sidebar-loggedin -->
           <div class="az-sidebar-body">
@@ -118,7 +118,7 @@
                         <img src="{{ asset('storage/'.(auth()->user()->photoURL ?: 'photos/image.gif')) }}" alt="">
                       </div><!-- az-img-user -->
                       <h6>{{ auth()->user()->full_name }}</h6>
-                      <span class="tx-center">{{ auth()->user()->position[0]->position }}</span>
+                      <span class="tx-center">{{ auth()->user()->position->count() > 0 ? auth()->user()->position[0]->position : "No Position" }}</span>
                     </div><!-- az-header-profile -->
 
                     <a href="" class="dropdown-item"><i class="typcn typcn-user-outline"></i> My Profile</a>
@@ -149,10 +149,11 @@
             </div><!-- az-dashboard-header-right -->
           </div><!-- az-content-header -->
           <div class="az-content-body">
-              <div id="app">
+            <div id="app">
                   @yield('content')
                   @yield('modal')
-              </div>
+            </div>
+            @include('sweetalert::alert')
           </div><!-- az-content-body -->
           <div class="az-footer ht-40">
             <div class="container-fluid pd-t-0-f ht-100p">
