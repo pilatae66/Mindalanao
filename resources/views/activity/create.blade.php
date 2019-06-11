@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-body bd bd-t-0">
+                <div class="card-body bd-t-0">
                     <form method="POST" action="{{ route('activity.store') }}">
                         @csrf
                         <div class="row">

@@ -17,4 +17,9 @@ class Position extends Model
     {
         return $this->belongsToMany(Department::class);
     }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

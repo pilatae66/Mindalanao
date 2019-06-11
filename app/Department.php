@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Department extends Model
 {
-    protected $fillable = ['department_name'];
+    protected $fillable = ['department_name', 'parent_department_id'];
 
     public function setDepartmentNameAttribute($value)
     {
@@ -16,5 +16,10 @@ class Department extends Model
     public function employee()
     {
         return $this->belongsToMany(User::class);
+    }
+
+    public function parent()
+    {
+        return $this->hasOne(Department::class, 'id', 'parent_department_id');
     }
 }

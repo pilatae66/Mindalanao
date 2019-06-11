@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card">
-                <div class="card-body bd bd-t-0">
+                <div class="card-body bd-t-0">
                     <form method="POST" action="{{ route('position.store') }}">
                         @csrf
                         <div class="form-group">
@@ -36,7 +36,7 @@
                         </div><!-- form-group -->
                         <div class="form-group pb-2">
                         <label>Basic Salary</label>
-                        <input type="text" value="{{ old('salary') }}" name="salary" class="form-control @error('salary') parsley-error @enderror" placeholder="Enter salary" required autofocus>
+                        <input type="number" value="{{ old('salary') }}" name="salary" class="form-control @error('salary') parsley-error @enderror" placeholder="Enter salary" required autofocus>
                         @error('salary')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -53,10 +53,7 @@
 @push('script')
     <script>
         $(function(){
-            $('.select2-no-search').select2({
-                minimumResultsForSearch: Infinity,
-                placeholder: 'Choose one'
-            });
+
         })
     </script>
 @endpush

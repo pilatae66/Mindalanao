@@ -24,19 +24,25 @@ class DepartmentController extends Controller
 
     public function getAllDepartment()
     {
-        return DataTables::of(Department::query())
+        return DataTables::of(Department::with('employee')->select('departments.*'))
         ->addColumn('action', function ($department) {
             return '<div class="d-flex align-items-baseline">
-                        <a href="'.route('department.edit', $department->id).'" class="btn btn-sm btn-rounded bg-white tx-success p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Edit Department">
-                            <i class="fas fa-eye"></i>
+                        <a href="'.route('department.show',$department->id).'" class="btn btn-sm btn-rounded bg-white p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Show Department Details">
+                            <i class="icon ion-md-eye"></i>
                         </a>
-                        <a href="departments/'.$department->id.'/edit" class="btn btn-sm btn-rounded bg-white tx-success p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Edit Department">
-                            <i class="fas fa-eye"></i>
+                        <a href="'.route('department.edit', $department->id).'" class="btn btn-sm btn-rounded bg-white tx-primary p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Edit Department">
+                            <i class="icon ion-md-open"></i>
                         </a>
                         <button data-remote="'.route('department.destroy', $department->id).'" class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2">
                             <i class="fas fa-trash"></i>
                         </button>
                     </div>';
+        })
+        ->addColumn('employees', function($department){
+            return $department->employee->count();
+        })
+        ->addColumn('parent', function($department){
+            return !empty($department->parent) ? $department->parent->department_name : "No Parent";
         })
         ->editColumn('created_at', function($department){
             return $department->created_at->format('F d, Y');
@@ -51,7 +57,9 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        return view('department.create');
+        $departments = Department::all();
+
+        return view('department.create', compact('departments'));
     }
 
     /**
@@ -63,7 +71,8 @@ class DepartmentController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'department_name' => 'required|string|max:255|unique:departments'
+            'department_name' => 'required|string|max:255|unique:departments',
+            'parent_department_id' => 'required|string|max:255|unique:departments'
         ]);
 
         Department::create($request->all());
@@ -79,7 +88,7 @@ class DepartmentController extends Controller
      */
     public function show(Department $department)
     {
-        //
+        return view('department.show', compact('department'));
     }
 
     /**
@@ -90,7 +99,13 @@ class DepartmentController extends Controller
      */
     public function edit(Department $department)
     {
-        return view('department.edit', compact('department'));
+        $grossDepartments = Department::all();
+
+        $departments = $grossDepartments->filter(function($department1) use($department){
+            return $department1->id != $department->id;
+        });
+
+        return view('department.edit', compact('department', 'departments'));
     }
 
     /**

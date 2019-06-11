@@ -19,6 +19,8 @@
                         <thead>
                             <tr>
                                 <th>Department</th>
+                                <th>Parent Department</th>
+                                <th>Members</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -50,6 +52,8 @@
                 ],
                 columns: [
                     { data: 'department_name' },
+                    { data: 'parent' },
+                    { data: 'employees' },
                     { data: 'created_at' },
                     { data: 'action', orderable: false, searchable: false }
                 ]

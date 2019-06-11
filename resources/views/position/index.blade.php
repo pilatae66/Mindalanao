@@ -21,6 +21,7 @@
                                 <th>Position</th>
                                 <th>Department</th>
                                 <th>Basic Salary</th>
+                                <th>Total Members</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -54,6 +55,7 @@
                     { data: 'position' },
                     { data: 'department[0].department_name', name:'department.department_name' },
                     { data: 'salary' },
+                    { data: 'users' },
                     { data: 'created_at' },
                     { data: 'action', orderable: false, searchable: false }
                 ]
@@ -118,24 +120,3 @@
         })
     </script>
 @endpush
-@section('modal')
-<div id="modaldemo1" class="modal fade effect-sign">
-    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
-        <div class="modal-content modal-content-demo">
-            <div class="modal-header">
-                <h6 class="modal-title">User Check</h6>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <position-list positions="{{ $positions }}"/>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-indigo">Save changes</button>
-                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div><!-- modal-dialog -->
-</div><!-- modal -->
-@endsection

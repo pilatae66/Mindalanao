@@ -41,6 +41,11 @@ Route::group(['prefix' => 'users'], function () {
 
 Route::resource('/position', 'PositionController');
 
+Route::group(['prefix' => 'position'], function () {
+
+    Route::get('/getMembers/{position}', 'UserController@getMembers')->name('position.getMembers');
+});
+
 Route::resource('/department', 'DepartmentController');
 
 Route::resource('/activity', 'ActivityController');

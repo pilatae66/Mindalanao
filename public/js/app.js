@@ -34847,7 +34847,6 @@ window.swal = __webpack_require__(/*! sweetalert2 */ "./node_modules/sweetalert2
 Vue.component('attendee-button', __webpack_require__(/*! ./components/attendeeButton.vue */ "./resources/js/components/attendeeButton.vue")["default"]);
 Vue.component('attendee-table', __webpack_require__(/*! ./components/attendeeTable.vue */ "./resources/js/components/attendeeTable.vue")["default"]);
 Vue.component('attendee-modal', __webpack_require__(/*! ./components/attendeeModal.vue */ "./resources/js/components/attendeeModal.vue")["default"]);
-Vue.component('position-list', __webpack_require__(/*! ./components/modifyPositionList.vue */ "./resources/js/components/modifyPositionList.vue")["default"]);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -35137,17 +35136,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_attendeeTable_vue_vue_type_template_id_3e1984f9___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
-
-/***/ }),
-
-/***/ "./resources/js/components/modifyPositionList.vue":
-/*!********************************************************!*\
-  !*** ./resources/js/components/modifyPositionList.vue ***!
-  \********************************************************/
-/*! exports provided: default */
-/***/ (function(module, exports) {
-
-throw new Error("Module build failed (from ./node_modules/vue-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'D:\\Jann\\Client Files\\Mindalanao\\System Files\\New Files\\Mindalanao\\resources\\js\\components\\modifyPositionList.vue'");
 
 /***/ }),
 

@@ -9,10 +9,10 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" defer></script>
-
     <link rel="shortcut icon" href="{{ asset('/images/logo/Minda.jpg') }}" type="image/x-icon">
+
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" async></script>
 
     <!-- Fonts -->
     {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -56,15 +56,15 @@
                   <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
                 </ul> --}}
               </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::path() == 'users' || Request::path() == 'users/create' ? 'active show' : '' }}">
+              <li class="nav-item  {{ Request::is('users*') ? 'active show' : '' }}">
                   {{-- <li>with-sub</li> --}}
                 <a href="{{ route('home') }}" class="nav-link with-sub"><i class="icon ion-md-contacts"></i>Users</a>
                 <ul class="nav-sub">
                   <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
-                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'users/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                  <li class="nav-sub-item {{ Request::is('users*') ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
                 </ul>
               </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::path() == 'position' || Request::path() == 'position/create' ? 'active show' : '' }}">
+              <li class="nav-item  {{ Request::is('position*') ? 'active show' : '' }}">
                   {{-- <li>with-sub</li> --}}
                 <a href="{{ route('position.index') }}" class="nav-link"><i class="icon ion-md-trophy"></i>Positions</a>
                 {{-- <ul class="nav-sub">
@@ -72,7 +72,7 @@
                   <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
                 </ul> --}}
               </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::path() == 'department' || Request::path() == 'department/create' ? 'active show' : '' }}">
+              <li class="nav-item  {{ Request::is('department*') ? 'active show' : '' }}">
                   {{-- <li>with-sub</li> --}}
                 <a href="{{ route('department.index') }}" class="nav-link"><i class="icon ion-md-filing"></i>Department</a>
                 {{-- <ul class="nav-sub">
@@ -80,7 +80,7 @@
                   <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
                 </ul> --}}
               </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::path() == 'activity' || Request::path() == 'activity/create' ? 'active show' : '' }}">
+              <li class="nav-item  {{ Request::is('activity*') ? 'active' : '' }}">
                   {{-- <li>with-sub</li> --}}
                 <a href="{{ route('activity.index') }}" class="nav-link"><i class="icon ion-md-star"></i>Activity</a>
                 {{-- <ul class="nav-sub">
@@ -88,13 +88,14 @@
                   <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
                 </ul> --}}
               </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::path() == '#' || Request::path() == '#/create' ? 'active show' : '' }}">
+              <li class="nav-item  {{ Request::is('payroll*')  ? 'active show' : '' }}">
                   {{-- <li>with-sub</li> --}}
-                <a href="#" class="nav-link"><i class="icon ion-md-card"></i>Payroll</a>
-                {{-- <ul class="nav-sub">
-                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
-                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
-                </ul> --}}
+                <a href="#" class="nav-link with-sub"><i class="icon ion-md-card"></i>Payroll</a>
+                <ul class="nav-sub">
+                    <li class="nav-sub-item {{ Request::is('deduction*') ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Deductions</a></li>
+                    <li class="nav-sub-item {{ Request::is('benefit*') ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Benefits</a></li>
+                    <li class="nav-sub-item {{ Request::is('compensation*') ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Compensations</a></li>
+                </ul>
               </li><!-- nav-item -->
             </ul><!-- nav -->
           </div><!-- az-sidebar-body -->
@@ -176,7 +177,6 @@
         <script src="{{ asset('js/dataTables.dataTables.min.js') }}"></script>
         <script src="{{ asset('js/jquery.maskedinput.js') }}"></script>
         <script src="{{ asset('js/select2.min.js') }}"></script>
-        <script src="{{ asset('js/ion.rangeSlider.min.js') }}"></script>
         <script src="{{ asset('js/amazeui.datetimepicker.min.js') }}"></script>
         <script src="{{ asset('js/jquery.simple-dtpicker.js') }}"></script>
         <script src="{{ asset('js/picker.min.js') }}"></script>
@@ -201,18 +201,22 @@
               $(this).parent().siblings().removeClass('show');
             })
 
-            $(document).on('click touchstart', function(e){
-              e.stopPropagation();
+            // $(document).on('click touchstart', function(e){
+            //   e.stopPropagation();
 
-              // closing of sidebar menu when clicking outside of it
-              if(!$(e.target).closest('.az-header-menu-icon').length) {
-                var sidebarTarg = $(e.target).closest('.az-sidebar').length;
-                if(!sidebarTarg) {
-                  $('body').removeClass('az-sidebar-show');
-                }
-              }
+            //   // closing of sidebar menu when clicking outside of it
+            //   if(!$(e.target).closest('.az-header-menu-icon').length) {
+            //     var sidebarTarg = $(e.target).closest('.az-sidebar').length;
+            //     if(!sidebarTarg) {
+            //       $('body').removeClass('az-sidebar-show');
+            //     }
+            //   }
+            // });
+
+            $('.select2-no-search').select2({
+                minimumResultsForSearch: Infinity,
+                placeholder: 'Choose one'
             });
-
 
             $('#azSidebarToggle').on('click', function(e){
               e.preventDefault();
@@ -227,69 +231,69 @@
             /* ----------------------------------- */
             /* Dashboard content */
 
-            $('#compositeline').sparkline('html', {
-              lineColor: '#cecece',
-              lineWidth: 2,
-              spotColor: false,
-              minSpotColor: false,
-              maxSpotColor: false,
-              highlightSpotColor: null,
-              highlightLineColor: null,
-              fillColor: '#f9f9f9',
-              chartRangeMin: 0,
-              chartRangeMax: 10,
-              width: '100%',
-              height: 20,
-              disableTooltips: true
-            });
+            // $('#compositeline').sparkline('html', {
+            //   lineColor: '#cecece',
+            //   lineWidth: 2,
+            //   spotColor: false,
+            //   minSpotColor: false,
+            //   maxSpotColor: false,
+            //   highlightSpotColor: null,
+            //   highlightLineColor: null,
+            //   fillColor: '#f9f9f9',
+            //   chartRangeMin: 0,
+            //   chartRangeMax: 10,
+            //   width: '100%',
+            //   height: 20,
+            //   disableTooltips: true
+            // });
 
-            $('#compositeline2').sparkline('html', {
-              lineColor: '#cecece',
-              lineWidth: 2,
-              spotColor: false,
-              minSpotColor: false,
-              maxSpotColor: false,
-              highlightSpotColor: null,
-              highlightLineColor: null,
-              fillColor: '#f9f9f9',
-              chartRangeMin: 0,
-              chartRangeMax: 10,
-              width: '100%',
-              height: 20,
-              disableTooltips: true
-            });
+            // $('#compositeline2').sparkline('html', {
+            //   lineColor: '#cecece',
+            //   lineWidth: 2,
+            //   spotColor: false,
+            //   minSpotColor: false,
+            //   maxSpotColor: false,
+            //   highlightSpotColor: null,
+            //   highlightLineColor: null,
+            //   fillColor: '#f9f9f9',
+            //   chartRangeMin: 0,
+            //   chartRangeMax: 10,
+            //   width: '100%',
+            //   height: 20,
+            //   disableTooltips: true
+            // });
 
-            $('#compositeline3').sparkline('html', {
-              lineColor: '#cecece',
-              lineWidth: 2,
-              spotColor: false,
-              minSpotColor: false,
-              maxSpotColor: false,
-              highlightSpotColor: null,
-              highlightLineColor: null,
-              fillColor: '#f9f9f9',
-              chartRangeMin: 0,
-              chartRangeMax: 10,
-              width: '100%',
-              height: 20,
-              disableTooltips: true
-            });
+            // $('#compositeline3').sparkline('html', {
+            //   lineColor: '#cecece',
+            //   lineWidth: 2,
+            //   spotColor: false,
+            //   minSpotColor: false,
+            //   maxSpotColor: false,
+            //   highlightSpotColor: null,
+            //   highlightLineColor: null,
+            //   fillColor: '#f9f9f9',
+            //   chartRangeMin: 0,
+            //   chartRangeMax: 10,
+            //   width: '100%',
+            //   height: 20,
+            //   disableTooltips: true
+            // });
 
-            $('#compositeline4').sparkline('html', {
-              lineColor: '#cecece',
-              lineWidth: 2,
-              spotColor: false,
-              minSpotColor: false,
-              maxSpotColor: false,
-              highlightSpotColor: null,
-              highlightLineColor: null,
-              fillColor: '#f9f9f9',
-              chartRangeMin: 0,
-              chartRangeMax: 10,
-              width: '100%',
-              height: 20,
-              disableTooltips: true
-            });
+            // $('#compositeline4').sparkline('html', {
+            //   lineColor: '#cecece',
+            //   lineWidth: 2,
+            //   spotColor: false,
+            //   minSpotColor: false,
+            //   maxSpotColor: false,
+            //   highlightSpotColor: null,
+            //   highlightLineColor: null,
+            //   fillColor: '#f9f9f9',
+            //   chartRangeMin: 0,
+            //   chartRangeMax: 10,
+            //   width: '100%',
+            //   height: 20,
+            //   disableTooltips: true
+            // });
 
             // $('#vmap2').vectorMap({
             //   map: 'usa_en',

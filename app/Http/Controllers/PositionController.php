@@ -27,18 +27,29 @@ class PositionController extends Controller
 
     public function getAllPosition()
     {
-        return DataTables::of(Position::with('department')->select('positions.*'))
+        return DataTables::of(Position::with('department')->with('users')->select('positions.*'))
         ->addColumn('action', function ($position) {
             return '<div class="d-flex align-items-baseline">
-                        <a href="'.route('position.edit',$position->id).'" class="btn btn-sm btn-rounded bg-white tx-primary p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Activate Employee">
+                        <a href="'.route('position.show',$position->id).'" class="btn btn-sm btn-rounded bg-white p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Show Position">
+                            <i class="icon ion-md-eye"></i>
+                        </a>
+                        <a href="'.route('position.edit',$position->id).'" class="btn btn-sm btn-rounded bg-white tx-primary p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Activate Position">
                             <i class="icon ion-md-open"></i>
                         </a>
                         <button class="btn btn-sm btn-rounded bg-white tx-danger delete p-0 m-0 pr-2" data-remote="'.route('position.destroy', $position->id).'"><i class="icon ion-md-trash"></i></button
                     </div>';
         })
+        ->editColumn('salary', function($position){
+            return "₱".number_format($position->salary, 0, '.', ',');
+        })
+        ->addColumn('users', function($position){
+            return $position->users->count();
+        })
         ->editColumn('created_at', function($user){
             return $user->created_at->format('F d, Y');
-        })->make(true);
+        })
+        ->removeColumn('id')
+        ->make(true);
     }
 
     /**
@@ -86,7 +97,12 @@ class PositionController extends Controller
      */
     public function show(Position $position)
     {
-        //
+        return view('position.show', compact('position'));
+    }
+
+    public function getMembers($position)
+    {
+        return DataTables::of(Position::findOrFail($position)->users);
     }
 
     /**

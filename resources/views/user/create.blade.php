@@ -8,7 +8,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-body bd bd-t-0">
+                <div class="card-body bd-t-0">
                     <form method="POST" action="{{ route('user.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -29,7 +29,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                 <label>Firstname</label>
-                                <input type="text" value="{{ old('firstname') }}" name="firstname" class="form-control @error('firstname') parsley-error @enderror" placeholder="Enter your firstname">
+                                <input type="text" value="{{ old('firstname') }}" name="firstname" class="form-control @error('firstname') parsley-error @enderror" placeholder="Enter your firstname" autofocus>
                                 @error('firstname')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -203,12 +203,6 @@
     <script>
         $(function() {
             $('#phoneMask').mask('+639999999999');
-
-            $('.select2-no-search').select2({
-                minimumResultsForSearch: Infinity,
-                placeholder: 'Choose one'
-            });
-
 
             new Picker(document.querySelector('#datepicker'), {
                 headers: true,
