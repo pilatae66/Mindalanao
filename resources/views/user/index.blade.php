@@ -8,11 +8,11 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card bd-0">
-                <div class="card-header tx-medium bd-0 tx-white bg-success d-flex justify-content-between">
+                <div class="card-header tx-medium bd-0 tx-white bg-primary d-flex justify-content-between">
                     <div class="pt-2">
                         User List
                     </div>
-                    <div><a href="{{ route('user.create') }}" class="btn btn-sm btn-success btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <div><a href="{{ route('user.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
                     <table class="table compact" id="userDatatable">

@@ -7,8 +7,8 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <div class="card">
-                <div class="card-body bd-t-0">
+            <div class="card card-body pd-40">
+                <h5 class="card-title mg-b-20">Create Department</h5>
                     <form method="POST" action="{{ route('department.store') }}">
                         @csrf
                         <div class="form-group pb-2">
@@ -20,7 +20,7 @@
                             </span>
                         @enderror
                         </div>
-                        <div class="form-group">
+                        <div class="form-group pb-2">
                             <label>Parent Department</label>
                             <select class="form-control select2-no-search @error('parent_department_id') parsley-error @enderror" name="parent_department_id">
                                 <option label="Choose one"></option>
@@ -35,9 +35,8 @@
                                 </span>
                             @enderror
                         </div><!-- form-group -->
-                        <button class="btn btn-az-primary btn-block mb-2">Create Department</button>
+                        <button class="btn btn-az-primary btn-block mb-2">Create</button>
                     </form>
-                </div><!-- card-body -->
             </div><!-- card -->
         </div>
     </div>

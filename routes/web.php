@@ -65,3 +65,15 @@ Route::get('/getPositionsData', 'PositionController@getAllPosition')->name('posi
 Route::get('/getDepartmentData', 'DepartmentController@getAllDepartment')->name('department.all');
 
 Route::get('/getActivityData', 'ActivityController@getAllActivity')->name('activity.all');
+
+Route::resource('/deduction', 'DeductionController');
+
+Route::group(['prefix' => 'deductions'], function () {
+    Route::get('/all', 'DeductionController@getAllDeduction')->name('deduction.all');
+});
+
+Route::resource('/benefit', 'BenefitController');
+
+Route::group(['prefix' => 'benefits'], function () {
+    Route::get('/all', 'BenefitController@getAllBenefits')->name('benefit.all');
+});

@@ -8,14 +8,14 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card bd-0">
-                <div class="card-header tx-medium bd-0 tx-white bg-success d-flex justify-content-between">
+                <div class="card-header tx-medium bd-0 tx-white bg-primary d-flex justify-content-between">
                     <div class="pt-2">
                         Activity List
                     </div>
-                    <div><a href="{{ route('activity.create') }}" class="btn btn-sm btn-success btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <div><a href="{{ route('activity.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
-                    <table class="table" id="activityDatatable">
+                    <table class="table" id="datatable">
                         <thead>
                             <tr>
                                 <th>Activity Name</th>
@@ -37,7 +37,7 @@
 @push('script')
     <script>
         $(function() {
-            $('#activityDatatable').DataTable({
+            $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
@@ -67,7 +67,7 @@
 
             $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
 
-            $('#activityDatatable').on('click', '.delete[data-remote]',(e) => {
+            $('#datatable').on('click', '.delete[data-remote]',(e) => {
                 e.preventDefault()
                 $.ajaxSetup({
                     headers: {
@@ -102,7 +102,7 @@
                     }
                     }).then((result) => {
                     if (result.value) {
-                        $('#activityDatatable').DataTable().draw(false);
+                        $('#datatable').DataTable().draw(false);
                         swal.fire({
                             position: 'top',
                             toast: true,

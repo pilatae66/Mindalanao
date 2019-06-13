@@ -7,15 +7,15 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-body bd bd-t-0">
+            <div class="card card-body pd-40">
+                <h5 class="card-title mg-b-20">Edit Employee</h5>
                     <form method="POST" action="{{ route('user.update', $user->id) }}">
                         @csrf
                         @method('PATCH')
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label>Position</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Position</label>
                                 <select class="form-control select2-no-search @error('position') parsley-error @enderror" name="position">
                                     <option label="Choose one"></option>
                                     @foreach ($positions as $position)
@@ -29,9 +29,9 @@
                                 @enderror
                                 </div><!-- form-group -->
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6 pb-2">
                                 <div class="form-group">
-                                <label>Department</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Department</label>
                                 <select class="form-control select2-no-search @error('department') parsley-error @enderror" name="department">
                                     <option label="Choose one"></option>
                                     @foreach ($departments as $department)
@@ -59,9 +59,8 @@
                         <label>Verify Password</label>
                         <input type="password" name="password_confirmation" class="form-control" placeholder="Verify your password">
                         </div><!-- form-group --> --}}
-                        <button class="btn btn-az-primary btn-block mb-2">Update Employee</button>
+                        <button class="btn btn-az-primary btn-block mb-2">Update</button>
                     </form>
-                </div><!-- card-body -->
             </div><!-- card -->
         </div>
     </div>

@@ -7,8 +7,8 @@
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-8">
-            <div class="card">
-                <div class="card-body bd-t-0">
+            <div class="card card-body pd-40">
+                <h5 class="card-title mg-b-20">Create Employee</h5>
                     <form method="POST" action="{{ route('user.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -28,7 +28,7 @@
                         <div class="row">
                             <div class="col-md-4">
                                 <div class="form-group">
-                                <label>Firstname</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Firstname</label>
                                 <input type="text" value="{{ old('firstname') }}" name="firstname" class="form-control @error('firstname') parsley-error @enderror" placeholder="Enter your firstname" autofocus>
                                 @error('firstname')
                                     <span class="invalid-feedback" role="alert">
@@ -39,7 +39,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                <label>Middlename</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Middlename</label>
                                 <input type="text" value="{{ old('middlename') }}" name="middlename" class="form-control @error('middlename') parsley-error @enderror" placeholder="Enter your middlename">
                                 @error('middlename')
                                     <span class="invalid-feedback" role="alert">
@@ -50,7 +50,7 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="form-group">
-                                <label>Lastname</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Lastname</label>
                                 <input type="text" value="{{ old('lastname') }}" name="lastname" class="form-control @error('lastname') parsley-error @enderror" placeholder="Enter your lastname">
                                 @error('lastname')
                                     <span class="invalid-feedback" role="alert">
@@ -63,7 +63,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label>Username</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Username</label>
                                 <input type="text" value="{{ old('username') }}" name="username" class="form-control @error('username') parsley-error @enderror" placeholder="Enter your username">
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
@@ -74,7 +74,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label>Email</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Email</label>
                                 <input type="email" value="{{ old('email') }}" name="email" class="form-control @error('email') parsley-error @enderror" placeholder="Enter your email">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
@@ -87,7 +87,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label>Address</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Address</label>
                                 <input type="text" value="{{ old('address') }}" name="address" class="form-control @error('address') parsley-error @enderror" placeholder="Enter your address">
                                 @error('address')
                                     <span class="invalid-feedback" role="alert">
@@ -98,7 +98,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label>Contact No.</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Contact No.</label>
                                 <input id="phoneMask" type="text" value="{{ old('contact_number') }}" name="contact_number" class="form-control @error('contact_number') parsley-error @enderror" placeholder="(+63) 900-000-0000">
                                 @error('contact_number')
                                     <span class="invalid-feedback" role="alert">
@@ -111,7 +111,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label>Gender</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Gender</label>
                                 <select class="form-control select2-no-search @error('gender') parsley-error @enderror" name="gender">
                                     <option label="Choose one"></option>
                                     <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Male</option>
@@ -126,7 +126,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label>Date of Birth</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Date of Birth</label>
                                 <input type="text" name="dob" class="form-control @error('dob') parsley-error @enderror" placeholder="Click to select date" id="datepicker">
                                 @error('dob')
                                     <span class="invalid-feedback" role="alert">
@@ -139,7 +139,7 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label>Position</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Position</label>
                                 <select class="form-control select2-no-search @error('position') parsley-error @enderror" name="position">
                                     <option label="Choose one"></option>
                                     @foreach ($positions as $position)
@@ -155,7 +155,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                <label>Department</label>
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Department</label>
                                 <select class="form-control select2-no-search @error('department') parsley-error @enderror" name="department">
                                     <option label="Choose one"></option>
                                     @foreach ($departments as $department)
@@ -170,8 +170,8 @@
                                 </div><!-- form-group -->
                             </div>
                         </div>
-                        <div class="form-group">
-                            <label>Degree</label>
+                        <div class="form-group pb-2">
+                            <label class="az-content-label tx-11 tx-medium tx-gray-600">Degree</label>
                             <input type="text" name="degree" class="form-control @error('degree') parsley-error @enderror" placeholder="Enter Employee's Degree">
                             @error('degree')
                                 <span class="invalid-feedback" role="alert">
@@ -192,9 +192,8 @@
                         <label>Verify Password</label>
                         <input type="password" name="password_confirmation" class="form-control" placeholder="Verify your password">
                         </div><!-- form-group --> --}}
-                        <button class="btn btn-az-primary btn-block mb-2">Create Employee</button>
+                        <button class="btn btn-az-primary btn-block">Create</button>
                     </form>
-                </div><!-- card-body -->
             </div><!-- card -->
         </div>
     </div>

@@ -8,14 +8,14 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card bd-0">
-                <div class="card-header tx-medium bd-0 tx-white bg-success d-flex justify-content-between">
+                <div class="card-header tx-medium bd-0 tx-white bg-primary d-flex justify-content-between">
                     <div class="pt-2">
                         Position List
                     </div>
-                    <div><a href="{{ route('position.create') }}" class="btn btn-sm btn-success btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <div><a href="{{ route('position.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
-                    <table class="table" id="positionDatatable">
+                    <table class="table" id="datatable">
                         <thead>
                             <tr>
                                 <th>Position</th>
@@ -35,7 +35,7 @@
 @push('script')
     <script>
         $(function() {
-            $('#positionDatatable').DataTable({
+            $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
@@ -63,7 +63,7 @@
 
             $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
 
-            $('#positionDatatable').on('click', '.delete[data-remote]',(e) => {
+            $('#datatable').on('click', '.delete[data-remote]',(e) => {
                 e.preventDefault()
                 $.ajaxSetup({
                     headers: {
@@ -105,12 +105,12 @@
                     }
                     }).then((result) => {
                     if (result.value) {
-                        $('#positionDatatable').DataTable().draw(false);
+                        $('#datatable').DataTable().draw(false);
                        swal.fire({
                             position: 'top',
                             toast: true,
                             type: 'success',
-                            title: 'Employee Successfully Deleted!',
+                            title: 'Position Successfully Deleted!',
                             showConfirmButton: false,
                             timer: 3000
                         })

@@ -7,7 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Position::class, function (Faker $faker) {
     return [
-        'position' => $faker->jobTitle,
-        'salary' => '1'
+        'position' => 'Head Doctor',
+        'salary' => '130000'
     ];
 });

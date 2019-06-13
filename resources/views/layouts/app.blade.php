@@ -88,12 +88,12 @@
                   <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
                 </ul> --}}
               </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::is('payroll*')  ? 'active show' : '' }}">
+              <li class="nav-item  {{ Request::is('deduction*') || Request::is('benefit*') || Request::is('compensation*')  ? 'active show' : '' }}">
                   {{-- <li>with-sub</li> --}}
                 <a href="#" class="nav-link with-sub"><i class="icon ion-md-card"></i>Payroll</a>
                 <ul class="nav-sub">
-                    <li class="nav-sub-item {{ Request::is('deduction*') ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Deductions</a></li>
-                    <li class="nav-sub-item {{ Request::is('benefit*') ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Benefits</a></li>
+                    <li class="nav-sub-item {{ Request::is('deduction*') ? 'active' : '' }}"><a href="{{ route('deduction.index') }}" class="nav-sub-link">Deductions</a></li>
+                    <li class="nav-sub-item {{ Request::is('benefit*') ? 'active' : '' }}"><a href="{{ route('benefit.index') }}" class="nav-sub-link">Benefits</a></li>
                     <li class="nav-sub-item {{ Request::is('compensation*') ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Compensations</a></li>
                 </ul>
               </li><!-- nav-item -->

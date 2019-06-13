@@ -10,7 +10,7 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-md-10">
                     <div class="card bd-0 pb-4">
-                        <div class="card-header tx-medium bd-0 tx-white tx-light bg-success d-flex justify-content-between">
+                        <div class="card-header tx-medium bd-0 tx-white tx-light bg-primary">
                             <div class="pt-2">
                                     {{ $activity->activity_name }} Details
                             </div>
@@ -33,12 +33,12 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-md-10">
                     <div class="card bd-0">
-                        <div class="card-header tx-medium bd-0 bg-success tx-light tx-white d-flex justify-content-between">
+                        <div class="card-header tx-medium bd-0 bg-primary tx-light tx-white d-flex justify-content-between">
                             <div class="pt-2">
                                     {{ $activity->activity_name }} Attendees List
                             </div>
                             <div>
-                                <a href="" class="btn btn-sm btn-success btn-rounded" data-toggle="modal" data-target="#modaldemo1"><i class="icon ion-md-add"></i> Add Attendees</a>
+                                <a href="" class="btn btn-sm btn-primary btn-rounded" data-toggle="modal" data-target="#modaldemo1"><i class="icon ion-md-add"></i> Add Attendees</a>
                             </div>
                         </div><!-- card-header -->
                         <div class="card-body bd">
@@ -54,8 +54,8 @@
 <div id="modaldemo1" class="modal fade effect-sign">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content modal-content-demo">
-            <div class="modal-header">
-                <h6 class="modal-title">Register Employee</h6>
+            <div class="modal-header bg-primary">
+                <h6 class="modal-title tx-white">Register Employee</h6>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
                 </button>

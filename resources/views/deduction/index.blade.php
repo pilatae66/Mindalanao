@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Department
+    Deductions
 @endsection
 
 @section('content')
@@ -10,17 +10,16 @@
             <div class="card bd-0">
                 <div class="card-header tx-medium bd-0 tx-white bg-primary d-flex justify-content-between">
                     <div class="pt-2">
-                        Department List
+                        Deduction List
                     </div>
-                    <div><a href="{{ route('department.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <div><a href="{{ route('deduction.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
                     <table class="table" id="datatable">
                         <thead>
                             <tr>
-                                <th>Department</th>
-                                <th>Parent Department</th>
-                                <th>Members</th>
+                                <th>Name</th>
+                                <th>Amount</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -38,7 +37,7 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: '{!! route('department.all') !!}',
+                ajax: '{!! route('deduction.all') !!}',
                 language: {
                     searchPlaceholder: 'Search...',
                     sSearch: '',
@@ -51,9 +50,8 @@
                     }
                 ],
                 columns: [
-                    { data: 'department_name' },
-                    { data: 'parent' },
-                    { data: 'employees' },
+                    { data: 'name' },
+                    { data: 'amount' },
                     { data: 'created_at' },
                     { data: 'action', orderable: false, searchable: false }
                 ]
@@ -101,7 +99,7 @@
                             position: 'top',
                             toast: true,
                             type: 'success',
-                            title: 'Department has been successfully deleted!',
+                            title: 'Deduction has been successfully deleted!',
                             showConfirmButton: false,
                             timer: 3000
                         })
