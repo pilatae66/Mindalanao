@@ -12,7 +12,156 @@
     <link rel="shortcut icon" href="{{ asset('/images/logo/Minda.jpg') }}" type="image/x-icon">
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}" async></script>
+
+
+    <script src="{{ asset('js/jquery.min.js') }}"></script>
+    <script src="{{ asset('js/datepicker.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.maskedinput.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="{{ asset('js/amazeui.datetimepicker.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.simple-dtpicker.js') }}"></script>
+    <script src="{{ asset('js/picker.min.js') }}"></script>
+    <script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
+
+    <script src="{{ asset('js/responsive.dataTables.min.js') }}"></script>
+    <script src="{{ asset('js/select2.min.js') }}"></script>
+    <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
+    <script src="{{ asset('js/jquery.sparkline.min.js') }}"></script>
+    <script src="{{ asset('js/raphael.min.js') }}"></script>
+    <script src="{{ asset('js/morris.min.js') }}"></script>
+    <script src="{{ asset('js/jquery.vmap.min.js') }}"></script>
+
+    <script src="{{ asset('js/azia.js') }}"></script>
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    <script>
+        $(function(){
+          'use strict'
+
+          $('.select2-no-search').select2({
+              minimumResultsForSearch: Infinity,
+              placeholder: 'Choose one'
+          });
+
+          $('.az-sidebar .with-sub').on('click', function(e){
+            e.preventDefault();
+            $(this).parent().toggleClass('show');
+            $(this).parent().siblings().removeClass('show');
+          })
+
+          // $(document).on('click touchstart', function(e){
+          //   e.stopPropagation();
+
+          //   // closing of sidebar menu when clicking outside of it
+          //   if(!$(e.target).closest('.az-header-menu-icon').length) {
+          //     var sidebarTarg = $(e.target).closest('.az-sidebar').length;
+          //     if(!sidebarTarg) {
+          //       $('body').removeClass('az-sidebar-show');
+          //     }
+          //   }
+          // });
+
+          $('#azSidebarToggle').on('click', function(e){
+            e.preventDefault();
+
+            if(window.matchMedia('(min-width: 992px)').matches) {
+              $('body').toggleClass('az-sidebar-hide');
+            } else {
+              $('body').toggleClass('az-sidebar-show');
+            }
+          })
+
+          /* ----------------------------------- */
+          /* Dashboard content */
+
+          // $('#compositeline').sparkline('html', {
+          //   lineColor: '#cecece',
+          //   lineWidth: 2,
+          //   spotColor: false,
+          //   minSpotColor: false,
+          //   maxSpotColor: false,
+          //   highlightSpotColor: null,
+          //   highlightLineColor: null,
+          //   fillColor: '#f9f9f9',
+          //   chartRangeMin: 0,
+          //   chartRangeMax: 10,
+          //   width: '100%',
+          //   height: 20,
+          //   disableTooltips: true
+          // });
+
+          // $('#compositeline2').sparkline('html', {
+          //   lineColor: '#cecece',
+          //   lineWidth: 2,
+          //   spotColor: false,
+          //   minSpotColor: false,
+          //   maxSpotColor: false,
+          //   highlightSpotColor: null,
+          //   highlightLineColor: null,
+          //   fillColor: '#f9f9f9',
+          //   chartRangeMin: 0,
+          //   chartRangeMax: 10,
+          //   width: '100%',
+          //   height: 20,
+          //   disableTooltips: true
+          // });
+
+          // $('#compositeline3').sparkline('html', {
+          //   lineColor: '#cecece',
+          //   lineWidth: 2,
+          //   spotColor: false,
+          //   minSpotColor: false,
+          //   maxSpotColor: false,
+          //   highlightSpotColor: null,
+          //   highlightLineColor: null,
+          //   fillColor: '#f9f9f9',
+          //   chartRangeMin: 0,
+          //   chartRangeMax: 10,
+          //   width: '100%',
+          //   height: 20,
+          //   disableTooltips: true
+          // });
+
+          // $('#compositeline4').sparkline('html', {
+          //   lineColor: '#cecece',
+          //   lineWidth: 2,
+          //   spotColor: false,
+          //   minSpotColor: false,
+          //   maxSpotColor: false,
+          //   highlightSpotColor: null,
+          //   highlightLineColor: null,
+          //   fillColor: '#f9f9f9',
+          //   chartRangeMin: 0,
+          //   chartRangeMax: 10,
+          //   width: '100%',
+          //   height: 20,
+          //   disableTooltips: true
+          // });
+
+          // $('#vmap2').vectorMap({
+          //   map: 'usa_en',
+          //   showTooltip: true,
+          //   backgroundColor: '#fff',
+          //   color: '#60adff',
+          //   colors: {
+          //     mo: '#9fceff',
+          //     fl: '#60adff',
+          //     or: '#409cff',
+          //     ca: '#005cbf',
+          //     tx: '#005cbf',
+          //     wy: '#005cbf',
+          //     ny: '#007bff'
+          //   },
+          //   hoverColor: '#222',
+          //   enableZoom: false,
+          //   borderWidth: 1,
+          //   borderColor: '#fff',
+          //   hoverOpacity: .85
+          // });
+        });
+      </script>
 
     <!-- Fonts -->
     {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -170,153 +319,6 @@
         </div><!-- az-content -->
 
 
-        <script src="{{ asset('js/jquery.min.js') }}"></script>
-        <script src="{{ asset('js/datepicker.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('js/dataTables.dataTables.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.maskedinput.js') }}"></script>
-        <script src="{{ asset('js/select2.min.js') }}"></script>
-        <script src="{{ asset('js/amazeui.datetimepicker.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.simple-dtpicker.js') }}"></script>
-        <script src="{{ asset('js/picker.min.js') }}"></script>
-        <script src="{{ asset('js/dataTables.responsive.min.js') }}"></script>
-
-        <script src="{{ asset('js/responsive.dataTables.min.js') }}"></script>
-        <script src="{{ asset('js/select2.min.js') }}"></script>
-        <script src="https://unpkg.com/ionicons@4.5.5/dist/ionicons.js"></script>
-        <script src="{{ asset('js/jquery.sparkline.min.js') }}"></script>
-        <script src="{{ asset('js/raphael.min.js') }}"></script>
-        <script src="{{ asset('js/morris.min.js') }}"></script>
-        <script src="{{ asset('js/jquery.vmap.min.js') }}"></script>
-
-        <script src="{{ asset('js/azia.js') }}"></script>
-        <script>
-          $(function(){
-            'use strict'
-
-            $('.az-sidebar .with-sub').on('click', function(e){
-              e.preventDefault();
-              $(this).parent().toggleClass('show');
-              $(this).parent().siblings().removeClass('show');
-            })
-
-            // $(document).on('click touchstart', function(e){
-            //   e.stopPropagation();
-
-            //   // closing of sidebar menu when clicking outside of it
-            //   if(!$(e.target).closest('.az-header-menu-icon').length) {
-            //     var sidebarTarg = $(e.target).closest('.az-sidebar').length;
-            //     if(!sidebarTarg) {
-            //       $('body').removeClass('az-sidebar-show');
-            //     }
-            //   }
-            // });
-
-            $('.select2-no-search').select2({
-                minimumResultsForSearch: Infinity,
-                placeholder: 'Choose one'
-            });
-
-            $('#azSidebarToggle').on('click', function(e){
-              e.preventDefault();
-
-              if(window.matchMedia('(min-width: 992px)').matches) {
-                $('body').toggleClass('az-sidebar-hide');
-              } else {
-                $('body').toggleClass('az-sidebar-show');
-              }
-            })
-
-            /* ----------------------------------- */
-            /* Dashboard content */
-
-            // $('#compositeline').sparkline('html', {
-            //   lineColor: '#cecece',
-            //   lineWidth: 2,
-            //   spotColor: false,
-            //   minSpotColor: false,
-            //   maxSpotColor: false,
-            //   highlightSpotColor: null,
-            //   highlightLineColor: null,
-            //   fillColor: '#f9f9f9',
-            //   chartRangeMin: 0,
-            //   chartRangeMax: 10,
-            //   width: '100%',
-            //   height: 20,
-            //   disableTooltips: true
-            // });
-
-            // $('#compositeline2').sparkline('html', {
-            //   lineColor: '#cecece',
-            //   lineWidth: 2,
-            //   spotColor: false,
-            //   minSpotColor: false,
-            //   maxSpotColor: false,
-            //   highlightSpotColor: null,
-            //   highlightLineColor: null,
-            //   fillColor: '#f9f9f9',
-            //   chartRangeMin: 0,
-            //   chartRangeMax: 10,
-            //   width: '100%',
-            //   height: 20,
-            //   disableTooltips: true
-            // });
-
-            // $('#compositeline3').sparkline('html', {
-            //   lineColor: '#cecece',
-            //   lineWidth: 2,
-            //   spotColor: false,
-            //   minSpotColor: false,
-            //   maxSpotColor: false,
-            //   highlightSpotColor: null,
-            //   highlightLineColor: null,
-            //   fillColor: '#f9f9f9',
-            //   chartRangeMin: 0,
-            //   chartRangeMax: 10,
-            //   width: '100%',
-            //   height: 20,
-            //   disableTooltips: true
-            // });
-
-            // $('#compositeline4').sparkline('html', {
-            //   lineColor: '#cecece',
-            //   lineWidth: 2,
-            //   spotColor: false,
-            //   minSpotColor: false,
-            //   maxSpotColor: false,
-            //   highlightSpotColor: null,
-            //   highlightLineColor: null,
-            //   fillColor: '#f9f9f9',
-            //   chartRangeMin: 0,
-            //   chartRangeMax: 10,
-            //   width: '100%',
-            //   height: 20,
-            //   disableTooltips: true
-            // });
-
-            // $('#vmap2').vectorMap({
-            //   map: 'usa_en',
-            //   showTooltip: true,
-            //   backgroundColor: '#fff',
-            //   color: '#60adff',
-            //   colors: {
-            //     mo: '#9fceff',
-            //     fl: '#60adff',
-            //     or: '#409cff',
-            //     ca: '#005cbf',
-            //     tx: '#005cbf',
-            //     wy: '#005cbf',
-            //     ny: '#007bff'
-            //   },
-            //   hoverColor: '#222',
-            //   enableZoom: false,
-            //   borderWidth: 1,
-            //   borderColor: '#fff',
-            //   hoverOpacity: .85
-            // });
-          });
-        </script>
         @stack('script')
       </body>
             {{-- <main class="py-4">

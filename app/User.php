@@ -45,6 +45,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Department::class);
     }
 
+    public function role()
+    {
+        return $this->belongsToMany(Role::class)->withTimestamps();
+    }
+
+    public function leaves()
+    {
+        return $this->hasMany(Leave::class, 'employee_id', 'id');
+    }
+
     public function setFirstnameAttribute($value)
     {
         $this->attributes['firstname'] = ucfirst($value);

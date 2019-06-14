@@ -12,7 +12,7 @@
                     <form method="POST" action="{{ route('department.store') }}">
                         @csrf
                         <div class="form-group pb-2">
-                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Department Name</label>
+                        <label>Department Name</label>
                         <input type="text" name="department_name" class="form-control @error('department') parsley-error @enderror" placeholder="Enter Department Name" required autofocus>
                         @error('department')
                             <span class="invalid-feedback" role="alert">
@@ -21,7 +21,7 @@
                         @enderror
                         </div>
                         <div class="form-group pb-2">
-                            <label class="az-content-label tx-11 tx-medium tx-gray-600">Parent Department</label>
+                            <label>Parent Department</label>
                             <select class="form-control select2-no-search @error('parent_department_id') parsley-error @enderror" name="parent_department_id">
                                 <option label="Choose one"></option>
                                 <option value="null">None</option>

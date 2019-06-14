@@ -77,3 +77,15 @@ Route::resource('/benefit', 'BenefitController');
 Route::group(['prefix' => 'benefits'], function () {
     Route::get('/all', 'BenefitController@getAllBenefits')->name('benefit.all');
 });
+
+Route::resource('/leave', 'LeaveController');
+
+Route::group(['prefix' => 'leaves'], function () {
+    Route::get('/all', 'LeaveController@getAllLeaves')->name('leave.all');
+});
+
+Route::resource('/role', 'RoleController');
+
+Route::group(['prefix' => 'roles'], function () {
+    Route::get('/all', 'RoleController@getAllRoles')->name('role.all');
+});
