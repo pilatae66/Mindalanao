@@ -147,7 +147,7 @@ class LeaveController extends Controller
      */
     public function update(Request $request, Leave $leave)
     {
-        $this->authorize('update', $leave);
+        // $this->authorize('update', $leave);
         $request->validate([
             'type' => 'required|string|max:255',
             'reason' => 'required|string|max:255',
@@ -202,7 +202,7 @@ class LeaveController extends Controller
      */
     public function destroy(Leave $leave)
     {
-        $this->authorize('delete', $leave);
+        // $this->authorize('delete', $leave);
         $leave->delete();
     }
 }

@@ -14,8 +14,8 @@
                         @method('PATCH')
                         <div class="form-group">
                             <label class="az-content-label tx-11 tx-medium tx-gray-600">Department</label>
-                            <input type="text" name="department_name" class="form-control @error('department') parsley-error @enderror" placeholder="Enter department" value="{{ $department->department_name }}" required autofocus>
-                            @error('department')
+                            <input type="text" name="department_name" class="form-control @error('department_name') parsley-error @enderror" placeholder="Enter department" value="{{ $department->department_name }}" required autofocus>
+                            @error('department_name')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
                                 </span>

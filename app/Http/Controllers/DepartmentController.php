@@ -77,6 +77,8 @@ class DepartmentController extends Controller
 
         Department::create($request->all());
 
+        toast('Department has been created successfully!', 'success', 'top');
+
         return redirect()->route('department.index');
     }
 
@@ -118,8 +120,11 @@ class DepartmentController extends Controller
     public function update(Request $request, Department $department)
     {
         $request->validate([
-            'department_name' => 'required|string|max:255|unique:departments'
+            'department_name' => 'required|string|max:255',
+            'parent_department_id' => 'required'
         ]);
+
+        toast('Department has been updated successfully!', 'success', 'top');
 
         $department->update($request->all());
 
