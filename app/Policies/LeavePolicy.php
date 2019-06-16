@@ -30,7 +30,7 @@ class LeavePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->first()->name == 'Admin' || $user->role->first()->name == 'HRO';
     }
 
     /**
@@ -42,7 +42,7 @@ class LeavePolicy
      */
     public function update(User $user, Leave $leave)
     {
-        return $user->id == $leave->employee_id;
+        return $user->role->first()->name == 'Admin' || $user->role->first()->name == 'HRO';
     }
 
     /**
@@ -54,7 +54,7 @@ class LeavePolicy
      */
     public function delete(User $user, Leave $leave)
     {
-        return $user->id == $leave->employee_id;
+        return $user->role->first()->name == 'Admin' || $user->role->first()->name == 'HRO';
     }
 
     /**

@@ -24,7 +24,7 @@
                                     <th>Reason</th>
                                     <th>Start Date</th>
                                     <th>End Date</th>
-                                    <th>Status</th>
+                                    <th>Filed by</th>
                                     <th>Created At</th>
                                     <th>Actions</th>
                                 </tr>
@@ -58,11 +58,11 @@
                     ],
                     columns: [
                         { data: 'user.full_name', name:'user.firstname' },
-                        { data: 'type' },
+                        { data: 'type.name' },
                         { data: 'reason' },
                         { data: 'start_date' },
                         { data: 'end_date' },
-                        { data: 'isApproved' },
+                        { data: 'admin.full_name', name:'user.firstname' },
                         { data: 'created_at' },
                         { data: 'action', orderable: false, searchable: false }
                     ]

@@ -15,7 +15,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array
      */
     protected $policies = [
-        // Leave::class => LeavePolicy::class,
+        Leave::class => LeavePolicy::class,
     ];
 
     /**

@@ -11,23 +11,35 @@
                 <h4 class="card-title mg-b-20 tx-center">Leave Filling Form</h4>
                     <form method="POST" action="{{ route('leave.store') }}">
                         @csrf
-                        <input type="hidden" name="employee_id" value="{{ auth()->user()->id }}">
+                        <input type="hidden" name="admin_id" value="{{ auth()->user()->id }}">
+                        <div class="form-group">
+                            <label class="az-content-label tx-11 tx-medium tx-gray-600">Employee</label>
+                            <select class="form-control select2 @error('employee_id') parsley-error @enderror" name="employee_id">
+                                <option label="Choose one"></option>
+                                @foreach ($users as $user)
+                                    <option {{ old('employee_id') == $user->id ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->full_name }}</option>
+                                @endforeach
+                              </select>
+                              @error('employee_id')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div><!-- form-group -->
                         <div class="form-group">
                         <label class="az-content-label tx-11 tx-medium tx-gray-600">Leave Type</label>
-                        <select class="form-control select2-no-search @error('type') parsley-error @enderror" name="type" autofocus>
+                        <select class="form-control select2-no-search @error('leave_type_id') parsley-error @enderror" name="leave_type_id" autofocus>
                             <option label="Choose one"></option>
-                            <option {{ old('type') != 'Maternity' ?: 'selected'  }} value="Maternity">Maternity</option>
-                            <option {{ old('type') != 'Paternity' ?: 'selected'  }} value="Paternity">Paternity</option>
-                            <option {{ old('type') != 'Sick' ?: 'selected'  }} value="Sick">Sick</option>
-                            <option {{ old('type') != 'Vacation' ?: 'selected'  }} value="Vacation">Vacation</option>
-                            <option {{ old('type') != 'Emergency' ?: 'selected'  }} value="Emergency">Emergency</option>
+                            @foreach ($leaveTypes as $type)
+                                <option {{ old('leave_type_id') == $type->id ? 'selected' : ''  }} value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
                         </select>
-                        @error('type')
+                        @error('leave_type_id')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                        </div>
+                        </div><!-- form-group -->
                         <div class="form-group">
                             <label class="az-content-label tx-11 tx-medium tx-gray-600">Start Date</label>
                             <input value="{{ old('start_date') }}" type="text" name="start_date" class="form-control @error('start_date') parsley-error @enderror" placeholder="Click to select Start Date" required id="startdatepicker">
