@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         factory(User::class, 1)->create()->each(function ($user){
-            $user->role()->save(factory(Role::class)->create());
             $user->department()->save(factory(Department::class)->create());
             $user->position()->sync(factory(Position::class)->create()->each(function($position){
                 $position->department()->sync(factory(Department::class)->create());

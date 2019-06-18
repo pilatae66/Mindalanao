@@ -109,7 +109,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                 <label class="az-content-label tx-11 tx-medium tx-gray-600">Gender</label>
                                 <select class="form-control select2-no-search @error('gender') parsley-error @enderror" name="gender">
@@ -124,7 +124,26 @@
                                 @enderror
                                 </div><!-- form-group -->
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Role</label>
+                                <select class="form-control select2-no-search @error('gender') parsley-error @enderror" name="gender">
+                                    <option label="Choose one"></option>
+                                    @if (auth()->user()->role === 'Admin')
+                                        <option value="Male" {{ old('gender') == 'Male' ? 'selected' : '' }}>Admin</option>
+                                        <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>HRO</option>
+                                    @else
+                                        <option value="Female" {{ old('gender') == 'Female' ? 'selected' : '' }}>Employee</option>
+                                    @endif
+                                </select>
+                                @error('gender')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                </div><!-- form-group -->
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                 <label class="az-content-label tx-11 tx-medium tx-gray-600">Date of Birth</label>
                                 <input type="text" name="dob" class="form-control @error('dob') parsley-error @enderror" placeholder="Click to select date" id="datepicker">

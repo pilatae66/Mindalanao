@@ -96,11 +96,24 @@ class LeaveController extends Controller
                 return redirect()->back()->withInput();
             }
             else{
-                Leave::create($request->all());
+                /**Calculation for the sum of number of leave days on the user */
+                $user_leaves_count = Leave::where('leave_type_id', $request->leave_type_id)
+                                    ->where('employee_id', $request->employee_id)->get();
 
-                toast('Leave successfully filed!', 'success', 'top');
+                $type = LeaveType::find($request->leave_type_id);
+                /**Check if user has more leave days */
+                if ($user_leaves_count->sum('number_of_days') < $type->days_allowed) {
+                    Leave::create($request->all());
 
-                return redirect()->route('leave.index');
+                    toast('Leave successfully filed!', 'success', 'top');
+
+                    return redirect()->route('leave.index');
+                }
+                else{
+                    alert()->error('Error!',"Employee {$user_leaves_count[0]->user->full_name} reached the maximum limit on {$user_leaves_count[0]->type->name} leave type!")->showConfirmButton('Confirm', '#3085d6');;
+
+                    return redirect()->back()->withInput();
+                }
             }
         }
         else{

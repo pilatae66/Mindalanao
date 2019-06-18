@@ -21,6 +21,7 @@ class CreateUsersTable extends Migration
             $table->string('address');
             $table->string('contact_number');
             $table->string('gender');
+            $table->string('role');
             $table->string('dob');
             $table->string('degree');
             $table->string('photoURL')->nullable();

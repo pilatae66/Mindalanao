@@ -84,8 +84,8 @@ Route::group(['prefix' => 'leaves'], function () {
     Route::get('/all', 'LeaveController@getAllLeaves')->name('leave.all');
 });
 
-Route::resource('/role', 'RoleController');
+Route::resource('/leaveType', 'LeaveTypeController');
 
-Route::group(['prefix' => 'roles'], function () {
-    Route::get('/all', 'RoleController@getAllRoles')->name('role.all');
+Route::group(['prefix' => 'types'], function () {
+    Route::get('/all', 'LeaveTypeController@getAllTypes')->name('types.all');
 });

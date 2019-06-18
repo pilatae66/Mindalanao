@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Role
+    Leave Type
 @endsection
 
 @section('content')
@@ -10,16 +10,16 @@
             <div class="card bd-0">
                 <div class="card-header tx-medium bd-0 tx-white bg-primary d-flex justify-content-between">
                     <div class="pt-2">
-                        Role List
+                        Leave Type List
                     </div>
-                    <div><a href="{{ route('role.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <div><a href="{{ route('leaveType.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
                     <table class="table" id="datatable">
                         <thead>
                             <tr>
-                                <th>Role Name</th>
-                                <th>Members</th>
+                                <th>Leave Type</th>
+                                <th>Allowed Days of Leave</th>
                                 <th>Created At</th>
                                 <th>Actions</th>
                             </tr>
@@ -37,7 +37,7 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: '{!! route('role.all') !!}',
+                ajax: '{!! route('types.all') !!}',
                 language: {
                     searchPlaceholder: 'Search...',
                     sSearch: '',
@@ -51,7 +51,7 @@
                 ],
                 columns: [
                     { data: 'name' },
-                    { data: 'employees' },
+                    { data: 'days_allowed' },
                     { data: 'created_at' },
                     { data: 'action', orderable: false, searchable: false }
                 ]
@@ -69,40 +69,45 @@
                 var url = e.currentTarget.dataset.remote;
                 // console.log(e.currentTarget.dataset.remote)
                 // confirm then
-                swal.fire({
+                Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!',
                     showLoaderOnConfirm: true,
-                    allowOutsideClick: () => !swal.isLoading(),
                     preConfirm: () => {
-                        return $.ajax({
-                                    url: url,
-                                    type: 'POST',
-                                    dataType: 'json',
-                                    data: {
-                                        _method: 'DELETE',
-                                        submit: true
-                                    }
-                                }).catch(err => {
-                                    console.log(err)
-                                })
-                    }
-                    }).then((result) => {
+                        return axios.post(url, {
+                            _method:"DELETE"
+                        })
+                        .then(response => {
+                            console.log(response)
+                            if (response.status == 403) {
+                                throw new Error(response)
+                            }
+                        })
+                        .catch(error => {
+                            if (error == "Error: Request failed with status code 403") {
+                                Swal.showValidationMessage(
+                                    'Unauthorized'
+                                )
+                            }
+                        })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                })
+                .then((result) => {
+                    console.log(result)
                     if (result.value) {
                         $('#datatable').DataTable().draw(false);
-                        swal.fire({
-                            position: 'top',
-                            toast: true,
-                            type: 'success',
-                            title: 'Department has been successfully deleted!',
-                            showConfirmButton: false,
-                            timer: 3000
-                        })
+                            swal.fire({
+                                position: 'top',
+                                toast: true,
+                                type: 'success',
+                                title: 'Leave Type has been successfully deleted!',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
                     }
                 })
             })

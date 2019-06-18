@@ -25,6 +25,7 @@ $factory->define(User::class, function (Faker $faker) {
         'address' => $faker->address,
         'dob' => 'October 10, 1989',
         'gender' => 'Female',
+        'role' => 'Admin',
         'contact_number' => '09754157431',
         'degree' => 'Master\'s in Gwapa',
         'email' => 'liezelortega39@gmail.com',

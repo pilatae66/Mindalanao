@@ -40,6 +40,17 @@
         $(function(){
           'use strict'
 
+            $('[data-toggle="tooltip"]').tooltip();
+
+            // colored tooltip
+            $('[data-toggle="tooltip-primary"]').tooltip({
+                template: '<div class="tooltip tooltip-primary" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+            });
+
+            $('[data-toggle="tooltip-secondary"]').tooltip({
+                template: '<div class="tooltip tooltip-secondary" role="tooltip"><div class="arrow"></div><div class="tooltip-inner"></div></div>'
+            });
+
 
           $('.select2').select2({
                 placeholder: 'Choose one',
@@ -277,6 +288,14 @@
               <li class="nav-item  {{ Request::is('leave*') ? 'active show' : '' }}">
                 {{-- <li>with-sub</li> --}}
               <a href="{{ route('leave.index') }}" class="nav-link"><i class="icon ion-md-airplane"></i>Leave</a>
+              {{-- <ul class="nav-sub">
+                <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+              </ul> --}}
+            </li><!-- nav-item -->
+            <li class="nav-item  {{ Request::is('type*') ? 'active show' : '' }}">
+                {{-- <li>with-sub</li> --}}
+              <a href="{{ route('leaveType.index') }}" class="nav-link"><i class="icon ion-md-airplane"></i>Leave Type</a>
               {{-- <ul class="nav-sub">
                 <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
                 <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
