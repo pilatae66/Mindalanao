@@ -3,18 +3,18 @@
 namespace App\Policies;
 
 use App\User;
-use App\Leave;
+use App\Deduction;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
-class LeavePolicy
+class DeductionPolicy
 {
     use HandlesAuthorization;
 
     /**
-     * Determine whether the user can view the leave.
+     * Determine whether the user can view the deduction.
      *
      * @param  \App\User  $user
-     * @param  \App\Leave  $leave
+     * @param  \App\Deduction  $deduction
      * @return mixed
      */
     public function view(User $user)
@@ -23,7 +23,7 @@ class LeavePolicy
     }
 
     /**
-     * Determine whether the user can create leaves.
+     * Determine whether the user can create deductions.
      *
      * @param  \App\User  $user
      * @return mixed
@@ -34,10 +34,10 @@ class LeavePolicy
     }
 
     /**
-     * Determine whether the user can update the leave.
+     * Determine whether the user can update the deduction.
      *
      * @param  \App\User  $user
-     * @param  \App\Leave  $leave
+     * @param  \App\Deduction  $deduction
      * @return mixed
      */
     public function update(User $user)
@@ -46,37 +46,37 @@ class LeavePolicy
     }
 
     /**
-     * Determine whether the user can delete the leave.
+     * Determine whether the user can delete the deduction.
      *
      * @param  \App\User  $user
-     * @param  \App\Leave  $leave
+     * @param  \App\Deduction  $deduction
      * @return mixed
      */
-    public function delete(User $user, Leave $leave)
+    public function delete(User $user)
     {
         return $user->role == 'HRO';
     }
 
     /**
-     * Determine whether the user can restore the leave.
+     * Determine whether the user can restore the deduction.
      *
      * @param  \App\User  $user
-     * @param  \App\Leave  $leave
+     * @param  \App\Deduction  $deduction
      * @return mixed
      */
-    public function restore(User $user, Leave $leave)
+    public function restore(User $user, Deduction $deduction)
     {
         //
     }
 
     /**
-     * Determine whether the user can permanently delete the leave.
+     * Determine whether the user can permanently delete the deduction.
      *
      * @param  \App\User  $user
-     * @param  \App\Leave  $leave
+     * @param  \App\Deduction  $deduction
      * @return mixed
      */
-    public function forceDelete(User $user, Leave $leave)
+    public function forceDelete(User $user, Deduction $deduction)
     {
         //
     }

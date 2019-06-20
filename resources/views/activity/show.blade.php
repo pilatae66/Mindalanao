@@ -10,10 +10,19 @@
             <div class="row d-flex justify-content-center">
                 <div class="col-md-10">
                     <div class="card bd-0 pb-4">
-                        <div class="card-header tx-medium bd-0 tx-white tx-light bg-primary">
+                        <div class="card-header tx-medium bd-0 tx-white tx-light bg-primary d-flex justify-content-between">
                             <div class="pt-2">
                                     {{ $activity->activity_name }} Details
                             </div>
+                            @can('signup', App\Activity::class)
+                                <div>
+                                    @if ($check)
+                                    <button class="btn btn-sm btn-primary btn-rounded signup" disabled id="signup"><i class="icon ion-md-checkmark"></i> Signed up</button>
+                                    @else
+                                        <button class="btn btn-sm btn-primary btn-rounded signup" id="signup"><i class="icon ion-md-checkmark"></i> Sign me up</button>
+                                    @endif
+                                </div>
+                            @endcan
                         </div><!-- card-header -->
                         <div class="card-body bd bd-t-0">
                             <div class="row pb-2">
@@ -30,23 +39,25 @@
                     </div><!-- card -->
                 </div>
             </div>
-            <div class="row d-flex justify-content-center">
-                <div class="col-md-10">
-                    <div class="card bd-0">
-                        <div class="card-header tx-medium bd-0 bg-primary tx-light tx-white d-flex justify-content-between">
-                            <div class="pt-2">
-                                    {{ $activity->activity_name }} Attendees List
-                            </div>
-                            <div>
-                                <a href="" class="btn btn-sm btn-primary btn-rounded" data-toggle="modal" data-target="#modaldemo1"><i class="icon ion-md-add"></i> Add Attendees</a>
-                            </div>
-                        </div><!-- card-header -->
-                        <div class="card-body bd">
-                            <attendee-table activity-id="{{ $activity->id }}" />
-                        </div><!-- card-body -->
-                    </div><!-- card -->
+            @can('create', App\Activity::class)
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-10">
+                        <div class="card bd-0">
+                            <div class="card-header tx-medium bd-0 bg-primary tx-light tx-white d-flex justify-content-between">
+                                <div class="pt-2">
+                                        {{ $activity->activity_name }} Attendees List
+                                </div>
+                                <div>
+                                    <a href="" class="btn btn-sm btn-primary btn-rounded" data-toggle="modal" data-target="#modaldemo1"><i class="icon ion-md-add"></i> Add Attendees</a>
+                                </div>
+                            </div><!-- card-header -->
+                            <div class="card-body bd">
+                                <attendee-table activity-id="{{ $activity->id }}" />
+                            </div><!-- card-body -->
+                        </div><!-- card -->
+                    </div>
                 </div>
-            </div>
+            @endcan
         </div>
     </div>
 @endsection
@@ -71,3 +82,24 @@
     </div><!-- modal-dialog -->
 </div><!-- modal -->
 @endsection
+@push('script')
+    <script>
+        $(function(){
+            $('#signup').on('click', function(e) {
+                axios({
+                    method: 'POST',
+                    url: '{!! route('activity.addEmployeeToActivity') !!}',
+                    data: {
+                        activityId: {!! $activity->id !!},
+                        employeeId: {!! auth()->user()->id !!}
+                    }
+                }).then(res => {
+                    window.location = '{!! route('activity.show', $activity->id) !!}'
+                }).catch(err => {
+                    console.log(err)
+                })
+            })
+        })
+
+    </script>
+@endpush

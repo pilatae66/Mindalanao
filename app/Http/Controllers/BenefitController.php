@@ -8,6 +8,10 @@ use Yajra\DataTables\DataTables;
 
 class BenefitController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +19,8 @@ class BenefitController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Benefit::class);
+
         return view('benefit.index');
     }
 
@@ -46,6 +52,8 @@ class BenefitController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Benefit::class);
+
         return view('benefit.create');
     }
 
@@ -77,7 +85,15 @@ class BenefitController extends Controller
      */
     public function show(Benefit $benefit)
     {
-        //
+        return view('benefit.show', compact('benefit'));
+    }
+
+    public function showAllBenefits()
+    {
+        $this->authorize('showAll', Benefit::class);
+        $benefits = Benefit::all();
+
+        return view('benefit.showAll', compact('benefits'));
     }
 
     /**
@@ -88,6 +104,7 @@ class BenefitController extends Controller
      */
     public function edit(Benefit $benefit)
     {
+        $this->authorize('update', $benefit);
         return view('benefit.edit', compact('benefit'));
     }
 

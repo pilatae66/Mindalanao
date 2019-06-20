@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Employee
+    Benefits
 @endsection
 
 @section('content')
@@ -10,26 +10,18 @@
             <div class="card bd-0">
                 <div class="card-header tx-medium bd-0 tx-white bg-primary d-flex justify-content-between">
                     <div class="pt-2">
-                        Employee List
+                        Benefit List
                     </div>
-                    <div><a href="{{ route('user.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <div><a href="{{ route('benefit.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
-                    <table class="table compact" id="userDatatable">
-                        <thead>
-                            <tr>
-                                <th>Employee Photo</th>
-                                <th>Employee ID</th>
-                                <th>Username</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Position</th>
-                                <th>Department</th>
-                                <th>Date Employed</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                    </table>
+                    <ul class="list-group">
+                        <li class="list-group-item">Cras justo odio</li>
+                        <li class="list-group-item">Dapibus ac facilisis in</li>
+                        <li class="list-group-item">Morbi leo risus</li>
+                        <li class="list-group-item">Porta ac consectetur ac</li>
+                        <li class="list-group-item">Vestibulum at eros</li>
+                    </ul>
                 </div><!-- card-body -->
             </div><!-- card -->
         </div>
@@ -38,11 +30,11 @@
 @push('script')
     <script>
         $(function() {
-            $('#userDatatable').DataTable({
+            $('#datatable').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: '{!! route('user.all') !!}',
+                ajax: '{!! route('benefit.all') !!}',
                 language: {
                     searchPlaceholder: 'Search...',
                     sSearch: '',
@@ -50,22 +42,13 @@
                 },
                 columnDefs: [
                     {
-                        targets: 0,
-                        className: 'dt-body-center'
-                    },
-                    {
-                        targets:[1,2,3,4,5,6,7,8],
+                        targets:'_all',
                         className: 'align-middle'
                     }
                 ],
                 columns: [
-                    { data: 'photo' },
-                    { data: 'id' },
-                    { data: 'username' },
-                    { data: 'name', name:'firstname' },
-                    { data: 'email' },
-                    { data: 'position[0].position', name:'position.position' },
-                    { data: 'department[0].department_name', name:'department.department_name' },
+                    { data: 'name' },
+                    { data: 'amount' },
                     { data: 'created_at' },
                     { data: 'action', orderable: false, searchable: false }
                 ]
@@ -73,7 +56,7 @@
 
             $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
 
-            $('#userDatatable').on('click', '.delete[data-remote]',(e) => {
+            $('#datatable').on('click', '.delete[data-remote]',(e) => {
                 e.preventDefault()
                 $.ajaxSetup({
                     headers: {
@@ -108,18 +91,18 @@
                     }
                     }).then((result) => {
                     if (result.value) {
-                        $('#userDatatable').DataTable().draw(false);
+                        $('#datatable').DataTable().draw(false);
                         swal.fire({
                             position: 'top',
                             toast: true,
                             type: 'success',
-                            title: 'Employee has been successfully deleted!',
+                            title: 'Benefit has been successfully deleted!',
                             showConfirmButton: false,
                             timer: 3000
                         })
                     }
                 })
-             })
+            })
         })
     </script>
 @endpush

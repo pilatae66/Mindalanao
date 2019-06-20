@@ -8,6 +8,10 @@ use Yajra\DataTables\DataTables;
 
 class DeductionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -15,6 +19,8 @@ class DeductionController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Deduction::class);
+
         return view('deduction.index');
     }
 
@@ -46,6 +52,8 @@ class DeductionController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Deduction::class);
+
         return view('deduction.create');
     }
 
@@ -88,6 +96,8 @@ class DeductionController extends Controller
      */
     public function edit(Deduction $deduction)
     {
+        $this->authorize('update', Deduction::class);
+
         return view('deduction.edit', compact('deduction'));
     }
 
@@ -120,6 +130,8 @@ class DeductionController extends Controller
      */
     public function destroy(Deduction $deduction)
     {
+        $this->authorize('delete', Deduction::class);
+
         $deduction->delete();
     }
 }

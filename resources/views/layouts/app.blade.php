@@ -237,70 +237,115 @@
           <div class="az-sidebar-body">
             <ul class="nav">
               <li class="nav-label">Main Menu</li>
-              <li class="nav-item {{ Request::path() == 'home' ? 'active' : '' }}">
+              <li class="nav-item {{ Request::is('home') ? 'active' : '' }}">
                   {{-- <li>with-sub</li> --}}
                 <a href="{{ route('home') }}" class="nav-link"><i class="icon ion-md-home"></i>Home</a>
                 {{-- <ul class="nav-sub">
                   <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
                 </ul> --}}
               </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::is('users*') ? 'active show' : '' }}">
-                  {{-- <li>with-sub</li> --}}
-                <a href="{{ route('home') }}" class="nav-link with-sub"><i class="icon ion-md-contacts"></i>Users</a>
-                <ul class="nav-sub">
-                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
-                  <li class="nav-sub-item {{ Request::is('users*') ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
-                </ul>
-              </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::is('position*') ? 'active show' : '' }}">
-                  {{-- <li>with-sub</li> --}}
-                <a href="{{ route('position.index') }}" class="nav-link"><i class="icon ion-md-trophy"></i>Positions</a>
+            @if (auth()->user()->role == 'Employee')
+                <li class="nav-item {{ Request::is('benefits/showAll') ? 'active' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                <a href="{{ route('benefit.showAll') }}" class="nav-link"><i class="icon ion-md-cash"></i>Benefit</a>
                 {{-- <ul class="nav-sub">
-                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
-                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
                 </ul> --}}
-              </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::is('department*') ? 'active show' : '' }}">
-                  {{-- <li>with-sub</li> --}}
-                <a href="{{ route('department.index') }}" class="nav-link"><i class="icon ion-md-filing"></i>Department</a>
+                </li><!-- nav-item -->
+                <li class="nav-item {{ Request::is('DTR/showAll') ? 'active' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                <a href="#" class="nav-link"><i class="icon ion-md-stopwatch"></i>DTR</a>
                 {{-- <ul class="nav-sub">
-                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
-                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
                 </ul> --}}
-              </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::is('activity*') ? 'active' : '' }}">
-                  {{-- <li>with-sub</li> --}}
-                <a href="{{ route('activity.index') }}" class="nav-link"><i class="icon ion-md-star"></i>Activity</a>
+                </li><!-- nav-item -->
+                <li class="nav-item {{ Request::is('activities/showAll') ? 'active' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                <a href="{{ route('activity.showAll') }}" class="nav-link"><i class="icon ion-md-construct"></i>Activity</a>
                 {{-- <ul class="nav-sub">
-                  <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
-                  <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
                 </ul> --}}
-              </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::is('deduction*') || Request::is('benefit*') || Request::is('compensation*')  ? 'active show' : '' }}">
-                  {{-- <li>with-sub</li> --}}
+                </li><!-- nav-item -->
+                <li class="nav-item {{ Request::is('leaves/showAll') ? 'active' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                <a href="#" class="nav-link"><i class="icon ion-md-airplane"></i>Leave</a>
+                {{-- <ul class="nav-sub">
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
+                </ul> --}}
+                </li><!-- nav-item -->
+                <li class="nav-item {{ Request::is('payslip/show') == 'benefit*' ? 'active' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                <a href="#" class="nav-link"><i class="icon ion-md-list-box"></i>Payslip</a>
+                {{-- <ul class="nav-sub">
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
+                </ul> --}}
+                </li><!-- nav-item -->
+            @elseif(auth()->user()->role == 'HRO')
+                <li class="nav-item  {{ Request::is('deduction*') || Request::is('benefit*') || Request::is('compensation*')  ? 'active show' : '' }}">
+                    {{-- <li>with-sub</li> --}}
                 <a href="#" class="nav-link with-sub"><i class="icon ion-md-card"></i>Payroll</a>
                 <ul class="nav-sub">
                     <li class="nav-sub-item {{ Request::is('deduction*') ? 'active' : '' }}"><a href="{{ route('deduction.index') }}" class="nav-sub-link">Deductions</a></li>
                     <li class="nav-sub-item {{ Request::is('benefit*') ? 'active' : '' }}"><a href="{{ route('benefit.index') }}" class="nav-sub-link">Benefits</a></li>
                     <li class="nav-sub-item {{ Request::is('compensation*') ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Compensations</a></li>
                 </ul>
-              </li><!-- nav-item -->
-              <li class="nav-item  {{ Request::is('leave*') ? 'active show' : '' }}">
-                {{-- <li>with-sub</li> --}}
-              <a href="{{ route('leave.index') }}" class="nav-link"><i class="icon ion-md-airplane"></i>Leave</a>
-              {{-- <ul class="nav-sub">
-                <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
-                <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
-              </ul> --}}
-            </li><!-- nav-item -->
-            <li class="nav-item  {{ Request::is('type*') ? 'active show' : '' }}">
-                {{-- <li>with-sub</li> --}}
-              <a href="{{ route('leaveType.index') }}" class="nav-link"><i class="icon ion-md-airplane"></i>Leave Type</a>
-              {{-- <ul class="nav-sub">
-                <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
-                <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
-              </ul> --}}
-            </li><!-- nav-item -->
+                </li><!-- nav-item -->
+                <li class="nav-item {{ Request::is('users/employee*') ? 'active' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                <a href="{{ route('user.index') }}" class="nav-link"><i class="icon ion-md-contact"></i>Employee</a>
+                {{-- <ul class="nav-sub">
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
+                </ul> --}}
+                </li><!-- nav-item -->
+                <li class="nav-item  {{ Request::is('activity*') ? 'active' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                <a href="{{ route('activity.index') }}" class="nav-link"><i class="icon ion-md-star"></i>Activity</a>
+                {{-- <ul class="nav-sub">
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                    <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                </ul> --}}
+                </li><!-- nav-item -->
+                <li class="nav-item  {{ Request::is('leave*') ? 'active show' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                    <a href="{{ route('leave.index') }}" class="nav-link"><i class="icon ion-md-airplane"></i>Leave</a>
+                    {{-- <ul class="nav-sub">
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                    <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                    </ul> --}}
+                </li><!-- nav-item -->
+            @elseif(auth()->user()->role == 'Admin')
+                <li class="nav-item {{ Request::is('users/admin*') ? 'active' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                <a href="{{ route('user.index') }}" class="nav-link"><i class="icon ion-md-contact"></i>Admin</a>
+                {{-- <ul class="nav-sub">
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
+                </ul> --}}
+                </li><!-- nav-item -->
+                <li class="nav-item  {{ Request::is('position*') ? 'active show' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                <a href="{{ route('position.index') }}" class="nav-link"><i class="icon ion-md-trophy"></i>Positions</a>
+                {{-- <ul class="nav-sub">
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                    <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                </ul> --}}
+                </li><!-- nav-item -->
+                <li class="nav-item  {{ Request::is('department*') ? 'active show' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                <a href="{{ route('department.index') }}" class="nav-link"><i class="icon ion-md-filing"></i>Department</a>
+                {{-- <ul class="nav-sub">
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                    <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                </ul> --}}
+                </li><!-- nav-item -->
+                <li class="nav-item  {{ Request::is('type*') ? 'active show' : '' }}">
+                    {{-- <li>with-sub</li> --}}
+                    <a href="{{ route('leaveType.index') }}" class="nav-link"><i class="icon ion-md-airplane"></i>Leave Type</a>
+                    {{-- <ul class="nav-sub">
+                    <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Admin</a></li>
+                    <li class="nav-sub-item {{ Request::path() == 'users' || Request::path() == 'user/create' ? 'active' : '' }}"><a href="{{ route('user.index') }}" class="nav-sub-link">Employee</a></li>
+                    </ul> --}}
+                </li><!-- nav-item -->
+            @endif
             </ul><!-- nav -->
           </div><!-- az-sidebar-body -->
         </div><!-- az-sidebar -->

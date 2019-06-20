@@ -22,6 +22,8 @@ class LeaveController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Leave::class);
+
         return view('leave.index');
     }
     public function getAllLeaves()
@@ -68,8 +70,10 @@ class LeaveController extends Controller
     public function create()
     {
         $this->authorize('create', Leave::class);
+
         $leaveTypes = LeaveType::all();
         $users = User::all();
+
         return view('leave.create', compact('users', 'leaveTypes'));
     }
 
@@ -142,8 +146,11 @@ class LeaveController extends Controller
      */
     public function edit(Leave $leave)
     {
+        $this->authorize('update', Leave::class);
+
         $users = User::all();
         $leaveTypes = LeaveType::all();
+
         return view('leave.edit', compact('leave', 'users', 'leaveTypes'));
     }
 

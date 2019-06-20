@@ -21,6 +21,8 @@ class ActivityController extends Controller
      */
     public function index()
     {
+        $this->authorize('view', Activity::class);
+
         return view('activity.index');
     }
 
@@ -56,6 +58,8 @@ class ActivityController extends Controller
      */
     public function create()
     {
+        $this->authorize('create', Activity::class);
+
         return view('activity.create');
     }
 
@@ -91,7 +95,15 @@ class ActivityController extends Controller
      */
     public function show(Activity $activity)
     {
-        return view('activity.show', compact('activity'));
+        $check = $activity->attendees->contains(auth()->user()->id);
+        return view('activity.show', compact('activity', 'check'));
+    }
+
+    public function showAll()
+    {
+        $activities = Activity::all();
+
+        return view('activity.showAll', compact('activities'));
     }
 
     public function getAllAttendees(Activity $activity)
@@ -142,6 +154,8 @@ class ActivityController extends Controller
      */
     public function edit(Activity $activity)
     {
+        $this->authorize('update', Activity::class);
+
         return view('activity.edit', compact('activity'));
     }
 
@@ -178,6 +192,7 @@ class ActivityController extends Controller
      */
     public function destroy(Activity $activity)
     {
+        $this->authorize('delete', Activity::class);
         $activity->delete();
     }
 }

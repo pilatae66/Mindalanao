@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use App\Position;
 use App\Department;
 use Image;
+use Auth;
 
 class UserController extends Controller
 {
@@ -18,8 +19,13 @@ class UserController extends Controller
 
     public function index()
     {
+        if (Auth::user()->role == 'HRO') {
+            return view('user.index');
+        }
+        else{
+            return view('user.indexAdmin');
 
-        return view('user.index');
+        }
     }
 
     public function getAllUsers()
@@ -62,6 +68,7 @@ class UserController extends Controller
 
     public function create()
     {
+        $this->authorize('create', User::class);
         $positions = Position::all();
         $departments = Department::all();
 
@@ -116,11 +123,14 @@ class UserController extends Controller
 
     public function delete(User $user, Request $request)
     {
+        $this->authorize('delete', User::class);
+
         $user->delete();
     }
 
     public function edit(User $user)
     {
+        $this->authorize('update', $user);
         $positions = Position::all();
         $departments = Department::all();
 
@@ -129,6 +139,8 @@ class UserController extends Controller
 
     public function update(User $user, Request $request)
     {
+        $this->authorize('update', $user);
+
         if ($user->position->count() > 0) {
             $user->position()->detach($user->position[0]->id);
             $user->position()->attach($request->position);
