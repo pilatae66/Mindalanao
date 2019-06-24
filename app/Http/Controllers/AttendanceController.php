@@ -37,7 +37,15 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attendance =  Attendance::create([
+        'user_id' => $request->userId,
+        'type' => $request->type
+        ]);
+
+        return response()->json([
+           'message' => 'Success!',
+           'status' => $attendance
+        ]);
     }
 
     /**

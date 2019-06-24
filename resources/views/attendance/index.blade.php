@@ -7,8 +7,8 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ config('app.name', 'Laravel') }}</title>
-	<script src="{{ asset('js/app.js') }}" defer></script>
 	<script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+	<script src="{{ asset('js/app.js') }}" defer></script>
 </head>
 <body>
     <div id="app">
@@ -18,7 +18,28 @@
     <script type="text/javascript">
         let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
         scanner.addListener('scan', function (content) {
-            alert(content);
+            axios.post('/api/attendance', {
+                userId:content,
+                type: 'Out'
+            }).then(res => {
+                console.log(res)
+                swal.fire({
+                    type: 'success',
+                    title: 'You have been successfully signed in!',
+                    showConfirmButton: false,
+                    timer: 3000
+                })
+            }).catch(err => {
+                console.log(err)
+                if (err == 'Error: Request failed with status code 500') {
+                    swal.fire({
+                        type: 'error',
+                        title: 'User not found!',
+                        showConfirmButton: false,
+                        timer: 3000
+                    })
+                }
+            })
         });
         Instascan.Camera.getCameras().then(function (cameras) {
             if (cameras.length > 0) {
