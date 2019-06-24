@@ -138,6 +138,14 @@ class LeaveController extends Controller
         //
     }
 
+    public function showAll()
+    {
+        $leavetypes = LeaveType::all();
+        $leaves = Leave::where('employee_id', auth()->user()->id)->get();
+
+        return view('leave.showAll', compact('leaves', 'leavetypes'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

@@ -9,7 +9,7 @@
         <div class="col-md-6">
             <div class="card card-body pd-40">
                 <h5 class="card-title mg-b-20 tx-center">Create Leave Type</h5>
-                    <form method="POST" action="{{ route('type.store') }}">
+                    <form method="POST" action="{{ route('leaveType.store') }}">
                         @csrf
                         <div class="form-group pb-2">
                         <label class="az-content-label tx-11 tx-medium tx-gray-600">Leave Type Name</label>

@@ -12,10 +12,12 @@
                     <div class="pt-2">
                         Employee List
                     </div>
-                    <div><a href="{{ route('user.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    @can('create', App\User::class)
+                        <div><a href="{{ route('user.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    @endcan
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
-                    <table class="table compact" id="userDatatable">
+                    <table class="table compact" id="datatable">
                         <thead>
                             <tr>
                                 <th>Employee Photo</th>
@@ -36,90 +38,191 @@
     </div>
 @endsection
 @push('script')
-    <script>
-        $(function() {
-            $('#userDatatable').DataTable({
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                ajax: '{!! route('user.all') !!}',
-                language: {
-                    searchPlaceholder: 'Search...',
-                    sSearch: '',
-                    lengthMenu: '_MENU_ items/page',
-                },
-                columnDefs: [
-                    {
-                        targets: 0,
-                        className: 'dt-body-center'
+    @if (auth()->user()->can('viewEmployee', App\User::class)) {
+        <script>
+            $(function() {
+                $('#datatable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    responsive: true,
+                    ajax: '{!! route('user.all') !!}',
+                    language: {
+                        searchPlaceholder: 'Search...',
+                        sSearch: '',
+                        lengthMenu: '_MENU_ items/page',
                     },
-                    {
-                        targets:[1,2,3,4,5,6,7,8],
-                        className: 'align-middle'
-                    }
-                ],
-                columns: [
-                    { data: 'photo' },
-                    { data: 'id' },
-                    { data: 'username' },
-                    { data: 'name', name:'firstname' },
-                    { data: 'email' },
-                    { data: 'position[0].position', name:'position.position' },
-                    { data: 'department[0].department_name', name:'department.department_name' },
-                    { data: 'created_at' },
-                    { data: 'action', orderable: false, searchable: false }
-                ]
-            });
-
-            $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
-
-            $('#userDatatable').on('click', '.delete[data-remote]',(e) => {
-                e.preventDefault()
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
+                    columnDefs: [
+                        {
+                            targets: 0,
+                            className: 'dt-body-center'
+                        },
+                        {
+                            targets:[1,2,3,4,5,6,7,8],
+                            className: 'align-middle'
+                        }
+                    ],
+                    columns: [
+                        { data: 'photo' },
+                        { data: 'id' },
+                        { data: 'username' },
+                        { data: 'name', name:'firstname' },
+                        { data: 'email' },
+                        { data: 'position[0].position', name:'position.position' },
+                        { data: 'department[0].department_name', name:'department.department_name' },
+                        { data: 'created_at' },
+                        { data: 'action' },
+                    ]
                 });
-                var url = e.currentTarget.dataset.remote;
-                // console.log(e.currentTarget.dataset.remote)
-                // confirm then
-                swal.fire({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!',
-                    showLoaderOnConfirm: true,
-                    allowOutsideClick: () => !swal.isLoading(),
-                    preConfirm: () => {
-                        return $.ajax({
-                                    url: url,
-                                    type: 'POST',
-                                    dataType: 'json',
-                                    data: {
-                                        _method: 'DELETE',
-                                        submit: true
-                                    }
-                                }).catch(err => {
-                                    console.log(err)
-                                })
-                    }
-                    }).then((result) => {
-                    if (result.value) {
-                        $('#userDatatable').DataTable().draw(false);
-                        swal.fire({
-                            position: 'top',
-                            toast: true,
-                            type: 'success',
-                            title: 'Employee has been successfully deleted!',
-                            showConfirmButton: false,
-                            timer: 3000
-                        })
-                    }
+
+                $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+
+                $('#datatable').on('click', '.delete[data-remote]',(e) => {
+                    e.preventDefault()
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    var url = e.currentTarget.dataset.remote;
+                    // console.log(e.currentTarget.dataset.remote)
+                    // confirm then
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, delete it!',
+                        showLoaderOnConfirm: true,
+                        preConfirm: () => {
+                            return axios.post(url, {
+                                _method:"DELETE"
+                            })
+                            .then(response => {
+                                console.log(response)
+                                if (response.status == 403) {
+                                    throw new Error(response)
+                                }
+                            })
+                            .catch(error => {
+                                if (error == "Error: Request failed with status code 403") {
+                                    Swal.showValidationMessage(
+                                        'Unauthorized'
+                                    )
+                                }
+                            })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    })
+                    .then((result) => {
+                        console.log(result)
+                        if (result.value) {
+                            $('#datatable').DataTable().draw(false);
+                            swal.fire({
+                                position: 'top',
+                                toast: true,
+                                type: 'success',
+                                title: 'Leave has been successfully deleted!',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                        }
+                    })
                 })
-             })
-        })
-    </script>
+            })
+        </script>
+    @elseif(auth()->user()->can('delete', App\User::class))
+    <script>
+            $(function() {
+                $('#datatable').DataTable({
+                    processing: true,
+                    serverSide: true,
+                    responsive: true,
+                    ajax: '{!! route('user.all') !!}',
+                    language: {
+                        searchPlaceholder: 'Search...',
+                        sSearch: '',
+                        lengthMenu: '_MENU_ items/page',
+                    },
+                    columnDefs: [
+                        {
+                            targets: 0,
+                            className: 'dt-body-center'
+                        },
+                        {
+                            targets:[1,2,3,4,5,6,7,8],
+                            className: 'align-middle'
+                        }
+                    ],
+                    columns: [
+                        { data: 'photo' },
+                        { data: 'id' },
+                        { data: 'username' },
+                        { data: 'name', name:'firstname' },
+                        { data: 'email' },
+                        { data: 'position[0].position', name:'position.position' },
+                        { data: 'department[0].department_name', name:'department.department_name' },
+                        { data: 'created_at' },
+                        { data: 'action' },
+                    ]
+                });
+
+                $('.dataTables_length select').select2({ minimumResultsForSearch: Infinity });
+
+                $('#datatable').on('click', '.delete[data-remote]',(e) => {
+                    e.preventDefault()
+                    $.ajaxSetup({
+                        headers: {
+                            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        }
+                    });
+                    var url = e.currentTarget.dataset.remote;
+                    // console.log(e.currentTarget.dataset.remote)
+                    // confirm then
+                    Swal.fire({
+                        title: 'Are you sure?',
+                        text: "You won't be able to revert this!",
+                        type: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Yes, delete it!',
+                        showLoaderOnConfirm: true,
+                        confirmButtonColor: '#d33',
+                        cancelButtonColor: '#3085d6',
+                        preConfirm: () => {
+                            return axios.post(url, {
+                                _method:"DELETE"
+                            })
+                            .then(response => {
+                                console.log(response)
+                                if (response.status == 403) {
+                                    throw new Error(response)
+                                }
+                            })
+                            .catch(error => {
+                                if (error == "Error: Request failed with status code 403") {
+                                    Swal.showValidationMessage(
+                                        'Unauthorized'
+                                    )
+                                }
+                            })
+                        },
+                        allowOutsideClick: () => !Swal.isLoading()
+                    })
+                    .then((result) => {
+                        console.log(result)
+                        if (result.value) {
+                            $('#datatable').DataTable().draw(false);
+                            swal.fire({
+                                position: 'top',
+                                toast: true,
+                                type: 'success',
+                                title: 'Employee has been successfully deleted!',
+                                showConfirmButton: false,
+                                timer: 3000
+                            })
+                        }
+                    })
+                })
+            })
+        </script>
+    @endif
 @endpush

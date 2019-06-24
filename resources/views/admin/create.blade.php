@@ -1,14 +1,14 @@
 @extends('layouts.app')
 
 @section('title')
-    {{ url()->current() == route('admin.create') ? 'Admin' : 'Employee' }} Create
+    Users Create
 @endsection
 
 @section('content')
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card card-body pd-40">
-                <h5 class="card-title mg-b-20 tx-center">Create {{ url()->current() == route('admin.create') ? 'Admin' : 'Employee' }}</h5>
+                <h5 class="card-title mg-b-20">Create Employee</h5>
                     <form method="POST" action="{{ route('user.store') }}" enctype="multipart/form-data">
                         @csrf
                         <div class="row">
@@ -34,7 +34,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                 <label class="az-content-label tx-11 tx-medium tx-gray-600">Firstname</label>
-                                <input type="text" value="{{ old('firstname') }}" name="firstname" class="form-control @error('firstname') parsley-error @enderror" placeholder="Enter firstname" autofocus>
+                                <input type="text" value="{{ old('firstname') }}" name="firstname" class="form-control @error('firstname') parsley-error @enderror" placeholder="Enter your firstname" autofocus>
                                 @error('firstname')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                 <label class="az-content-label tx-11 tx-medium tx-gray-600">Middlename</label>
-                                <input type="text" value="{{ old('middlename') }}" name="middlename" class="form-control @error('middlename') parsley-error @enderror" placeholder="Enter middlename">
+                                <input type="text" value="{{ old('middlename') }}" name="middlename" class="form-control @error('middlename') parsley-error @enderror" placeholder="Enter your middlename">
                                 @error('middlename')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -56,7 +56,7 @@
                             <div class="col-md-4">
                                 <div class="form-group">
                                 <label class="az-content-label tx-11 tx-medium tx-gray-600">Lastname</label>
-                                <input type="text" value="{{ old('lastname') }}" name="lastname" class="form-control @error('lastname') parsley-error @enderror" placeholder="Enter lastname">
+                                <input type="text" value="{{ old('lastname') }}" name="lastname" class="form-control @error('lastname') parsley-error @enderror" placeholder="Enter your lastname">
                                 @error('lastname')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -69,7 +69,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                 <label class="az-content-label tx-11 tx-medium tx-gray-600">Username</label>
-                                <input type="text" value="{{ old('username') }}" name="username" class="form-control @error('username') parsley-error @enderror" placeholder="Enter username">
+                                <input type="text" value="{{ old('username') }}" name="username" class="form-control @error('username') parsley-error @enderror" placeholder="Enter your username">
                                 @error('username')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -80,7 +80,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                 <label class="az-content-label tx-11 tx-medium tx-gray-600">Email</label>
-                                <input type="email" value="{{ old('email') }}" name="email" class="form-control @error('email') parsley-error @enderror" placeholder="Enter email">
+                                <input type="email" value="{{ old('email') }}" name="email" class="form-control @error('email') parsley-error @enderror" placeholder="Enter your email">
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -93,7 +93,7 @@
                             <div class="col-md-6">
                                 <div class="form-group">
                                 <label class="az-content-label tx-11 tx-medium tx-gray-600">Address</label>
-                                <input type="text" value="{{ old('address') }}" name="address" class="form-control @error('address') parsley-error @enderror" placeholder="Enter address">
+                                <input type="text" value="{{ old('address') }}" name="address" class="form-control @error('address') parsley-error @enderror" placeholder="Enter your address">
                                 @error('address')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -114,7 +114,7 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="form-group">
                                 <label class="az-content-label tx-11 tx-medium tx-gray-600">Gender</label>
                                 <select class="form-control select2-no-search @error('gender') parsley-error @enderror" name="gender">
@@ -129,8 +129,26 @@
                                 @enderror
                                 </div><!-- form-group -->
                             </div>
-                            <input type="hidden" name="role" value="{{ url()->current() == route('admin.create') ? 'Admin' : 'Employee' }}">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                <label class="az-content-label tx-11 tx-medium tx-gray-600">Role</label>
+                                <select class="form-control select2-no-search @error('role') parsley-error @enderror" name="role">
+                                    <option label="Choose one"></option>
+                                    @if (auth()->user()->role === 'Admin')
+                                        <option value="Male" {{ old('role') == 'Male' ? 'selected' : '' }}>Admin</option>
+                                        <option value="Female" {{ old('role') == 'Female' ? 'selected' : '' }}>HRO</option>
+                                    @else
+                                        <option value="Female" {{ old('role') == 'Female' ? 'selected' : '' }}>Employee</option>
+                                    @endif
+                                </select>
+                                @error('role')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                                </div><!-- form-group -->
+                            </div>
+                            <div class="col-md-4">
                                 <div class="form-group">
                                 <label class="az-content-label tx-11 tx-medium tx-gray-600">Date of Birth</label>
                                 <input type="text" value="{{ old('dob') }}" name="dob" class="form-control @error('dob') parsley-error @enderror" placeholder="Click to select date" id="datepicker">
@@ -178,7 +196,7 @@
                         </div>
                         <div class="form-group pb-2">
                             <label class="az-content-label tx-11 tx-medium tx-gray-600">Degree</label>
-                            <input type="text" value="{{ old('degree') }}" name="degree" class="form-control @error('degree') parsley-error @enderror" placeholder="Enter Degree">
+                            <input type="text" value="{{ old('degree') }}" name="degree" class="form-control @error('degree') parsley-error @enderror" placeholder="Enter Employee's Degree">
                             @error('degree')
                                 <span class="invalid-feedback" role="alert">
                                     <strong>{{ $message }}</strong>
@@ -187,7 +205,7 @@
                         </div><!-- form-group -->
                         {{-- <div class="form-group">
                         <label>Password</label>
-                        <input type="password" name="password" class="form-control @error('password') parsley-error @enderror" placeholder="Enter password">
+                        <input type="password" name="password" class="form-control @error('password') parsley-error @enderror" placeholder="Enter your password">
                         @error('password')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
@@ -196,7 +214,7 @@
                         </div><!-- form-group -->
                         <div class="form-group">
                         <label>Verify Password</label>
-                        <input type="password" name="password_confirmation" class="form-control" placeholder="Verify password">
+                        <input type="password" name="password_confirmation" class="form-control" placeholder="Verify your password">
                         </div><!-- form-group --> --}}
                         <button class="btn btn-az-primary btn-block">Create</button>
                     </form>

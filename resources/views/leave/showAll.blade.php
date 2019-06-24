@@ -1,48 +1,70 @@
 @extends('layouts.app')
 
 @section('title')
-    Activity
+    Leave
 @endsection
 
 @section('content')
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card card-dashboard-seven">
+                <div class="card-header tx-medium bd-0 tx-white bg-primary">
+                    Leave Statistics
+                </div><!-- card-header -->
+                <div class="card-body">
+                    <div class="row">
+                        @forelse ($leavetypes as $types)
+                            <div class="col-6 col-lg-3">
+                                <label class="az-content-label">{{ $types->name }} Leave</label>
+                                <h2>{{ $types->leaves->sum('number_of_days') }} days</h2>
+                                <div class="desc up">
+                                <i class="icon ion-md-stats"></i>
+                                <span><strong>{{ round(($types->leaves->sum('number_of_days') / $types->days_allowed) * 100, 2) }}%</strong> ({{ $types->days_allowed - $types->leaves->sum('number_of_days') }} days remaining)</span>
+                                </div>
+                            </div><!-- col -->
+                        @empty
+
+                        @endforelse
+                    </div><!-- row -->
+                </div><!-- card-body -->
+            </div><!-- card -->
+        </div>
+    </div>
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card bd-0">
                 <div class="card-header tx-medium bd-0 tx-white bg-primary d-flex justify-content-between">
-                    <div class="pt-2">
-                        Activity List
-                    </div>
-                    <div><a href="{{ route('benefit.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    Leave List
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="d-flex justify-content-between">
-                                <div class="tx-bold">Name</div>
-                                <div class="tx-bold">Provider</div>
-                                <div class="tx-bold">Venue</div>
-                                <div class="tx-bold">Date</div>
-                                <div class="tx-bold">Time</div>
-                                <div class="tx-bold">Description</div>
-                                <div class="tx-bold">Date Created</div>
-                            </div>
-                        </li>
-                        @forelse ($activities as $activity)
-                            <li class="list-group-item">
-                                <div class="d-flex justify-content-between">
-                                    <div>{{ $activity->name }}</div>
-                                    <div>{{ $activity->provider }}</div>
-                                    <div>{{ $activity->venue }}</div>
-                                    <div>{{ $activity->date }}</div>
-                                    <div>{{ $activity->time }}</div>
-                                    <div>{{ $activity->description }}</div>
-                                    <div>{{ $activity->created_at->format('F d, Y') }}</div>
-                                </div>
-                            </li>
-                        @empty
-                            <li class="list-group-item tx-center">No Data Available</li>
-                        @endforelse
-                    </ul>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr class="tx-center">
+                                <th class="tx-bold">Leave Type</th>
+                                <th class="tx-bold">Start Date</th>
+                                <th class="tx-bold">End Date</th>
+                                <th class="tx-bold">Number of Days</th>
+                                <th class="tx-bold">Reason</th>
+                                <th class="tx-bold">Confirmed by</th>
+                                <th class="tx-bold">Date Filed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($leaves as $leave)
+                                <tr class="tx-center">
+                                    <td>{{ $leave->type->name }}</td>
+                                    <td>{{ $leave->start_date }}</td>
+                                    <td>{{ $leave->end_date }}</td>
+                                    <td>{{ $leave->number_of_days }}</td>
+                                    <td>{{ $leave->reason }}</td>
+                                    <td>{{ $leave->admin->full_name }}</td>
+                                    <td>{{ $leave->created_at->format('F d, Y') }}</td>
+                                </tr>
+                            @empty
+                                <td>No Data Available</td>
+                            @endforelse
+                        </tbody>
+                    </table>
                 </div><!-- card-body -->
             </div><!-- card -->
         </div>

@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDepartmentUserPivotTable extends Migration
+class CreateCompensationTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,11 +13,10 @@ class CreateDepartmentUserPivotTable extends Migration
      */
     public function up()
     {
-        Schema::create('department_user', function (Blueprint $table) {
+        Schema::create('compensation', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('department_id');
-            $table->unsignedBigInteger('user_id');
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('name');
+            $table->bigInteger('amount');
             $table->timestamps();
         });
     }
@@ -29,6 +28,6 @@ class CreateDepartmentUserPivotTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('department_user');
+        Schema::dropIfExists('compensation');
     }
 }

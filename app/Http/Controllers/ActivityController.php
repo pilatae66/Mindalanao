@@ -103,6 +103,10 @@ class ActivityController extends Controller
     {
         $activities = Activity::all();
 
+        foreach ($activities as $key => $activity) {
+            $activity->check = $activity->attendees->contains(auth()->user()->id);
+        }
+
         return view('activity.showAll', compact('activities'));
     }
 

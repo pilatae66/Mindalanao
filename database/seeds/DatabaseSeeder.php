@@ -6,6 +6,7 @@ use App\Position;
 use App\Department;
 use App\Role;
 use App\LeaveType;
+use App\Attendance;
 
 class DatabaseSeeder extends Seeder
 {
@@ -23,5 +24,7 @@ class DatabaseSeeder extends Seeder
             }));
         });
         factory(LeaveType::class, 1)->create();
+
+        factory(Attendance::class, 30)->create();
     }
 }

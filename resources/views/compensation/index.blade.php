@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Activity
+    Compensation
 @endsection
 
 @section('content')
@@ -10,29 +10,21 @@
             <div class="card bd-0">
                 <div class="card-header tx-medium bd-0 tx-white bg-primary d-flex justify-content-between">
                     <div class="pt-2">
-                        Activity List
+                        Compensation List
                     </div>
+                    <div><a href="{{ route('compensation.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
-                    <div class="wd-lg-100p">
-                        <div class="list-group">
-                            <div class="list-group-item list-group-item-action d-flex justify-content-around">
-                                <div class="tx-bold">Name</div>
-                                <div class="tx-bold">Provider</div>
-                                <div class="tx-bold">Venue</div>
-                            </div>
-
-                            @forelse ($activities as $activity)
-                                <a href="{{ route('activity.show', $activity->id) }}" class="list-group-item list-group-item-action d-flex justify-content-around {{ $activity->check ? 'bg-success tx-white' : '' }}">
-                                    <div>{{ $activity->activity_name }}</div>
-                                    <div>{{ $activity->activity_provider }}</div>
-                                    <div>{{ $activity->activity_venue }}</div>
-                                </a>
-                            @empty
-                                <div class="list-group-item tx-center">No Data Available</div>
-                            @endforelse
-                        </div>
-                    </div>
+                    <table class="table" id="datatable">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Amount</th>
+                                <th>Created At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div><!-- card-body -->
             </div><!-- card -->
         </div>
@@ -45,7 +37,7 @@
                 processing: true,
                 serverSide: true,
                 responsive: true,
-                ajax: '{!! route('benefit.all') !!}',
+                ajax: '{!! route('compensation.all') !!}',
                 language: {
                     searchPlaceholder: 'Search...',
                     sSearch: '',
@@ -77,37 +69,44 @@
                 var url = e.currentTarget.dataset.remote;
                 // console.log(e.currentTarget.dataset.remote)
                 // confirm then
-                swal.fire({
+                Swal.fire({
                     title: 'Are you sure?',
                     text: "You won't be able to revert this!",
                     type: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
                     confirmButtonText: 'Yes, delete it!',
                     showLoaderOnConfirm: true,
-                    allowOutsideClick: () => !swal.isLoading(),
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
                     preConfirm: () => {
-                        return $.ajax({
-                                    url: url,
-                                    type: 'POST',
-                                    dataType: 'json',
-                                    data: {
-                                        _method: 'DELETE',
-                                        submit: true
-                                    }
-                                }).catch(err => {
-                                    console.log(err)
-                                })
-                    }
-                    }).then((result) => {
+                        return axios.post(url, {
+                            _method:"DELETE"
+                        })
+                        .then(response => {
+                            console.log(response)
+                            if (response.status == 403) {
+                                throw new Error(response)
+                            }
+                        })
+                        .catch(error => {
+                            if (error == "Error: Request failed with status code 403") {
+                                Swal.showValidationMessage(
+                                    'Unauthorized'
+                                )
+                            }
+                        })
+                    },
+                    allowOutsideClick: () => !Swal.isLoading()
+                })
+                .then((result) => {
+                    console.log(result)
                     if (result.value) {
                         $('#datatable').DataTable().draw(false);
                         swal.fire({
                             position: 'top',
                             toast: true,
                             type: 'success',
-                            title: 'Benefit has been successfully deleted!',
+                            title: 'Compensation has been successfully deleted!',
                             showConfirmButton: false,
                             timer: 3000
                         })

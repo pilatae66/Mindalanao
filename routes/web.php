@@ -39,7 +39,23 @@ Route::group(['prefix' => 'users'], function () {
         Route::get('/getUserData', 'UserController@getAllUsers')->name('user.all');
     });
 
+    Route::group(['prefix' => 'admin'], function () {
+        Route::get('/', 'UserController@index')->name('admin.index');
 
+        Route::get('/all', 'UserController@getAllAdminAPI')->name('admin.all');
+
+        Route::get('/create', 'UserController@create')->name('admin.create');
+
+        Route::post('/', 'UserController@store')->name('admin.store');
+
+        Route::delete('/{user}', 'UserController@delete')->name('admin.delete');
+
+        Route::get('/{user}/edit', 'UserController@editAdmin')->name('admin.edit');
+
+        Route::patch('/{user}', 'UserController@updateAdmin')->name('admin.update');
+
+        Route::get('/getAdminData', 'UserController@getAllAdmins')->name('admin.all');
+    });
 });
 
 
@@ -89,6 +105,7 @@ Route::resource('/leave', 'LeaveController');
 
 Route::group(['prefix' => 'leaves'], function () {
     Route::get('/all', 'LeaveController@getAllLeaves')->name('leave.all');
+    Route::get('/showAll', 'LeaveController@showAll')->name('leave.showAll');
 });
 
 Route::resource('/leaveType', 'LeaveTypeController');
@@ -96,3 +113,12 @@ Route::resource('/leaveType', 'LeaveTypeController');
 Route::group(['prefix' => 'types'], function () {
     Route::get('/all', 'LeaveTypeController@getAllTypes')->name('types.all');
 });
+
+Route::resource('/compensation', 'CompensationController');
+
+Route::group(['prefix' => 'compensations'], function () {
+    Route::get('/all', 'CompensationController@getAll')->name('compensation.all');
+});
+
+Route::get('attendance', 'AttendanceController@index')->name('attendance.index');
+
