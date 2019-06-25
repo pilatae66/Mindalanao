@@ -26,5 +26,8 @@ class DatabaseSeeder extends Seeder
         factory(LeaveType::class, 1)->create();
 
         factory(Attendance::class, 30)->create();
+
+        $this->call(DeductionSeeder::class);
+        $this->call(BenefitSeeder::class);
     }
 }

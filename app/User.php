@@ -16,7 +16,7 @@ class User extends Authenticatable
         parent::boot();
 
         static::saving(function($model){
-                $model->QRCodeURL = "storage/{$model->full_name}.png";
+            $model->QRCodeURL = "storage/{$model->full_name}.png";
         });
 
         static::saved(function($model){

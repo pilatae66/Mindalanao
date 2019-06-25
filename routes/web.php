@@ -61,7 +61,7 @@ Route::group(['prefix' => 'users'], function () {
 
 Route::resource('/position', 'PositionController');
 
-Route::group(['prefix' => 'position'], function () {
+Route::group(['prefix' => 'positions'], function () {
 
     Route::get('/getMembers/{position}', 'UserController@getMembers')->name('position.getMembers');
 

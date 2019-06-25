@@ -6,6 +6,7 @@ use App\Attendance;
 use Illuminate\Http\Request;
 use QrCode;
 use App\User;
+use Carbon\Carbon;
 
 class AttendanceController extends Controller
 {
@@ -37,15 +38,23 @@ class AttendanceController extends Controller
      */
     public function store(Request $request)
     {
-        $attendance =  Attendance::create([
-        'user_id' => $request->userId,
-        'type' => $request->type
-        ]);
+        if (Attendance::where('user_id', $request->userId)->where('created_at', '>', Carbon::today())->count() < 2) {
+            $type = Attendance::where('user_id', $request->userId)->where('created_at', '>', Carbon::today())->count() > 0 ? 'Out' : 'In';
+            $attendance =  Attendance::create([
+                'user_id' => $request->userId,
+                'type' => $type
+            ]);
 
-        return response()->json([
-           'message' => 'Success!',
-           'status' => $attendance
-        ]);
+            return response()->json([
+                'message' => 'Success!',
+            'status' => $attendance
+            ]);
+        }
+        else{
+            return response()->json([
+                'message' => 'Error: Double Entry!'
+            ], 500);
+        }
     }
 
     /**

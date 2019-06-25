@@ -19,8 +19,7 @@
         let scanner = new Instascan.Scanner({ video: document.getElementById('preview') });
         scanner.addListener('scan', function (content) {
             axios.post('/api/attendance', {
-                userId:content,
-                type: 'Out'
+                userId:content
             }).then(res => {
                 console.log(res)
                 swal.fire({
@@ -30,11 +29,11 @@
                     timer: 3000
                 })
             }).catch(err => {
-                console.log(err)
-                if (err == 'Error: Request failed with status code 500') {
+                console.log(err.response)
+                if (err.response.status == 500) {
                     swal.fire({
                         type: 'error',
-                        title: 'User not found!',
+                        title: err.response.data.message,
                         showConfirmButton: false,
                         timer: 3000
                     })
