@@ -190,7 +190,7 @@
                 </li><!-- nav-item -->
                 <li class="nav-item {{ Request::is('payslip/show') == 'benefit*' ? 'active' : '' }}">
                         {{-- <li>with-sub</li> --}}
-                    <a href="#" class="nav-link"><i class="icon ion-md-list-box"></i>Payslip</a>
+                    <a href="{{ route('payslip.employee', auth()->user()->id) }}" class="nav-link"><i class="icon ion-md-list-box"></i>Payslip</a>
                     {{-- <ul class="nav-sub">
                         <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
                     </ul> --}}

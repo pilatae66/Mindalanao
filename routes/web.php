@@ -122,3 +122,7 @@ Route::group(['prefix' => 'compensations'], function () {
 
 Route::get('attendance', 'AttendanceController@index')->name('attendance.index');
 
+Route::group(['prefix' => 'payslip'], function () {
+    Route::get('/{id}', 'PayslipController@employeeShow')->name('payslip.employee');
+});
+

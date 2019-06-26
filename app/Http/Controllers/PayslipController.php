@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Payslip;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class PayslipController extends Controller
 {
@@ -46,7 +47,16 @@ class PayslipController extends Controller
      */
     public function show(Payslip $payslip)
     {
-        //
+
+    }
+
+    public function employeeShow($user)
+    {
+        $payslip = Payslip::latest()->first();
+        $payslip_count = Payslip::whereMonth('created_at', Carbon::today()->month)->count();
+        $deductions = $payslip->deductions();
+        $benefits = $payslip->benefits();
+        return view('payslip.employeeShow', compact('payslip', 'payslip_count', 'deductions', 'benefits'));
     }
 
     /**

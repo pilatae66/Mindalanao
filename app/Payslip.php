@@ -22,4 +22,9 @@ class Payslip extends Model
     {
         return $this->details->where('type', 'Benefits');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
