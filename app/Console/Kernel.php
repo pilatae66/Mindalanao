@@ -30,6 +30,9 @@ class Kernel extends ConsoleKernel
         $schedule->call(function () {
             DB::table('leaves')->delete();
         })->yearly();
+
+        $schedule->command('payroll:generate')->monthlyOn(9, '4:00')->runInBackground();
+        $schedule->command('payroll:generate')->monthlyOn(19, '4:00')->runInBackground();
     }
 
     /**

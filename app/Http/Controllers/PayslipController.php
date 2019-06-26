@@ -53,10 +53,15 @@ class PayslipController extends Controller
     public function employeeShow($user)
     {
         $payslip = Payslip::latest()->first();
-        $payslip_count = Payslip::whereMonth('created_at', Carbon::today()->month)->count();
-        $deductions = $payslip->deductions();
-        $benefits = $payslip->benefits();
-        return view('payslip.employeeShow', compact('payslip', 'payslip_count', 'deductions', 'benefits'));
+        if($payslip){
+            $payslip_count = Payslip::whereMonth('created_at', Carbon::today()->month)->count();
+            $deductions = $payslip->deductions();
+            $benefits = $payslip->benefits();
+
+            return view('payslip.employeeShow', compact('payslip', 'payslip_count', 'deductions', 'benefits'));
+        }else{
+            return abort(404);
+        }
     }
 
     /**

@@ -33,7 +33,7 @@
                         <div>Position</div>
                     </div>
                     <div class="col-md-6 tx-center">
-                        <div>{{ $payslip_count < 0 ? "{$payslip->created_at->format('F')} 10, 2019" : "{$payslip->created_at->format('F')} 20, 2019" }}</div>
+                        <div>{{ $payslip_count < 0 ? "{$payslip->created_at->format('F')} 20, 2019" : "{$payslip->created_at->addMonth()->format('F')} 10, 2019" }}</div>
                         <hr class="p-0 m-0">
                         <div>Pay Date</div>
                     </div>
