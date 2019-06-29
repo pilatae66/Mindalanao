@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Benefit;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use PDF;
 
 class BenefitController extends Controller
 {
@@ -138,5 +139,12 @@ class BenefitController extends Controller
     public function destroy(Benefit $benefit)
     {
         $benefit->delete();
+    }
+
+    public function printBenefits()
+    {
+        $benefits = Benefit::orderBy('name', 'ASC')->get();
+        $pdf = PDF::loadView('print.benefit', compact('benefits'));
+        return $pdf->stream('benefit.pdf');
     }
 }

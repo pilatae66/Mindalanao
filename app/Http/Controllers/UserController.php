@@ -9,6 +9,8 @@ use App\Position;
 use App\Department;
 use Image;
 use Illuminate\Support\Facades\URL;
+use GuzzleHttp\Client;
+use PDF;
 
 class UserController extends Controller
 {
@@ -69,9 +71,15 @@ class UserController extends Controller
         if (auth()->user()->role == 'HRO') {
             return DataTables::of(User::with('position')->with('department')->where('role', '!=', 'Admin')->select('users.*'))
                     ->addColumn('action', function ($user) {
-                        return '<a href="'.route('user.edit', $user->id).'" class="bg-white tx-primary p-0 m-0" data-toggle="tooltip" data-placement="top" title="Edit User">
-                                        <i class="icon ion-md-open"></i>
-                                    </a>';
+                        return '<a href="'.route('user.edit', $user->id).'" class="bg-white tx-primary p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Edit User">
+                                    <i class="icon ion-md-open"></i>
+                                </a>
+                                <a href="'.route('attendance.getDate',$user->id).'" class="bg-white tx-warning pr-2" title="View Employee\'s DTR">
+                                    <i class="icon ion-md-clock"></i>
+                                </a>
+                                <a href="'.route('payslip.showAll',$user->id).'" class="bg-white tx-success" title="View Employee\'s Payslip">
+                                    <i class="icon ion-md-list-box"></i>
+                                </a>';
                     })
                     ->editColumn('created_at', function($user){
                         return $user->created_at->format('F d, Y');
@@ -310,5 +318,12 @@ class UserController extends Controller
     public function getAllUsersAPI()
     {
         return User::doesntHave('position')->get();
+    }
+
+    public function printEmployees()
+    {
+        $employees = User::where('role', 'Employee')->orderBy('lastname', 'ASC')->get();
+        $pdf = PDF::loadView('print.employee', compact('employees'));
+        return $pdf->stream('employees.pdf');
     }
 }

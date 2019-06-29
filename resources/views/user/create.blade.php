@@ -216,7 +216,7 @@
                     title: 'Pick a Time',
                     year: 'Year',
                     month: 'Month',
-                    day: 'Day'
+                day: 'Day'
                 },
             });
         })

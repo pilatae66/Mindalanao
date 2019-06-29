@@ -12,7 +12,9 @@
                     <div class="pt-2">
                         Benefit List
                     </div>
-                    <div><a href="{{ route('benefit.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    @can('create', App\Benefit::class)
+                        <div><a href="{{ route('benefit.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    @endcan
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
                     <ul class="list-group">
@@ -27,7 +29,7 @@
                             <li class="list-group-item">
                                 <div class="d-flex justify-content-between">
                                     <div>{{ $benefit->name }}</div>
-                                    <div>{{ $benefit->amount }}</div>
+                                    <div>₱{{ $benefit->amount }}</div>
                                     <div>{{ $benefit->created_at->format('F d, Y') }}</div>
                                 </div>
                             </li>

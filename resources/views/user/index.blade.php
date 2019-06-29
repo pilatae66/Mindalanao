@@ -13,7 +13,14 @@
                         Employee List
                     </div>
                     @can('create', App\User::class)
-                        <div><a href="{{ route('user.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <div>
+                        <a href="{{ route('user.create') }}" class="btn btn-sm btn-primary btn-rounded" data-toggle="tooltip" data-placement="top" title="Add new Employee">
+                            <i class="icon ion-md-add"></i> Add New
+                        </a>
+                        <a href="{{ route('print.employee') }}" class="btn btn-sm btn-primary btn-rounded" data-toggle="tooltip" data-placement="top" title="Print Employee Master List">
+                            <i class="icon ion-md-print"></i> Print
+                        </a>
+                    </div>
                     @endcan
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">

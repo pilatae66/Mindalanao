@@ -37,6 +37,8 @@ Route::group(['prefix' => 'users'], function () {
         Route::patch('/{user}', 'UserController@update')->name('user.update');
 
         Route::get('/getUserData', 'UserController@getAllUsers')->name('user.all');
+
+        Route::get('/print', 'UserController@printEmployees')->name('print.employee');
     });
 
     Route::group(['prefix' => 'admin'], function () {
@@ -58,6 +60,9 @@ Route::group(['prefix' => 'users'], function () {
     });
 });
 
+Route::get('position/{position}/print', 'PositionController@printPositionMembers')->name('print.positionMembers');
+
+Route::get('position/print', 'PositionController@printPositions')->name('print.position');
 
 Route::resource('/position', 'PositionController');
 
@@ -67,6 +72,10 @@ Route::group(['prefix' => 'positions'], function () {
 
     Route::get('/getPositionsData', 'PositionController@getAllPosition')->name('position.all');
 });
+
+Route::get('department/print', 'DepartmentController@printDepartments')->name('print.department');
+
+Route::get('department/{department}/print', 'DepartmentController@printDepartmentMembers')->name('print.departmentMembers');
 
 Route::resource('/department', 'DepartmentController');
 
@@ -88,11 +97,15 @@ Route::get('/getAllEmployee/{activity}', 'ActivityController@getAllEmployees')->
 
 Route::post('/addEmployeeToActivity', 'ActivityController@addEmployeeToActivity')->name('activity.addEmployeeToActivity');
 
+Route::get('deduction/print', 'DeductionController@printDeductions')->name('print.deduction');
+
 Route::resource('/deduction', 'DeductionController');
 
 Route::group(['prefix' => 'deductions'], function () {
     Route::get('/all', 'DeductionController@getAllDeduction')->name('deduction.all');
 });
+
+Route::get('benefit/print', 'BenefitController@printBenefits')->name('print.benefit');
 
 Route::resource('/benefit', 'BenefitController');
 
@@ -100,6 +113,8 @@ Route::group(['prefix' => 'benefits'], function () {
     Route::get('/all', 'BenefitController@getAllBenefits')->name('benefit.all');
     Route::get('/showAll', 'BenefitController@showAllBenefits')->name('benefit.showAll');
 });
+
+Route::get('leave/print', 'LeaveController@printLeaves')->name('print.leave');
 
 Route::resource('/leave', 'LeaveController');
 
@@ -122,7 +137,19 @@ Route::group(['prefix' => 'compensations'], function () {
 
 Route::get('attendance', 'AttendanceController@index')->name('attendance.index');
 
+Route::get('employee/{user}/attendance', 'AttendanceController@showDTR')->name('attendance.showDTR');
+
+Route::post('employee/{user}/DTRView', 'AttendanceController@showHRODTR')->name('attendance.showHRODTR');
+
+Route::get('employee/{user}/getDate', 'AttendanceController@getDate')->name('attendance.getDate');
+
 Route::group(['prefix' => 'payslip'], function () {
     Route::get('/{id}', 'PayslipController@employeeShow')->name('payslip.employee');
+
+    Route::get('/HRO/{payslip}', 'PayslipController@HROShow')->name('payslip.HRO');
+
+    Route::get('{user}/showpayslips', 'PayslipController@showAll')->name('payslip.showAll');
+
+    Route::get('/{payslip}/print', 'PayslipController@printPayslips')->name('print.payslip');
 });
 

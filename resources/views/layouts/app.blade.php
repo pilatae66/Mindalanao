@@ -169,7 +169,7 @@
                 </li><!-- nav-item -->
                 <li class="nav-item {{ Request::is('DTR/showAll') ? 'active' : '' }}">
                         {{-- <li>with-sub</li> --}}
-                    <a href="#" class="nav-link"><i class="icon ion-md-stopwatch"></i>DTR</a>
+                    <a href="{{ route('attendance.showDTR', auth()->user()->id) }}" class="nav-link"><i class="icon ion-md-stopwatch"></i>DTR</a>
                     {{-- <ul class="nav-sub">
                         <li class="nav-sub-item"><a href="dashboard-one.html" class="nav-sub-link">Web Analytics</a></li>
                     </ul> --}}
@@ -325,7 +325,7 @@
             <div class="container-fluid pd-t-0-f ht-100p">
               <span>&copy; 2019 Developed by <a href="https://www.linkedin.com/in/LonerJey"><b>LonerJey</b></a></span>
               <div class="ml-auto">
-                Mindalano Specialist Hospital Foundation, Inc., Panggao Saduc, Marawi City
+                Mindalano Specialist Hospital Foundation, Inc., Panggao Saduc, Marawi City, Lanao del Sur, Philippines
               </div>
             <div>
 

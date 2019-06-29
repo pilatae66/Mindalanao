@@ -6,6 +6,7 @@ use App\Position;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use App\Department;
+use PDF;
 
 class PositionController extends Controller
 {
@@ -158,5 +159,18 @@ class PositionController extends Controller
         toast('Position has been successfully deleted!','success', 'top');
 
         return redirect()->route('position.index');
+    }
+
+    public function printPositions()
+    {
+        $positions = Position::orderBy('position', 'ASC')->get();
+        $pdf = PDF::loadView('print.position', compact('positions'));
+        return $pdf->stream('position.pdf');
+    }
+
+    public function printPositionMembers(Position $position)
+    {
+        $pdf = PDF::loadView('print.positionMembers', compact('position'));
+        return $pdf->stream('position members.pdf');
     }
 }

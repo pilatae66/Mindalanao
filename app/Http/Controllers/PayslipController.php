@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Payslip;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\User;
+use PDF;
 
 class PayslipController extends Controller
 {
@@ -52,16 +54,29 @@ class PayslipController extends Controller
 
     public function employeeShow($user)
     {
-        $payslip = Payslip::latest()->first();
+        $payslip = Payslip::where('user_id', $user)->latest()->first();
         if($payslip){
-            $payslip_count = Payslip::whereMonth('created_at', Carbon::today()->month)->count();
             $deductions = $payslip->deductions();
             $benefits = $payslip->benefits();
 
-            return view('payslip.employeeShow', compact('payslip', 'payslip_count', 'deductions', 'benefits'));
+            return view('payslip.employeeShow', compact('payslip', 'deductions', 'benefits'));
         }else{
             return abort(404);
         }
+    }
+
+    public function HROShow(Payslip $payslip)
+    {
+        $deductions = $payslip->deductions();
+        $benefits = $payslip->benefits();
+        return view('payslip.employeeShow', compact('payslip', 'deductions', 'benefits'));
+    }
+
+    public function showAll(User $user)
+    {
+        $payslips = $user->payslips;
+
+        return view('payslip.showAll', compact('payslips'));
     }
 
     /**
@@ -96,5 +111,15 @@ class PayslipController extends Controller
     public function destroy(Payslip $payslip)
     {
         //
+    }
+
+    public function printPayslips(Payslip $payslip)
+    {
+        $deductions = $payslip->deductions();
+        $benefits = $payslip->benefits();
+        $pdf = PDF::loadView('print.payslip', compact('payslip', 'deductions', 'benefits'));
+        // dd($pdf);
+        return $pdf->stream('payslip.pdf');
+
     }
 }

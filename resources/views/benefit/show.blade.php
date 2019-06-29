@@ -12,7 +12,6 @@
                     <div class="pt-2">
                         Benefit List
                     </div>
-                    <div><a href="{{ route('benefit.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
                     <ul class="list-group">

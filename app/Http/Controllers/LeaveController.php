@@ -8,6 +8,7 @@ use Yajra\DataTables\DataTables;
 use Carbon\Carbon;
 use App\User;
 use App\LeaveType;
+use PDF;
 
 class LeaveController extends Controller
 {
@@ -211,5 +212,12 @@ class LeaveController extends Controller
     {
         $this->authorize('delete', $leave);
         $leave->delete();
+    }
+
+    public function printLeaves()
+    {
+        $leaves = Leave::join('users', 'users.id' ,'=', 'leaves.employee_id')->select('users.*')->orderBy('users.lastname', 'ASC')->get();
+        $pdf = PDF::loadView('print.leave', compact('leaves'));
+        return $pdf->stream('leaves.pdf');
     }
 }

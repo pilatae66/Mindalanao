@@ -8,7 +8,12 @@
 <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card bd-0">
-                <div class="card-body bd">
+                <div class="card-header bd bg-white">
+                    <a href="{{ route('print.positionMembers', $position->id) }}" class="btn tx-primary bg-white btn-rounded float-right" data-toggle="tooltip" data-placement="top" title="Print Position Master List'">
+                        <i class="icon ion-md-print"></i> Print
+                    </a>
+                </div>
+                <div class="card-body bd bd-t-0">
                     <div class="row tx-center bd mb-3 p-3 rounded-5" style="margin-left: 2px; margin-right:2px;">
                         <div class="col-md-6">
                             <label style="color:blue;" for="name"><b>Position Name:</b></label>

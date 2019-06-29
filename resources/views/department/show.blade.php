@@ -8,7 +8,12 @@
 <div class="row justify-content-center">
         <div class="col-md-6">
             <div class="card bd-0">
-                <div class="card-body bd">
+                <div class="card-header bd bg-white">
+                    <a href="{{ route('print.departmentMembers', $department->id) }}" class="btn tx-primary bg-white btn-rounded float-right" data-toggle="tooltip" data-placement="top" title="Print Department Master List'">
+                        <i class="icon ion-md-print"></i> Print
+                    </a>
+                </div>
+                <div class="card-body bd bd-t-0">
                     <div class="row tx-center bd mb-3 p-3 rounded-5" style="margin-left: 2px; margin-right:2px;">
                         <div class="col-md-6">
                             <label style="color:blue;" for="name"><b>Department Name:</b></label>
@@ -20,12 +25,12 @@
                         </div>
                         <div class="col-md-12">
                             <label style="color:blue;" for="name"><b>Total Members:</b></label>
-                            <p>{{ $department->employee->count() }}</p>
+                            <p>{{ $department->employees->count() }}</p>
                         </div>
                     </div>
                     <ul class="list-group" id="userList">
                         <input class="form-control list-group-item" onkeyup="searchList()" type="text" id="search" placeholder="Search...">
-                        @forelse ($department->employee as $user)
+                        @forelse ($department->employees as $user)
                             <li class="list-group-item">
                                 <div class="d-flex align-items-center">
                                     <img src="{{ asset(!empty($user->photoURL) ? "storage/{$user->photoURL}" : 'storage/photos/image.gif' ) }}" class="wd-30 rounded-circle mg-r-15" alt="">

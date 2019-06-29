@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Department;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use PDF;
 
 class DepartmentController extends Controller
 {
@@ -24,7 +25,7 @@ class DepartmentController extends Controller
 
     public function getAllDepartment()
     {
-        return DataTables::of(Department::with('employee')->select('departments.*'))
+        return DataTables::of(Department::with('employees')->select('departments.*'))
         ->addColumn('action', function ($department) {
             return '<div class="d-flex align-items-baseline">
                         <a href="'.route('department.show',$department->id).'" class="btn btn-sm btn-rounded bg-white p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Show Department Details">
@@ -39,7 +40,7 @@ class DepartmentController extends Controller
                     </div>';
         })
         ->addColumn('employees', function($department){
-            return $department->employee->count();
+            return $department->employees->count();
         })
         ->addColumn('parent', function($department){
             return !empty($department->parent) ? $department->parent->department_name : "No Parent";
@@ -140,5 +141,18 @@ class DepartmentController extends Controller
     public function destroy(Department $department)
     {
         $department->delete();
+    }
+
+    public function printDepartments()
+    {
+        $departments = Department::orderBy('department_name', 'ASC')->get();
+        $pdf = PDF::loadView('print.department', compact('departments'));
+        return $pdf->stream('department.pdf');
+    }
+
+    public function printDepartmentMembers(Department $department)
+    {
+        $pdf = PDF::loadView('print.departmentMembers', compact('department'));
+        return $pdf->stream('department members.pdf');
     }
 }

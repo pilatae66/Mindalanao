@@ -12,7 +12,14 @@
                     <div class="pt-2">
                         Leave List
                     </div>
-                    <div><a href="{{ route('leave.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <div>
+                        <a href="{{ route('leave.create') }}" class="btn btn-sm btn-primary btn-rounded">
+                            <i class="icon ion-md-add"></i> Add New
+                        </a>
+                        <a href="{{ route('print.leave') }}" class="btn btn-sm btn-primary btn-rounded" data-toggle="tooltip" data-placement="top" title="Print Leaves'">
+                            <i class="icon ion-md-print"></i> Print
+                        </a>
+                    </div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
                     <table class="table" id="datatable">

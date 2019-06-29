@@ -12,7 +12,14 @@
                     <div class="pt-2">
                         Deduction List
                     </div>
-                    <div><a href="{{ route('deduction.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <div>
+                        <a href="{{ route('deduction.create') }}" class="btn btn-sm btn-primary btn-rounded">
+                            <i class="icon ion-md-add"></i> Add New
+                        </a>
+                        <a href="{{ route('print.deduction') }}" class="btn btn-sm btn-primary btn-rounded" data-toggle="tooltip" data-placement="top" title="Print Deduction Master List'">
+                            <i class="icon ion-md-print"></i> Print
+                        </a>
+                    </div>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
                     <table class="table" id="datatable">

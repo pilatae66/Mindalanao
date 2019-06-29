@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Deduction;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
+use PDF;
 
 class DeductionController extends Controller
 {
@@ -133,5 +134,13 @@ class DeductionController extends Controller
         $this->authorize('delete', Deduction::class);
 
         $deduction->delete();
+    }
+
+    public function printDeductions()
+    {
+        $deductions = Deduction::orderBy('name', 'ASC')->get();
+        $pdf = PDF::loadView('print.deduction', compact('deductions'));
+        // dd($pdf);
+        return $pdf->stream('deductions.pdf');
     }
 }

@@ -35,7 +35,7 @@
                         @enderror
                         </div><!-- form-group -->
                         <div class="form-group pb-2">
-                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Basic Salary</label>
+                        <label class="az-content-label tx-11 tx-medium tx-gray-600">Basic Salary per Day</label>
                         <input type="number" value="{{ old('salary') }}" name="salary" class="form-control @error('salary') parsley-error @enderror" placeholder="Enter salary" required autofocus>
                         @error('salary')
                             <span class="invalid-feedback" role="alert">

@@ -55,7 +55,7 @@ class Payroll extends Command
             $payslip = Payslip::create([
                 'user_id' => $employee->id,
                 'net_salary' => $employee->position[0]->salary,
-                'gross_salary' => $employee->position[0]->salary,
+                'gross_salary' => $employee->position[0]->salary * $employee->dtrDataEmployee()['grand_total_hours'],
             ]);
 
             foreach ($deductions as $key => $deduction) {
