@@ -125,7 +125,7 @@ class ActivityController extends Controller
     public function getAllEmployees($activity)
     {
         $activity_test = Activity::findOrFail($activity);
-        $users = User::all();
+        $users = User::where('role', '!=' ,'Admin')->get();
         for ($i=0; $i < $users->count(); $i++) {
             $users[$i]->position = $users[$i]->position[0];
             $users[$i]->department = $users[$i]->department[0];

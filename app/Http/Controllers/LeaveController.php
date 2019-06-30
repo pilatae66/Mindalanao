@@ -32,9 +32,6 @@ class LeaveController extends Controller
         return DataTables::of(Leave::with('user')->with('admin')->with('type')->select('leaves.*'))
         ->addColumn('action', function ($leave) {
             return '<div class="d-flex align-items-baseline">
-                        <a href="'.route('leave.show',$leave->id).'" class="btn btn-sm btn-rounded bg-white p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Show Department Details">
-                            <i class="icon ion-md-eye"></i>
-                        </a>
                         <a href="'.route('leave.edit', $leave->id).'" class="btn btn-sm btn-rounded bg-white tx-primary p-0 m-0 pr-2" data-toggle="tooltip" data-placement="top" title="Edit Department">
                             <i class="icon ion-md-open"></i>
                         </a>
@@ -73,7 +70,7 @@ class LeaveController extends Controller
         $this->authorize('create', Leave::class);
 
         $leaveTypes = LeaveType::all();
-        $users = User::all();
+        $users = User::where('role', '!=' ,'Admin')->get();
 
         return view('leave.create', compact('users', 'leaveTypes'));
     }

@@ -125,7 +125,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-5 bd">
+                <div class="col-5 bd">
                 <div class="row ">
                     <div class="col d-flex">
                         <div class="tx-bold pt-3">NET PAY:</div>

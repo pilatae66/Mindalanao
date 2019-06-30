@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Edit Employee
+    Users Create
 @endsection
 
 @section('content')
@@ -9,7 +9,7 @@
         <div class="col-md-8">
             <div class="card card-body pd-40">
                 <h5 class="card-title mg-b-20">Edit Employee</h5>
-                    <form method="POST" action="{{ route('user.update', $user->id) }}">
+                    <form method="POST" action="{{ route('user.updateAdmin', $user->id) }}">
                         @csrf
                         @method('PATCH')
                         <div class="row">

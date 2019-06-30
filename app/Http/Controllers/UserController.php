@@ -221,18 +221,8 @@ class UserController extends Controller
         $user->delete();
     }
 
-    public function edit(User $user)
-    {
-        $this->authorize('update', $user);
-        $positions = Position::all();
-        $departments = Department::all();
-
-        return view('user.edit', compact('user', 'positions', 'departments'));
-    }
-
     public function editAdmin(User $user)
     {
-
         $this->authorize('updateAdmin', User::class);
         $positions = Position::all();
         $departments = Department::all();
@@ -240,9 +230,19 @@ class UserController extends Controller
         return view('admin.edit', compact('user', 'positions', 'departments'));
     }
 
-    public function update(User $user, Request $request)
+    public function editEmployee(User $user)
     {
-        $this->authorize('update', $user);
+
+        $this->authorize('updateEmployee', User::class);
+        $positions = Position::all();
+        $departments = Department::all();
+
+        return view('user.edit', compact('user', 'positions', 'departments'));
+    }
+
+    public function updateAdmin(User $user, Request $request)
+    {
+        $this->authorize('updateAdminupdateEmployeeAdmin', User::class);
 
         $user->department()->sync([$request->department]);
         $user->position()->sync([$request->position]);
@@ -252,8 +252,9 @@ class UserController extends Controller
         return redirect()->route('user.index');
     }
 
-    public function updateAdmin(User $user, Request $request)
+    public function update(User $user, Request $request)
     {
+        // $this->authorize('update', $user);
          // return $request->file('photoURL')->store('photos', 'public');
          $request->validate([
             'firstname' => 'required|string|max:255',

@@ -54,6 +54,11 @@ class UserPolicy
         return $user->id == $model->id;
     }
 
+    public function updateEmployee(User $user)
+    {
+        return $user->role == 'HRO';
+    }
+
     public function updateAdmin(User $user)
     {
         return $user->role == 'Admin';

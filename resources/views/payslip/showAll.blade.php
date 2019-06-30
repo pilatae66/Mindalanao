@@ -9,10 +9,9 @@
         <div class="col-md-12">
             <div class="card bd-0">
                 <div class="card-header tx-medium bd-0 tx-white bg-primary d-flex justify-content-between">
-                    <div class="pt-2">
-                        Payslip List for {{ $payslips[0]->user->full_name }}
-                    </div>
-                    <div><a href="{{ route('benefit.create') }}" class="btn btn-sm btn-primary btn-rounded"><i class="icon ion-md-add"></i> Add New</a></div>
+                    <h5 class="pt-2 card-title tx-white">
+                        Payslip List for {{ $user->full_name }}
+                    </h5>
                 </div><!-- card-header -->
                 <div class="card-body bd bd-t-0">
                     <div class="list-group">

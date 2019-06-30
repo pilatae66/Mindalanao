@@ -67,16 +67,22 @@ class PayslipController extends Controller
 
     public function HROShow(Payslip $payslip)
     {
-        $deductions = $payslip->deductions();
-        $benefits = $payslip->benefits();
-        return view('payslip.employeeShow', compact('payslip', 'deductions', 'benefits'));
+        dd($payslip);
+        if (!empty($payslip)) {
+            $deductions = $payslip->deductions();
+            $benefits = $payslip->benefits();
+            return view('payslip.employeeShow', compact('payslip', 'deductions', 'benefits'));
+        }
+        else{
+            return abort(404);
+        }
     }
 
     public function showAll(User $user)
     {
         $payslips = $user->payslips;
 
-        return view('payslip.showAll', compact('payslips'));
+        return view('payslip.showAll', compact('payslips', 'user'));
     }
 
     /**

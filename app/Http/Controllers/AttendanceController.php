@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Attendance;
 use Illuminate\Http\Request;
-use QrCode;
 use App\User;
 use Carbon\Carbon;
+use PDF;
 
 class AttendanceController extends Controller
 {
@@ -75,6 +75,7 @@ class AttendanceController extends Controller
         $month = Carbon::now()->month;
         $year = Carbon::now()->year;
         $day = Carbon::now()->day;
+        $dtr = $user->dtrDataEmployee($month, $year, $day);
         return view('attendance.showDTR', compact('user', 'month', 'year', 'day'));
     }
 
@@ -89,7 +90,8 @@ class AttendanceController extends Controller
         $day = Carbon::parse($request->date)->day;
         $month = Carbon::parse($request->date)->month;
         $year = Carbon::parse($request->date)->year;
-        return view('attendance.showDTR', compact('user', 'month', 'year', 'day'));
+        $dtr = $user->dtrDataEmployee($month, $year, $day);
+        return view('attendance.showDTR', compact('user', 'dtr', 'month', 'year', 'day'));
     }
 
     /**
@@ -124,5 +126,12 @@ class AttendanceController extends Controller
     public function destroy(Attendance $attendance)
     {
         //
+    }
+
+    public function printDTR(User $user, $year, $month, $day){
+        $dtrs = $user->dtrDataEmployee($month, $year, $day);
+        // dd($dtrs);
+        $pdf = PDF::loadView('print.dtr', compact('dtrs', 'user', 'day', 'month', 'year'))->setPaper('','landscape');
+        return $pdf->stream('DTR.pdf');
     }
 }

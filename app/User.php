@@ -46,76 +46,82 @@ class User extends Authenticatable
 
         for ($i=1+$offset; $i <= 15+$offset2; $i++) {
             $day = $i;
-            $dtr[$i]['day'] = Carbon::createFromDate($year, $month, $day);
-            $dtr[$i]['Morning In'] = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'In')->whereTime('created_at', '>=', '08:00:00')->whereTime('created_at', '<=', '12::00')->first();
-            $dtr[$i]['Morning Out'] = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'Out')->whereTime('created_at', '>=', '08:00:00')->whereTime('created_at', '<=', '12::00')->first();
-            $dtr[$i]['Afternoon In'] = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'In')->whereTime('created_at', '>', '12:00:00')->whereTime('created_at', '<=', '18::00')->first();
-            $dtr[$i]['Afternoon Out'] = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'Out')->whereTime('created_at', '>', '12:00:00')->whereTime('created_at', '<=', '18::00')->first();
-            $dtr[$i]['Evening In'] = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'In')->whereTime('created_at', '>', '18:00:00')->whereTime('created_at', '<=', '24::00')->first();
-            $dtr[$i]['Evening Out'] = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'Out')->whereTime('created_at', '>', '18:00:00')->whereTime('created_at', '<=', '24::00')->first();
-            if ($dtr[$i]['Morning In'] != null) {
-                if ($dtr[$i]['Morning In']->isHoliday == 1) {
+            $dtr[$i]['day'] = Carbon::createFromDate($year, $month, $day)->format('m/d');
+            $morning_in = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'In')->whereTime('created_at', '>=', '08:00:00')->whereTime('created_at', '<=', '12::00')->first();
+            $dtr[$i]['Morning In'] = $morning_in != null > 0 ? $morning_in->created_at->format('g:i A') : '-';
+            $morning_out = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'Out')->whereTime('created_at', '>=', '08:00:00')->whereTime('created_at', '<=', '12::00')->first();
+            $dtr[$i]['Morning Out'] = $morning_out != null > 0 ? $morning_out->created_at->format('g:i A') : '-';
+            $afternoon_in = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'In')->whereTime('created_at', '>=', '12:00:00')->whereTime('created_at', '<=', '18::00')->first();
+            $dtr[$i]['Afternoon In'] = $afternoon_in != null > 0 ? $afternoon_in->created_at->format('g:i A') : '-';
+            $afternoon_out = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'Out')->whereTime('created_at', '>=', '12:00:00')->whereTime('created_at', '<=', '18::00')->first();
+            $dtr[$i]['Afternoon Out'] = $afternoon_out != null > 0 ? $afternoon_out->created_at->format('g:i A') : '-';
+            $evening_in = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'In')->whereTime('created_at', '>=', '18:00:00')->whereTime('created_at', '<=', '24::00')->first();
+            $dtr[$i]['Evening In'] = $evening_in != null > 0 ? $evening_in->created_at->format('g:i A') : '-';
+            $evening_out = $this->attendances()->whereMonth('created_at', $month)->whereYear('created_at', $year)->whereDay('created_at', $i)->where('type', 'Out')->whereTime('created_at', '>=', '18:00:00')->whereTime('created_at', '<=', '24::00')->first();
+            $dtr[$i]['Evening Out'] = $evening_out != null ? $evening_out->created_at->format('g:i A') : '-';
+            if ($morning_in != null) {
+                if ($morning_in->isHoliday == 1) {
                     $dtr[$i]['total_hours_in_a_day'] = 0;
-                    $dtr[$i]['holiday_hours'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['holiday_hours'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
                 else{
                     $dtr[$i]['holiday_hours'] = 0;
-                    $dtr[$i]['total_hours_in_a_day'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['total_hours_in_a_day'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
             }
-            else if ($dtr[$i]['Morning Out'] != null) {
-                if ($dtr[$i]['Morning Out']->isHoliday == 1) {
+            else if ($morning_out != null) {
+                if ($morning_out->isHoliday == 1) {
                     $dtr[$i]['total_hours_in_a_day'] = 0;
-                    $dtr[$i]['holiday_hours'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['holiday_hours'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
                 else{
                     $dtr[$i]['holiday_hours'] = 0;
-                    $dtr[$i]['total_hours_in_a_day'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['total_hours_in_a_day'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
             }
-            else if ($dtr[$i]['Afternoon In'] != null) {
-                if ($dtr[$i]['Afternoon In']->isHoliday == 1) {
+            else if ($afternoon_in != null) {
+                if ($afternoon_in->isHoliday == 1) {
                     $dtr[$i]['total_hours_in_a_day'] = 0;
-                    $dtr[$i]['holiday_hours'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['holiday_hours'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
                 else{
                     $dtr[$i]['holiday_hours'] = 0;
-                    $dtr[$i]['total_hours_in_a_day'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['total_hours_in_a_day'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
             }
-            else if ($dtr[$i]['Afternoon Out'] != null) {
-                if ($dtr[$i]['Afternoon Out']->isHoliday == 1) {
+            else if ($afternoon_out != null) {
+                if ($afternoon_out->isHoliday == 1) {
                     $dtr[$i]['total_hours_in_a_day'] = 0;
-                    $dtr[$i]['holiday_hours'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['holiday_hours'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
                 else{
                     $dtr[$i]['holiday_hours'] = 0;
-                    $dtr[$i]['total_hours_in_a_day'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['total_hours_in_a_day'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
             }
-            else if ($dtr[$i]['Evening In'] != null) {
-                if ($dtr[$i]['Evening In']->isHoliday == 1) {
+            else if ($evening_in != null) {
+                if ($evening_in->isHoliday == 1) {
                     $dtr[$i]['total_hours_in_a_day'] = 0;
-                    $dtr[$i]['holiday_hours'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['holiday_hours'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
                 else{
                     $dtr[$i]['holiday_hours'] = 0;
-                    $dtr[$i]['total_hours_in_a_day'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['total_hours_in_a_day'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
             }
-            else if ($dtr[$i]['Evening Out'] != null) {
-                if ($dtr[$i]['Evening Out']->isHoliday == 1) {
+            else if ($evening_out != null) {
+                if ($evening_out->isHoliday == 1) {
                     $dtr[$i]['total_hours_in_a_day'] = 0;
-                    $dtr[$i]['holiday_hours'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['holiday_hours'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
                 else{
                     $dtr[$i]['holiday_hours'] = 0;
-                    $dtr[$i]['total_hours_in_a_day'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                    $dtr[$i]['total_hours_in_a_day'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
                 }
             }
             else{
                 $dtr[$i]['holiday_hours'] = 0;
-                $dtr[$i]['total_hours_in_a_day'] = ($dtr[$i]['Morning In'] != null && $dtr[$i]['Morning Out'] != null ? $dtr[$i]['Morning In']->created_at->diffInHours($dtr[$i]['Morning Out']->created_at) : 0) + ($dtr[$i]['Afternoon In'] != null && $dtr[$i]['Afternoon Out'] != null ? $dtr[$i]['Afternoon In']->created_at->diffInHours($dtr[$i]['Afternoon Out']->created_at) : 0) + ($dtr[$i]['Evening In'] != null && $dtr[$i]['Evening Out'] != null ? $dtr[$i]['Evening In']->created_at->diffInHours($dtr[$i]['Evening Out']->created_at) : 0);
+                $dtr[$i]['total_hours_in_a_day'] = ($morning_in != null && $morning_out != null ? $morning_in->created_at->diffInHours($morning_out->created_at) : 0) + ($afternoon_in != null && $afternoon_out != null ? $afternoon_in->created_at->diffInHours($afternoon_out->created_at) : 0) + ($evening_in != null && $evening_out != null ? $evening_in->created_at->diffInHours($evening_out->created_at) : 0);
             }
             $dtr[$i]['overtime_hours'] = $dtr[$i]['total_hours_in_a_day'] > 0 ? $dtr[$i]['total_hours_in_a_day'] - $hrsPerDay : 0.0;
         }

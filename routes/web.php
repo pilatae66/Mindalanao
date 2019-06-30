@@ -34,7 +34,11 @@ Route::group(['prefix' => 'users'], function () {
 
         Route::get('/{user}/edit', 'UserController@edit')->name('user.edit');
 
+        Route::get('/{user}/edit', 'UserController@editEmployee')->name('user.edit');
+
         Route::patch('/{user}', 'UserController@update')->name('user.update');
+
+        Route::patch('/{user}/admin', 'UserController@updateAdmin')->name('user.updateAdmin');
 
         Route::get('/getUserData', 'UserController@getAllUsers')->name('user.all');
 
@@ -54,7 +58,7 @@ Route::group(['prefix' => 'users'], function () {
 
         Route::get('/{user}/edit', 'UserController@editAdmin')->name('admin.edit');
 
-        Route::patch('/{user}', 'UserController@updateAdmin')->name('admin.update');
+        Route::patch('/{user}', 'UserController@update')->name('admin.update');
 
         Route::get('/getAdminData', 'UserController@getAllAdmins')->name('admin.all');
     });
@@ -140,6 +144,8 @@ Route::get('attendance', 'AttendanceController@index')->name('attendance.index')
 Route::get('employee/{user}/attendance', 'AttendanceController@showDTR')->name('attendance.showDTR');
 
 Route::post('employee/{user}/DTRView', 'AttendanceController@showHRODTR')->name('attendance.showHRODTR');
+
+Route::get('employee/{user}/DTR/{year}/{month}/{day}/print', 'AttendanceController@printDTR')->name('print.dtr');
 
 Route::get('employee/{user}/getDate', 'AttendanceController@getDate')->name('attendance.getDate');
 

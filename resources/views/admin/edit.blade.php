@@ -20,7 +20,7 @@
                         <div class="row">
                             <div class="col-md-6 pb-3">
                                 <div class="custom-file">
-                                    <input type="file" name="photoURL" class="custom-file-input @error('photoURL') parsley-error @enderror" id="customFile" onchange="readURL(this);">
+                                    <input type="file" value="{{ $user->photoURL }}" name="photoURL" class="custom-file-input @error('photoURL') parsley-error @enderror" id="customFile" onchange="readURL(this);">
                                     <label class="custom-file-label" for="customFile">Choose file</label>
                                     @error('photoURL')
                                         <span class="invalid-feedback" role="alert">
